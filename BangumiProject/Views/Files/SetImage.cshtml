@@ -1,0 +1,42 @@
+﻿@model BangumiProject.Models.ImageSetting
+@{
+    ViewData["Title"] = "SetImage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SetImage</h2>
+<form asp-route="SetImage" asp-route-imageid="@Model.ImageID" method="post">
+
+    <table border="1" style="width:100%;table-layout:fixed;">
+
+        <tr>
+            <td>
+                图片名字：
+            </td>
+            <td>
+                <input asp-for="Name" style="width:100%;"/>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                能够读取图片的用户ID：
+            </td>
+            <td>
+                <input asp-for="ReadUser" style="width:100%;" />
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <button type="submit">提交</button>
+            </td>
+
+        </tr>
+
+    </table>
+</form>
+

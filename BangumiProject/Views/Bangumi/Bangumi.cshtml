@@ -1,0 +1,32 @@
+﻿@model BangumiModel
+@{
+    ViewData["Title"] = "Bangumi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table border="1" style="width:100%;table-layout:fixed;">
+    @foreach (var item in Model.Animes)
+    {
+        <tr>
+            <td>
+                <div class="col s12 m7">
+                    <h2 class="header">@item.AnimeName</h2>
+                    <div class="card horizontal">
+                        <div class="card-image">
+                            <img src="@Model.AnimePic(item)">
+                        </div>
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p>@item.AnimeInfo</p>
+                            </div>
+                            <div class="card-action">
+                                <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">查看详情</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+

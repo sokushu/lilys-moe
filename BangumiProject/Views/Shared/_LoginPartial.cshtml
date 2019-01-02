@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using BangumiProject.Models
+@using BangumiProject.Controllers
+@inject SignInManager<Users> SignInManager
+@inject UserManager<Users> UserManager
+
+@{ 
+    var Route_Profile = Final.Route_Profile;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+        
+        <li><a asp-route="@Route_Profile" title="Manage">@UserManager.GetUserName(User)!</a></li>
+        <li>
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                <button type="submit" class="btn">退出</button>
+            </form>
+        </li>
+        
+}
+else
+{
+        <li><a asp-area="Identity" asp-page="/Account/Register">注册</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Login">登录</a></li>
+}

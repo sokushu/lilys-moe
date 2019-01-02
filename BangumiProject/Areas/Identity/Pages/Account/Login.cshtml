@@ -1,0 +1,40 @@
+﻿@page "/Login"
+@model LoginModel
+
+<center style="padding-top:10%;padding-bottom:30%;">
+    <div class="center z-depth-4 hoverable" style="width:275px; padding:20px;">
+        <section>
+            <form method="post">
+                <h5>使用账号进行登陆</h5>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn green" style="width:49%;">登陆</button>
+                    <button type="reset" class="btn red" style="width:49%;">重置</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a asp-page="./ForgotPassword">忘记密码?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">注册一个新用户</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</center>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,81 @@
+﻿@model ProfileModel
+@using Microsoft.AspNetCore.Authorization
+@using BangumiProject.Controllers
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string GetPic(string pic)
+    {
+        return string.IsNullOrEmpty(pic) ?  Final.DefaultAnimePic : pic;
+    }
+}
+
+<table border="1" style="width:100%;table-layout:fixed;">
+
+    <tr>
+        <td>
+            <img src="@Model.UserPic" style="width:100%;" />
+        </td>
+        <td>
+            @Model.UserName
+            <br />
+            @if (Model.IsMe)
+            {
+                <a href="/Profile/Setting">用户设置</a>
+            }
+        </td>
+    </tr>
+
+    <tr>
+</table>
+
+<table border="1" style="width:100%;table-layout:fixed;">
+    <tr style="background-color:orchid;">
+        <th colspan="4">还没看的</th>
+    </tr>
+
+    @foreach (var item in Model.AnimeInfos[0])
+    {
+        <tr>
+            <td><img src="@GetPic(item.SubAnime.AnimePic)" style="width:100%;" /></td>
+            <td><a asp-route="GetBangumi" asp-route-id="@item.SubAnime.AnimeID">@item.SubAnime.AnimeName</a></td>
+            <td>还没开始看呢</td>
+            <td>剧情简介：@item.SubAnime.AnimeInfo</td>
+        </tr>
+    }
+
+    <tr style="background-color:orchid;">
+        <th colspan="4">正在看的</th>
+    </tr>
+
+
+    @foreach (var item in Model.AnimeInfos[1])
+    {
+        <tr>
+            <td><img src="@GetPic(item.SubAnime.AnimePic)" style="width:100%;" /></td>
+            <td><a asp-route="GetBangumi" asp-route-id="@item.SubAnime.AnimeID">@item.SubAnime.AnimeName</a></td>
+            <td>已经看到：第 @item.NowAnimeNum 集</td>
+            <td>剧情简介：@item.SubAnime.AnimeInfo</td>
+        </tr>
+    }
+        
+
+    <tr style="background-color:orchid;">
+        <th colspan="4">已经看完的</th>
+    </tr>
+
+        
+    @foreach (var item in Model.AnimeInfos[2])
+    {
+        <tr>
+            <td><img src="@GetPic(item.SubAnime.AnimePic)" style="width:100%;" /></td>
+            <td><a asp-route="GetBangumi" asp-route-id="@item.SubAnime.AnimeID">@item.SubAnime.AnimeName</a></td>
+            <td>已经看完：总共 @item.NowAnimeNum 集</td>
+            <td>剧情简介：@item.SubAnime.AnimeInfo</td>
+        </tr>
+    }
+
+
+    </table>
+

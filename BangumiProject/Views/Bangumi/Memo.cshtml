@@ -1,0 +1,27 @@
+﻿@model BangumiProject.Models.Memo
+@{
+    ViewData["Title"] = "Memo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>记一个备忘</h2>
+<form method="post">
+    <table border="1" style="width:100%;table-layout:fixed;">
+
+        <tr>
+            <td>
+                记录的是哪一集：<input asp-for="NowAnimeNum" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                记录内容：<textarea asp-for="MemoStr" style="height:500px;width:100%"></textarea>
+            </td>
+        </tr>
+        <tr><td>
+                <button type="submit">提交</button>
+            </td></tr>
+    </table>
+</form>
+

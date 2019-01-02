@@ -1,0 +1,46 @@
+﻿@using BangumiProject.Models
+@model Anime
+@{
+    ViewData["Title"] = "AddBangumi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>编辑动画</h2>
+<form asp-route="PostAddBagnumi">
+    <table border="1" style="width:100%;table-layout:fixed;">
+        <tr>
+            <td>动画名：</td>
+            <td><input asp-for="AnimeName" style="width:100%;" /></td>
+        </tr>
+        <tr>
+            <td>动画集数：</td>
+            <td><input asp-for="AnimeNum" style="width:100%;" /></td>
+        </tr>
+        <tr>
+            <td>动画封面图片：</td>
+            <td><input asp-for="AnimePic" style="width:100%;" /></td>
+        </tr>
+        <tr>
+            <td>动画简介：</td>
+            <td><textarea asp-for="AnimeInfo" style="width:100%; height:150px;"></textarea></td>
+        </tr>
+        <tr>
+            <td><label asp-for="AnimePlayTime"></label></td>
+            <td><input asp-for="AnimePlayTime" style="width:100%;" /></td>
+        </tr>
+        <tr>
+            <td>动画类型：</td>
+            <td>
+                <select class="browser-default" asp-for="AnimeType" asp-items="@Html.GetEnumSelectList(typeof(AnimeType))" style="width:100%;"></select>
+            </td>
+        </tr>
+
+    </table>
+    <p>
+        <label>
+            <input asp-for="IsEnd" type="checkbox" />
+            <span>完结</span>
+        </label>
+    </p>
+    <input type="submit" class="btn" value="提交" />
+</form>

@@ -1,0 +1,58 @@
+﻿
+@model BangumiProject.Views.Files.IndexModel
+@{ 
+    ViewData["title"] = Model.Tilte;
+}
+<h1>@Model.Tilte</h1>
+<h2>@Model.Message</h2>
+
+<table border="1" style="width:100%;table-layout:fixed;">
+    已上传文件列表（临时）
+    @foreach (var item in Model.Pic)
+    {
+        <tr>
+
+            <td>
+                <img src="/Image/Thumb/@item.ImagePath" style="width:100%;" />
+            </td>
+            <td>
+                图片名字：@item.ImageName
+            </td>
+            <td>
+                <a asp-route="GetSetImage" asp-route-imageid="@item.ImageID">编辑图片信息</a>
+            </td>
+
+        </tr>
+        <tr>
+            <th colspan="3">
+                图片URL：
+                @if (string.IsNullOrEmpty(item.ReadUsers))
+                {
+                    <a asp-route="GetImagePublic" asp-route-imageID="@item.ImageID">点击打开</a>
+                }
+                else
+                {
+                    <a asp-route="GetImages" asp-route-imageid="@item.ImageID">点击打开</a>
+                }
+
+            </th>
+        </tr>
+    }
+
+
+</table>
+
+<form method="post" asp-route="UploadFiles" enctype="multipart/form-data">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>上传一张图片：</p>
+            <input type="file" name="Files" multiple />
+            <input name="IsStaticFile" type="checkbox" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="上传" />
+        </div>
+    </div>
+</form>
