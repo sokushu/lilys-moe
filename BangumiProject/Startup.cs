@@ -204,6 +204,7 @@ namespace BangumiProject
         /// </summary>
         private void Mkdir()
         {
+            
             if (!Directory.Exists(Final.FilePath))
                 Directory.CreateDirectory(Final.FilePath);
             if (!Directory.Exists(Final.FilePath_Image))
@@ -220,13 +221,21 @@ namespace BangumiProject
             string ProjectPath = System.IO.Directory.GetCurrentDirectory();
             foreach (var file in Directory.GetFiles(ProjectPath))
             {
-                int cut = 0;
-                string fileName;
-                bool check = (cut = (fileName = file.GetFileName()).LastIndexOf('.')) > 0 ? fileName.Substring(cut).EndsWith("db") : false;
-                if (check)
+                try
                 {
-                    File.Move(file, $"{Final.DateBasePath}{fileName}");
+                    int cut = 0;
+                    string fileName;
+                    bool check = (cut = (fileName = file.GetFileName()).LastIndexOf('.')) > 0 ? fileName.Substring(cut).EndsWith("db") : false;
+                    if (check)
+                    {
+                        File.Move(file, $"{Final.DateBasePath}{fileName}");
+                    }
                 }
+                catch (Exception)
+                {
+                
+                }
+                
             }
 #endif
         }
