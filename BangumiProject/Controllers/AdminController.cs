@@ -16,7 +16,7 @@ namespace BangumiProject.Controllers
     [Authorize(Policy = Final.Yuri_Admin)]
     public class AdminController : Controller
     {
-        // 加载配置文件。。
+        // 加载配置文件。。test
         private readonly ReadConfig _Config = new ReadConfig();
         private readonly UserManager<Users> _userManager;
         private readonly BangumiProjectContext _DB;
