@@ -12,13 +12,13 @@ namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
+        UserManager<Models.Users> _userManager;
+        private readonly SignInManager<Models.Users> _signInManager;
         ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
-            UserManager<Users> userManager,
-            SignInManager<Users> signInManager,
+            UserManager<Models.Users> userManager,
+            SignInManager<Models.Users> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
             _userManager = userManager;

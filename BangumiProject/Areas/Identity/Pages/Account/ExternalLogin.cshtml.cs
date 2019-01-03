@@ -16,13 +16,13 @@ namespace BangumiProject.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<Users> _signInManager;
-        private readonly UserManager<Users> _userManager;
+        private readonly SignInManager<Models.Users> _signInManager;
+        private readonly UserManager<Models.Users> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<Users> signInManager,
-            UserManager<Users> userManager,
+            SignInManager<Models.Users> signInManager,
+            UserManager<Models.Users> userManager,
             ILogger<ExternalLoginModel> logger)
         {
             _signInManager = signInManager;
@@ -115,7 +115,7 @@ namespace BangumiProject.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new Users { UserName = Input.Email, Email = Input.Email };
+                var user = new Models.Users { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

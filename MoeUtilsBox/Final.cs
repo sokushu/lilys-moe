@@ -127,7 +127,14 @@ namespace BangumiProject.Controllers
         public const string Route_Profile_UID = "Profile_Uid";
         public const string Route_Profile = "Profile";
         public const string Route_Test = "Test";
-
+        public const string Route_Bangumi_Create = "Route_Bangumi_Create";
+        public const string Route_Bangumi_Create_POST = "Route_Bangumi_Create_POST";
+        public const string Route_Bangumi_Index = "Route_Bangumi_Index";
+        public const string Route_Bangumi_Details = "Route_Bangumi_Details";
+        public const string Route_Bangumi_Edit = "Route_Bangumi_Edit";
+        public const string Route_Bangumi_Edit_POST = "Route_Bangumi_Edit_POST";
+        public const string Route_Bangumi_Delete = "Route_Bangumi_Delete";
+        public const string Route_Bangumi_Delete_POST = "Route_Bangumi_Delete_POST";
         /*
          * ====================================================
          * 以下是阿里云OSS的文件使用

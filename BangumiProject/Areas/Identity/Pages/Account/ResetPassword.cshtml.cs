@@ -14,9 +14,9 @@ namespace BangumiProject.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ResetPasswordModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
+        private readonly UserManager<Models.Users> _userManager;
 
-        public ResetPasswordModel(UserManager<Users> userManager)
+        public ResetPasswordModel(UserManager<Models.Users> userManager)
         {
             _userManager = userManager;
         }

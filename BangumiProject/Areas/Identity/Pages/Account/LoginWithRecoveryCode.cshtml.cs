@@ -15,10 +15,10 @@ namespace BangumiProject.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginWithRecoveryCodeModel : PageModel
     {
-        private readonly SignInManager<Users> _signInManager;
+        private readonly SignInManager<Models.Users> _signInManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
 
-        public LoginWithRecoveryCodeModel(SignInManager<Users> signInManager, ILogger<LoginWithRecoveryCodeModel> logger)
+        public LoginWithRecoveryCodeModel(SignInManager<Models.Users> signInManager, ILogger<LoginWithRecoveryCodeModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;

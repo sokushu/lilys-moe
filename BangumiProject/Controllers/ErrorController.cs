@@ -24,8 +24,7 @@ namespace BangumiProject.Controllers
         {
             var Code = HttpContext.Response.StatusCode;
             IExceptionHandlerFeature exf = HttpContext.Features.Get<IExceptionHandlerFeature>();
-            ErrorException exception = exf?.Error as ErrorException;
-            if (exception != null)  // 如果出现错误就显示错误信息
+            if (exf?.Error is ErrorException exception)  // 如果出现错误就显示错误信息
             {
                 switch (exception.StatesCode)
                 {

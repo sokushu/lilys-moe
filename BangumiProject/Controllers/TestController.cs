@@ -50,8 +50,6 @@ namespace BangumiProject.Controllers
             _cache = memoryCache;
         }
 
-        private string a = "TEST";
-
         [HttpPost]
         [Route("/Test", Name = Final.Route_Test)]
         public IActionResult Index()
@@ -64,12 +62,13 @@ namespace BangumiProject.Controllers
         [Route("/Test")]
         public async Task<IActionResult> GetIndexAsync(string b)
         {
-            return Json(HttpContext.Session.Id);
+            return Json("HelloWorld");
         }
 
-        public void T(object source, ElapsedEventArgs e)
+        public T GetDate<T>(Func<string, T> func)
         {
-            Test();
+            T t = func.Invoke("TEST");
+            return t;
         }
 
         public Task Test()

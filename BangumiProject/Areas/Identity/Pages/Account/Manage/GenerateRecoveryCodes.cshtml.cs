@@ -12,11 +12,11 @@ namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
     public class GenerateRecoveryCodesModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
+        private readonly UserManager<Models.Users> _userManager;
         private readonly ILogger<GenerateRecoveryCodesModel> _logger;
 
         public GenerateRecoveryCodesModel(
-            UserManager<Users> userManager,
+            UserManager<Models.Users> userManager,
             ILogger<GenerateRecoveryCodesModel> logger)
         {
             _userManager = userManager;

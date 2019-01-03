@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using MoeUtilsBox;
 using MoeUtilsBox.String;
+using BangumiProject.Component.Interface;
 
 namespace BangumiProject
 {
@@ -141,7 +142,6 @@ namespace BangumiProject
                 option.AddPolicy(Final.Yuri_Yuri1, policy => policy.RequireRole(Yuris.Take(7).ToArray()));
                 option.AddPolicy(Final.Yuri_Boy, policy => policy.RequireRole(Yuris.ToArray()));
             });
-
             //这个其实没什么用的
             services.AddTransient<IEmailSender, Services.EmailSender>();
             
@@ -240,4 +240,19 @@ namespace BangumiProject
 #endif
         }
     }
+
+
+    public static class Utils
+    {
+        public static IEnumerable<IComponents> LoadComponent(this IServiceCollection services)
+        {
+            return null;
+        }
+
+        //public static IEnumerable<> AddDBTable(this IServiceCollection services)
+        //{
+
+        //}
+    }
+
 }

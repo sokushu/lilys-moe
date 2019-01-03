@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BangumiProject.Models
 {
+
     public class BangumiProjectContext : IdentityDbContext<Users, IdentityRole, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public DbSet<Anime> Anime { get; set; }

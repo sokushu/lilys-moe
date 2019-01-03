@@ -15,10 +15,10 @@ namespace BangumiProject.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
+        private readonly UserManager<Models.Users> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<Users> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<Models.Users> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

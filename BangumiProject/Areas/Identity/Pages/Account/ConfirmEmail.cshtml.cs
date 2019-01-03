@@ -13,9 +13,9 @@ namespace BangumiProject.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
+        private readonly UserManager<Models.Users> _userManager;
 
-        public ConfirmEmailModel(UserManager<Users> userManager)
+        public ConfirmEmailModel(UserManager<Models.Users> userManager)
         {
             _userManager = userManager;
         }

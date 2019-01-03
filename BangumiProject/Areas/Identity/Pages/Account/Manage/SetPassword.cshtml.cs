@@ -12,12 +12,12 @@ namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<Models.Users> _userManager;
+        private readonly SignInManager<Models.Users> _signInManager;
 
         public SetPasswordModel(
-            UserManager<Users> userManager,
-            SignInManager<Users> signInManager)
+            UserManager<Models.Users> userManager,
+            SignInManager<Models.Users> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

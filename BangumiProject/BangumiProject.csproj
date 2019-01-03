@@ -53,9 +53,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Bangumi\Services\" />
+    <Folder Include="Areas\Bangumi\Views\" />
+    <Folder Include="Areas\Bangumi\Process\" />
+    <Folder Include="Areas\Blogs\Controllers\" />
+    <Folder Include="Areas\Blogs\Process\" />
+    <Folder Include="Areas\Blogs\Services\" />
+    <Folder Include="Areas\Blogs\Views\" />
+    <Folder Include="Areas\Files\Controllers\" />
+    <Folder Include="Areas\Files\Process\" />
+    <Folder Include="Areas\Files\Services\" />
+    <Folder Include="Areas\Files\Views\" />
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Areas\Search\Controllers\" />
+    <Folder Include="Areas\Search\Models\" />
+    <Folder Include="Areas\Search\Process\" />
+    <Folder Include="Areas\Search\Services\" />
+    <Folder Include="Areas\Search\Views\" />
+    <Folder Include="Areas\Users\Controllers\" />
+    <Folder Include="Areas\Users\Process\" />
+    <Folder Include="Areas\Users\Services\" />
+    <Folder Include="Areas\Users\Views\" />
     <Folder Include="Process\MoeMushi\Process\" />
     <Folder Include="Views\Search\" />
+    <Folder Include="Context\" />
   </ItemGroup>
 
   <ItemGroup>

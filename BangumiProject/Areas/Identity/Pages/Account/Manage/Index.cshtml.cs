@@ -14,13 +14,13 @@ namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<Models.Users> _userManager;
+        private readonly SignInManager<Models.Users> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<Users> userManager,
-            SignInManager<Users> signInManager,
+            UserManager<Models.Users> userManager,
+            SignInManager<Models.Users> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
