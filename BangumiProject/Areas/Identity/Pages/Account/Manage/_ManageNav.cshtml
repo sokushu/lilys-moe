@@ -1,4 +1,5 @@
-﻿@inject SignInManager<Users> SignInManager
+﻿@using BangumiProject.Areas.Users.Models
+@inject SignInManager<Users> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

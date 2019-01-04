@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProject.Areas.Users.Models;
 using BangumiProject.Models;
 using BangumiProject.Process;
 using BangumiProject.Process.Bangumi;

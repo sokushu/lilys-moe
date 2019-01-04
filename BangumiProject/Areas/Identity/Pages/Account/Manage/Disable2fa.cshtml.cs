@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using User = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
     public class Disable2faModel : PageModel
     {
-        private readonly UserManager<Models.Users> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<Disable2faModel> _logger;
 
         public Disable2faModel(
-            UserManager<Models.Users> userManager,
+            UserManager<User> userManager,
             ILogger<Disable2faModel> logger)
         {
             _userManager = userManager;

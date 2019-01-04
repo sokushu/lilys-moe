@@ -19,6 +19,7 @@ using System.Linq;
 using MoeUtilsBox;
 using MoeUtilsBox.String;
 using BangumiProject.Component.Interface;
+using BangumiProject.Areas.Users.Models;
 
 namespace BangumiProject
 {
@@ -57,14 +58,15 @@ namespace BangumiProject
     /// </summary>
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IServiceProvider serviceProvider)
         {
             Configuration = configuration;
+            ServiceProvider = serviceProvider;
             Mkdir();
         }
 
         public IConfiguration Configuration { get; }
-
+        public IServiceProvider ServiceProvider { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -144,7 +146,10 @@ namespace BangumiProject
             });
             //这个其实没什么用的
             services.AddTransient<IEmailSender, Services.EmailSender>();
-            
+            //==============================================================
+            //服务注册
+            //==============================================================
+            services.AddSingleton<IConfig, BangumiProject.Areas.Bangumi.Config>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -241,18 +246,8 @@ namespace BangumiProject
         }
     }
 
-
-    public static class Utils
+    public interface IConfig
     {
-        public static IEnumerable<IComponents> LoadComponent(this IServiceCollection services)
-        {
-            return null;
-        }
-
-        //public static IEnumerable<> AddDBTable(this IServiceCollection services)
-        //{
-
-        //}
+        
     }
-
 }

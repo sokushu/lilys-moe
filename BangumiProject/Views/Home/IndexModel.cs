@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MoeUtilsBox.String;
+using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Areas.Users.Models;
 
 namespace BangumiProject.Views.Home
 {

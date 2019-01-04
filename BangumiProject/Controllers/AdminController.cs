@@ -10,6 +10,7 @@ using BangumiProject.Process.MoeMushi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Users = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Controllers
 {

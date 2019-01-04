@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Areas.Users.Models;
 using BangumiProject.Models;
 using BangumiProject.Process.Bangumi;
 using Microsoft.AspNetCore.Authorization;

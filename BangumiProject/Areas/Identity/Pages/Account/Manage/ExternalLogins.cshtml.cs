@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using User = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<Models.Users> _userManager;
-        private readonly SignInManager<Models.Users> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public ExternalLoginsModel(
-            UserManager<Models.Users> userManager,
-            SignInManager<Models.Users> signInManager)
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

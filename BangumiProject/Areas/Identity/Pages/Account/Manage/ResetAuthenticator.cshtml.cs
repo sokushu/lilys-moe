@@ -7,18 +7,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using User = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        UserManager<Models.Users> _userManager;
-        private readonly SignInManager<Models.Users> _signInManager;
+        UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
-            UserManager<Models.Users> userManager,
-            SignInManager<Models.Users> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
             _userManager = userManager;

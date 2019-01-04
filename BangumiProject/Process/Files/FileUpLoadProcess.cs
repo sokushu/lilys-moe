@@ -1,4 +1,5 @@
-﻿using BangumiProject.Controllers;
+﻿using BangumiProject.Areas.Users.Models;
+using BangumiProject.Controllers;
 using BangumiProject.Models;
 using BangumiProject.Process.Files.aliyunOSS;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Images = BangumiProject.Areas.Files.Models.FileImages;
 
 namespace BangumiProject.Process.Files
 {

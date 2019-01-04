@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MoeUtilsBox.String;
+using BangumiProject.Areas.Bangumi.Models;
+using Memo = BangumiProject.Areas.Bangumi.Models.AnimeMemo;
 
 namespace BangumiProject.Views.Bangumi
 {

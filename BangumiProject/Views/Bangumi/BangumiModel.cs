@@ -1,4 +1,5 @@
-﻿using BangumiProject.Controllers;
+﻿using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Controllers;
 using BangumiProject.Models;
 using MoeUtilsBox.String;
 using System;

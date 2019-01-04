@@ -1,4 +1,5 @@
-﻿using BangumiProject.Controllers;
+﻿using BangumiProject.Areas.Users.Models;
+using BangumiProject.Controllers;
 using BangumiProject.Models;
 using Microsoft.AspNetCore.Identity;
 

@@ -130,6 +130,9 @@ namespace BangumiProject.Controllers
         public const string Route_Bangumi_Create = "Route_Bangumi_Create";
         public const string Route_Bangumi_Create_POST = "Route_Bangumi_Create_POST";
         public const string Route_Bangumi_Index = "Route_Bangumi_Index";
+        /// <summary>
+        /// 查看一部详细的动画
+        /// </summary>
         public const string Route_Bangumi_Details = "Route_Bangumi_Details";
         public const string Route_Bangumi_Edit = "Route_Bangumi_Edit";
         public const string Route_Bangumi_Edit_POST = "Route_Bangumi_Edit_POST";

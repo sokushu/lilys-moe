@@ -16,6 +16,11 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using BangumiProject.Process.Bangumi;
 using Microsoft.Extensions.Caching.Memory;
+using Users = BangumiProject.Areas.Users.Models.Users;
+using UserAnimeInfo = BangumiProject.Areas.Bangumi.Models.AnimeUserInfo;
+using Memo = BangumiProject.Areas.Bangumi.Models.AnimeMemo;
+using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Areas.Blogs.Models;
 
 namespace BangumiProject.Controllers
 {
@@ -206,7 +211,7 @@ namespace BangumiProject.Controllers
             var IsSignIn = false;                                       //用户是否登录
             var IsSub = false;                                          //用户是否订阅某动画
             ICollection<Memo> memo = new List<Memo>();                  //用户写下的MEMO
-            ICollection<Blog> blogs = new List<Blog>();                 //用户对该动画的长评短评
+            ICollection<Blogs> blogs = new List<Blogs>();                 //用户对该动画的长评短评
             ICollection<AnimeTag> animeTags = new List<AnimeTag>();     //动画的标签
             ICollection<AnimeSouce> animeSouces = new List<AnimeSouce>();//动画的播放源
             ICollection<AnimeComm> animeComms = new List<AnimeComm>();  //动画的评论
@@ -224,7 +229,7 @@ namespace BangumiProject.Controllers
             //读取动画评论
             animeComms = anime.AnimeComms;
             //读取动画的短评，长评
-            blogs = _memoryCache.Get<List<Blog>>($"Blogs{id}");
+            blogs = _memoryCache.Get<List<Blogs>>($"Blogs{id}");
             //读取动画的标签
             if (anime.Tags != null)
             {

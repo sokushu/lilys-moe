@@ -1,4 +1,5 @@
-﻿using BangumiProject.Controllers;
+﻿using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Controllers;
 using BangumiProject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;

@@ -21,6 +21,8 @@ using BangumiProject.Process;
 using BangumiProject.Process.Files.aliyunOSS;
 using Microsoft.Extensions.Caching.Memory;
 using MoeUtilsBox;
+using BangumiProject.Areas.Users.Models;
+using Images = BangumiProject.Areas.Files.Models.FileImages;
 
 namespace BangumiProject.Controllers
 {

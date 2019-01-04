@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using BangumiProject.Process.Bangumi;
+using BangumiProject.Areas.Users.Models;
+using BangumiProject.Areas.Bangumi.Models;
 
 namespace BangumiProject.Controllers
 {

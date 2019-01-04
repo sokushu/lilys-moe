@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MoeUtilsBox.String;
+using BangumiProject.Areas.Users.Models;
+using UserAnimeInfo = BangumiProject.Areas.Bangumi.Models.AnimeUserInfo;
 
 namespace BangumiProject.Views.Profile
 {

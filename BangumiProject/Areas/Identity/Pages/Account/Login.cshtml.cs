@@ -13,19 +13,19 @@ using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Caching.Memory;
-
+using User = BangumiProject.Areas.Users.Models.Users;
 namespace BangumiProject.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<Models.Users> _signInManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly UserManager<Models.Users> _userManager;
+        private readonly UserManager<User> _userManager;
         //加入内存缓存
         private readonly IMemoryCache _cache;
 
-        public LoginModel(SignInManager<Models.Users> signInManager, ILogger<LoginModel> logger, UserManager<Models.Users> userManager, IMemoryCache memoryCache)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, UserManager<User> userManager, IMemoryCache memoryCache)
         {
             _signInManager = signInManager;
             _logger = logger;

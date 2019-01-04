@@ -21,6 +21,7 @@ using System.Timers;
 using System.Threading;
 using MoeUtilsBox.String;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Users = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Controllers
 {
@@ -62,7 +63,8 @@ namespace BangumiProject.Controllers
         [Route("/Test")]
         public async Task<IActionResult> GetIndexAsync(string b)
         {
-            return Json("HelloWorld");
+            
+            return Json($"TEST:{_DB.GetType().GUID}, TEST2 :{_DB.GetType().GetHashCode()}");
         }
 
         public T GetDate<T>(Func<string, T> func)

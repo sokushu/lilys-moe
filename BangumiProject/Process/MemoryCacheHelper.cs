@@ -8,6 +8,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Timers;
+using BangumiProject.Areas.Users.Models;
+using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Areas.Blogs.Models;
 
 namespace BangumiProject.Process
 {
@@ -122,7 +125,7 @@ namespace BangumiProject.Process
                         }
                         break;
                     case CacheType.BlogOne:
-                        if (_memoryCache.TryGetValue(key.Key, out Blog blog))
+                        if (_memoryCache.TryGetValue(key.Key, out Blogs blog))
                         {
                             _bangumiProjectContext.Blogs.Update(blog);
                         }

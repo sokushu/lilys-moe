@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Areas.Blogs.Models;
+using BangumiProject.Areas.Files.Models;
+using BangumiProject.Areas.Users.Models;
 using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Users = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Models
 {
@@ -15,16 +20,16 @@ namespace BangumiProject.Models
     {
         public DbSet<Anime> Anime { get; set; }
         public DbSet<AnimeTag> AnimeTag { get; set; }
-        public DbSet<Images> Images { get; set; }
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<BlogTags> BlogTags { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<FileImages> Images { get; set; }
+        public DbSet<Blogs> Blogs { get; set; }
+        public DbSet<BlogsTags> BlogTags { get; set; }
+        public DbSet<BlogsComm> Comments { get; set; }
         public DbSet<AnimeSouce> AnimeSouces { get; set; }
         public DbSet<AnimeSouceComm> AnimeSouceComms { get; set; }
         public DbSet<AnimeComm> AnimeComms { get; set; }
-        public DbSet<Photos> Photos { get; set; }
-        public DbSet<Memo> Memos { get; set; }
-        public DbSet<UserAnimeInfo> UserAnimeInfos { get; set; }
+        public DbSet<FilePhoto> Photos { get; set; }
+        public DbSet<AnimeMemo> Memos { get; set; }
+        public DbSet<AnimeUserInfo> UserAnimeInfos { get; set; }
 
         /// <summary>
         /// 
@@ -72,15 +77,15 @@ namespace BangumiProject.Models
             builder.Entity<Anime>().Property(e => e.AnimeType).HasConversion(converter);
 
             // 外键约束
-            builder.Entity<Images>().HasOne(img => img.UpLoadUsers).WithMany(user => user.Images).HasConstraintName("Images_User_PK");
-            builder.Entity<Images>().HasOne(img => img.Photos).WithMany(photo => photo.Images).HasConstraintName("Image_Photo_PK");
-            builder.Entity<UserAnimeInfo>().HasOne(UAInfo => UAInfo.Users).WithMany(user => user.UserAnimeInfos).HasConstraintName("UserAnimeInfo_User_PK");
-            builder.Entity<UserAnimeInfo>().HasOne(UAInfo => UAInfo.SubAnime).WithMany(anime => anime.UserAnimeInfos).HasConstraintName("UserAnimeInfo_Anime_PK");
-            builder.Entity<Memo>().HasOne(memo => memo.UserAnimeInfo).WithMany(UAInfo => UAInfo.Memos).HasConstraintName("Memo_UserAnimeInfo_PK");
-            builder.Entity<Blog>().HasOne(blog => blog.UpLoadUser).WithMany(user => user.Blogs).HasConstraintName("Blog_User_PK");
-            builder.Entity<BlogTags>().HasOne(blogtag => blogtag.Blogs).WithMany(blog => blog.TagIDs).HasConstraintName("BlogTags_Blog_PK");
-            builder.Entity<Comment>().HasOne(comm => comm.Users).WithMany(user => user.Comments).HasConstraintName("Comment_User_PK");
-            builder.Entity<Comment>().HasOne(comm => comm.Blogs).WithMany(blog => blog.Comments).HasConstraintName("Comment_Blogs_PK");
+            builder.Entity<FileImages>().HasOne(img => img.UpLoadUsers).WithMany(user => user.Images).HasConstraintName("Images_User_PK");
+            builder.Entity<FileImages>().HasOne(img => img.Photos).WithMany(photo => photo.Images).HasConstraintName("Image_Photo_PK");
+            builder.Entity<AnimeUserInfo>().HasOne(UAInfo => UAInfo.Users).WithMany(user => user.UserAnimeInfos).HasConstraintName("UserAnimeInfo_User_PK");
+            builder.Entity<AnimeUserInfo>().HasOne(UAInfo => UAInfo.SubAnime).WithMany(anime => anime.UserAnimeInfos).HasConstraintName("UserAnimeInfo_Anime_PK");
+            builder.Entity<AnimeMemo>().HasOne(memo => memo.UserAnimeInfo).WithMany(UAInfo => UAInfo.Memos).HasConstraintName("Memo_UserAnimeInfo_PK");
+            builder.Entity<Blogs>().HasOne(blog => blog.UpLoadUser).WithMany(user => user.Blogs).HasConstraintName("Blog_User_PK");
+            builder.Entity<BlogsTags>().HasOne(blogtag => blogtag.Blogs).WithMany(blog => blog.TagIDs).HasConstraintName("BlogTags_Blog_PK");
+            builder.Entity<BlogsComm>().HasOne(comm => comm.Users).WithMany(user => user.Comments).HasConstraintName("Comment_User_PK");
+            builder.Entity<BlogsComm>().HasOne(comm => comm.Blogs).WithMany(blog => blog.Comments).HasConstraintName("Comment_Blogs_PK");
             builder.Entity<AnimeSouce>().HasOne(AniSou => AniSou.Anime).WithMany(anime => anime.Souce).HasConstraintName("AnimeSouce_Anime_PK");
             builder.Entity<AnimeTag>().HasOne(animetag => animetag.Anime).WithMany(anime => anime.Tags).HasConstraintName("AnimeTag_Anime_PK");
             builder.Entity<AnimeSouceComm>().HasOne(aniSoComm => aniSoComm.AnimeSouce).WithMany(aniSou => aniSou.AnimeSouceComms).HasConstraintName("AnimeSouceComm_AnimeSouce_PK");
@@ -90,13 +95,13 @@ namespace BangumiProject.Models
 
             //默认值
             builder.Entity<Users>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
-            builder.Entity<UserAnimeInfo>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
-            builder.Entity<Memo>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
-            builder.Entity<Photos>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
-            builder.Entity<Images>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
-            builder.Entity<Blog>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
-            builder.Entity<BlogTags>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
-            builder.Entity<Comment>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
+            builder.Entity<AnimeUserInfo>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
+            builder.Entity<AnimeMemo>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
+            builder.Entity<FilePhoto>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
+            builder.Entity<FileImages>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
+            builder.Entity<Blogs>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
+            builder.Entity<BlogsTags>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
+            builder.Entity<BlogsComm>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
             builder.Entity<Anime>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
             builder.Entity<AnimeSouce>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
             builder.Entity<AnimeTag>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
