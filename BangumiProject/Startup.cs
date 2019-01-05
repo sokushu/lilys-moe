@@ -20,6 +20,7 @@ using MoeUtilsBox;
 using MoeUtilsBox.String;
 using BangumiProject.Component.Interface;
 using BangumiProject.Areas.Users.Models;
+using BangumiProject.Services;
 
 namespace BangumiProject
 {
@@ -77,14 +78,13 @@ namespace BangumiProject
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
 
-            //加载使用数据库
-            services.AddDbContext<BangumiProjectContext>(option =>
-                option.UseSqlite(Final.DBStr)
-            );
             //加载爬虫数据库
             services.AddDbContext<MoeMushiContext>(option =>
                 option.UseSqlite(Final.DBStr_MoeMushi)
             );
+            //加载数据库
+            services.AddDbContextPool<BangumiProjectContext>(option =>
+                option.UseSqlite(Final.DBStr), poolSize: 128);
 
             //使用微软提供的内存缓存
             services.AddMemoryCache(cache =>
@@ -149,6 +149,8 @@ namespace BangumiProject
             //==============================================================
             //服务注册
             //==============================================================
+            services.AddScoped<ICommDB, CommDB>();
+
             services.AddSingleton<IConfig, BangumiProject.Areas.Bangumi.Config>();
         }
 

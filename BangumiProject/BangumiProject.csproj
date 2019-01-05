@@ -54,8 +54,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Bangumi\Services\" />
-    <Folder Include="Areas\Bangumi\Views\" />
-    <Folder Include="Areas\Bangumi\Process\" />
     <Folder Include="Areas\Blogs\Controllers\" />
     <Folder Include="Areas\Blogs\Process\" />
     <Folder Include="Areas\Blogs\Services\" />

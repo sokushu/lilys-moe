@@ -22,6 +22,7 @@ using System.Threading;
 using MoeUtilsBox.String;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Users = BangumiProject.Areas.Users.Models.Users;
+using BangumiProject.Services;
 
 namespace BangumiProject.Controllers
 {
@@ -37,18 +38,20 @@ namespace BangumiProject.Controllers
         //加入内存缓存
         private readonly IMemoryCache _cache;
         private readonly MemoryCacheHelper memoryCacheHelper = new MemoryCacheHelper();
+        private readonly ICommDB _commdb;
         /// <summary>
         /// 进行初始化
         /// </summary>
         /// <param name="_userManager"></param>
         /// <param name="DB"></param>
         /// <param name="_roleManager"></param>
-        public TestController(UserManager<Users> _userManager, BangumiProjectContext _DB, RoleManager<IdentityRole> _roleManager, IMemoryCache memoryCache)
+        public TestController(ICommDB _commdb, UserManager<Users> _userManager, BangumiProjectContext _DB, RoleManager<IdentityRole> _roleManager, IMemoryCache memoryCache)
         {
             this._userManager = _userManager;
             this._DB = _DB;
             this._roleManager = _roleManager;
             _cache = memoryCache;
+            this._commdb = _commdb;
         }
 
         [HttpPost]
@@ -63,8 +66,9 @@ namespace BangumiProject.Controllers
         [Route("/Test")]
         public async Task<IActionResult> GetIndexAsync(string b)
         {
-            
-            return Json($"TEST:{_DB.GetType().GUID}, TEST2 :{_DB.GetType().GetHashCode()}");
+            _commdb.HasAnimeID(3);
+
+            return Json(_commdb.HasAnimeID(3));
         }
 
         public T GetDate<T>(Func<string, T> func)
@@ -94,4 +98,14 @@ namespace BangumiProject.Controllers
             return Json("OK");
         }
     }
+
+    public static class TT
+    {
+        public static void TrT(this AnimeSetting animeSetting)
+        {
+            animeSetting.IsStop = true;
+            animeSetting.StopNum = 400;
+        }
+    }
+
 }

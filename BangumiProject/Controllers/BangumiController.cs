@@ -284,8 +284,7 @@ namespace BangumiProject.Controllers
                 Memos = memo,
                 IsSub = IsSub,
                 IsSignIn = IsSignIn,
-                IsShowEdit = IsShowEdit,
-                Page = Page
+                IsShowEdit = IsShowEdit
             });
         }
 

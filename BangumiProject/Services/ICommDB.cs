@@ -13,16 +13,18 @@ namespace BangumiProject.Services
         bool AutoCache { set; get; }
 
         Task<List<T>> GetDateToListAsync<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class;
-        void SetCache<T>(char[] key, T Value);
-        bool GetDate<T>(char[] key, out T t);
-        void DBUpdate<T>() where T : class;
-        void Remove(char[] key);
+        void SetCache<T>(KEY kEY, T Value);
+        bool GetDate<T>(KEY kEY, out T t);
+        void DBUpdate<T>(IEnumerable<char[]> Keys) where T : class;
+        void Remove(KEY kEY);
         Task SaveChangesAsync();
         Task UpdateAsync<T>(IEnumerable<T> t) where T : class;
         Task UpdateAsync<T>(T t) where T : class;
         Task<T[]> GetDateToArrayAsync<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class;
         Task<T> GetFirstAsync<T>(Expression<Func<T, bool>> func) where T : class;
         Task<T> GetDateOneAsync<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class;
-
+        bool HasAnimeID(int id);
+        void AddAnimeID(int id);
+        void RemoveAnimeID(int id);
     }
 }

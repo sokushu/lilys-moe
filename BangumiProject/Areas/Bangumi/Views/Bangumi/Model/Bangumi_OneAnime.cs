@@ -1,18 +1,16 @@
-﻿using BangumiProject.Controllers;
-using BangumiProject.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using BangumiProject.Areas.Bangumi.Models;
+using MoeUtilsBox.String;
+using MoeUtilsBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MoeUtilsBox.String;
-using BangumiProject.Areas.Bangumi.Models;
-using Memo = BangumiProject.Areas.Bangumi.Models.AnimeMemo;
+using BangumiProject.Controllers;
 using BangumiProject.Areas.Bangumi.Process;
 
-namespace BangumiProject.Views.Bangumi
+namespace BangumiProject.Areas.Bangumi.Views.Bangumi.Model
 {
-    public class Bangumi_OneAnimeModel
+    public class Bangumi_OneAnime
     {
         public Anime Anime { get; set; }
 
@@ -23,7 +21,7 @@ namespace BangumiProject.Views.Bangumi
         public bool IsSub { get; set; }
 
         public bool IsSignIn { get; set; }
-        public ICollection<Memo> Memos { get; set; }
+        public ICollection<AnimeMemo> Memos { get; set; }
 
         public bool IsShowEdit { get; set; }
         /// <summary>

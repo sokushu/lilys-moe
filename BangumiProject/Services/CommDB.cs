@@ -11,12 +11,14 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Services
 {
-    public abstract class CommDB : ICommDB
+    public class CommDB : ICommDB
     {
         public bool AutoCache { set; get; }
         private readonly IMemoryCache _memoryCache;
         private readonly BangumiProjectContext _db;
-        private readonly HashSet<char[]> hashSet = new HashSet<char[]>();
+        private readonly static HashSet<KEY> hashSet = new HashSet<KEY>();
+        private readonly static HashSet<int> AnimeIDs = new HashSet<int>();
+        private static bool AnimeIDADD = false;
         /// <summary>
         /// 
         /// </summary>
@@ -32,15 +34,23 @@ namespace BangumiProject.Services
         {
             this._db = _db;
             this._memoryCache = _memoryCache;
+            if (AnimeIDADD == false)
+            {
+                AnimeIDADD = true;
+                _db.Anime.Select(a => a.AnimeID).ToList().ForEach(id => 
+                {
+                    AnimeIDs.Add(id);
+                });
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public virtual void DBUpdate<T>() where T : class
+        public virtual void DBUpdate<T>(IEnumerable<char[]> Keys) where T : class
         {
-            foreach (var key in hashSet)
+            foreach (var key in Keys)
             {
                 if (_memoryCache.TryGetValue(key, out T t))
                 {
@@ -56,10 +66,10 @@ namespace BangumiProject.Services
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="Value"></param>
-        public virtual void SetCache<T>(char[] key, T Value)
+        public virtual void SetCache<T>(KEY kEY, T Value)
         {
-            hashSet.Add(key);
-            _memoryCache.Set(key, Value);
+            hashSet.Add(kEY);
+            _memoryCache.Set(kEY.Key, Value);
         }
 
         /// <summary>
@@ -146,18 +156,68 @@ namespace BangumiProject.Services
         /// <param name="key"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        public virtual bool GetDate<T>(char[] key, out T t)
+        public virtual bool GetDate<T>(KEY kEY, out T t)
         {
-            return _memoryCache.TryGetValue(key, out t);
+            bool Return = false;
+            if (!(Return = _memoryCache.TryGetValue(kEY.Key, out t)))
+            {
+                //已经赋值返回True（赋值Null）
+                return hashSet.Contains(kEY);
+            }
+            return Return;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="key"></param>
-        public void Remove(char[] key)
+        public void Remove(KEY key)
         {
-            _memoryCache.Remove(key);
+            _memoryCache.Remove(key.Key);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        public void AddAnimeID(int id)
+        {
+            AnimeIDs.Add(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool HasAnimeID(int id)
+        {
+            return AnimeIDs.Contains(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveAnimeID(int id)
+        {
+            AnimeIDs.Remove(id);
+        }
+    }
+    public struct KEY
+    {
+        public char[] Key { get; set; }
+        public CacheType Type { get; set; }
+        /// <summary>
+        /// 被调用的次数
+        /// </summary>
+        public int I { get; set; }
+    }
+    public enum CacheType
+    {
+        AnimeOne,
+        BlogOne,
+        Other,
+        Test,
     }
 }

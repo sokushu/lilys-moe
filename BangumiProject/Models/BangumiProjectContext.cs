@@ -40,7 +40,7 @@ namespace BangumiProject.Models
         {
         }
 
-        public BangumiProjectContext() : base() { }
+        //public BangumiProjectContext() : base() { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -75,6 +75,12 @@ namespace BangumiProject.Models
                 v => v.ToString(),
                 v => (AnimeType)Enum.Parse(typeof(AnimeType), v));
             builder.Entity<Anime>().Property(e => e.AnimeType).HasConversion(converter);
+
+            //// 停播理由的关系映射
+            //var StopCause = new ValueConverter<StopCause, string>(
+            //    v => v.ToString(),
+            //    v => (StopCause)Enum.Parse(typeof(StopCause), v));
+            //builder.Entity<AnimeStop>().Property(e => e.StopCause).HasConversion(converter);
 
             // 外键约束
             builder.Entity<FileImages>().HasOne(img => img.UpLoadUsers).WithMany(user => user.Images).HasConstraintName("Images_User_PK");
