@@ -12,7 +12,6 @@ using User = BangumiProject.Areas.Users.Models.Users;
 using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
 using MoeUtilsBox;
 using BangumiProject.Areas.Bangumi.Process;
-using BangumiProject.Views.Bangumi;
 using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
 using BangumiProject.Areas.Bangumi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +39,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
     /// 是有效的！！！
     /// 
     /// </summary>
+    [Area("Bangumi")]
     public class BangumiController : Controller
     {
         private readonly ICommDB _DBServices;
@@ -111,7 +111,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             PageHelper pageHelper = new PageHelper(20);
             
             return View(
-                viewName:"",
+                viewName:"Bangumi",
                 model:new Views.Bangumi.Model.Bangumi
                 {
                     AllPage = pageHelper.GetAllPage(),      //处理后动画的全部页数
@@ -219,7 +219,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
 
             return View(
                 viewName: "Bangumi_OneAnime",
-                model:new Bangumi_OneAnimeModel
+                model:new Bangumi_OneAnime
                 {
                     Anime = Anime,
                     UserAnimeNumber = userAnimeNumber,

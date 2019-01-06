@@ -1,0 +1,282 @@
+﻿@using BangumiProject.Controllers
+@model Index
+@{
+    ViewData["Title"] = "Home page";
+    var Home = Final.Route_Profile_UID;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h3 class="header">最近更新</h3>
+    @foreach (var item in Model.Animes)
+    {
+
+        <div class="col s6 m3">
+            <div class="card horizontal hoverable">
+                <div class="card-image">
+                    <img src="@Model.AnimePic(item)">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>@Model.AnimeInfo(item)</p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+@{ 
+    string w1 = "";
+    string w2 = "";
+    string w3 = "";
+    string w4 = "";
+    string w5 = "";
+    string w6 = "";
+    string w7 = "";
+    switch (DateTime.Now.DayOfWeek)
+    {
+        case DayOfWeek.Friday:
+            w5 = "active";
+            break;
+        case DayOfWeek.Monday:
+            w1 = "active";
+            break;
+        case DayOfWeek.Saturday:
+            w6 = "active";
+            break;
+        case DayOfWeek.Sunday:
+            w7 = "active";
+            break;
+        case DayOfWeek.Thursday:
+            w4 = "active";
+            break;
+        case DayOfWeek.Tuesday:
+            w2 = "active";
+            break;
+        case DayOfWeek.Wednesday:
+            w3 = "active";
+            break;
+        default:
+            break;
+    }
+}
+
+<div class="row">
+    <div class="col s12">
+        <ul class="tabs" id="Test">
+            <li class="tab col s1"><a id="week1" class="@w1" href="#weektime1">星期一</a></li>
+            <li class="tab col s2"><a id="week2" class="@w2" href="#weektime2">星期二</a></li>
+            <li class="tab col s2"><a id="week3" class="@w3" href="#weektime3">星期三</a></li>
+            <li class="tab col s2"><a id="week4" class="@w4" href="#weektime4">星期四</a></li>
+            <li class="tab col s2"><a id="week5" class="@w5" href="#weektime5">星期五</a></li>
+            <li class="tab col s2"><a id="week6" class="@w6" href="#weektime6">星期六</a></li>
+            <li class="tab col s1"><a id="week0" class="@w7" href="#weektime0">星期天</a></li>
+        </ul>
+    </div>
+    <div id="weektime1" class="col s12">
+        @foreach (var item in Model.WeekAnimes[1])
+        {
+            <div class="col s6 m3">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="@Model.AnimePic(item)">
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>@Model.AnimeInfo(item)</p>
+                        </div>
+                        <div class="card-action">
+                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="weektime2" class="col s12">
+        @foreach (var item in Model.WeekAnimes[2])
+        {
+        <div class="col s6 m3">
+            <div class="card horizontal hoverable">
+                <div class="card-image">
+                    <img src="@Model.AnimePic(item)">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>@Model.AnimeInfo(item)</p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <div id="weektime3" class="col s12">
+        @foreach (var item in Model.WeekAnimes[3])
+        {
+        <div class="col s6 m3">
+            <div class="card horizontal hoverable">
+                <div class="card-image">
+                    <img src="@Model.AnimePic(item)">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>@Model.AnimeInfo(item)</p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <div id="weektime4" class="col s12">
+        @foreach (var item in Model.WeekAnimes[4])
+        {
+        <div class="col s6 m3">
+            <div class="card horizontal hoverable">
+                <div class="card-image">
+                    <img src="@Model.AnimePic(item)">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>@Model.AnimeInfo(item)</p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <div id="weektime5" class="col s12">
+        @foreach (var item in Model.WeekAnimes[5])
+        {
+        <div class="col s6 m3">
+            <div class="card horizontal hoverable">
+                <div class="card-image">
+                    <img src="@Model.AnimePic(item)">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>@Model.AnimeInfo(item)</p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <div id="weektime6" class="col s12">
+        @foreach (var item in Model.WeekAnimes[6])
+        {
+        <div class="col s6 m3">
+            <div class="card horizontal hoverable">
+                <div class="card-image">
+                    <img src="@Model.AnimePic(item)">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>@Model.AnimeInfo(item)</p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <div id="weektime0" class="col s12">
+        @foreach (var item in Model.WeekAnimes[0])
+        {
+        <div class="col s6 m3">
+            <div class="card horizontal hoverable">
+                <div class="card-image">
+                    <img src="@Model.AnimePic(item)">
+                </div>
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p>@Model.AnimeInfo(item)</p>
+                    </div>
+                    <div class="card-action">
+                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<script>
+    var el = document.querySelectorAll(".tabs");
+    var instance = M.Tabs.init(el);
+</script>
+<table border="1" style="width:100%;table-layout:fixed;">
+
+    <tr>
+        <th colspan="2" style="background-color:hotpink;">博文</th>
+    </tr>
+    <tr>
+        <td>
+            新功能稍后赶来，不要太期待
+        </td>
+        <td>
+            新功能稍后赶来，不要太期待
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color:hotpink;">新闻</th>
+    </tr>
+    <tr>
+        <td>
+            新功能稍后赶来，不要太期待
+        </td>
+        <td>
+            新功能稍后赶来，不要太期待
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color:hotpink;">更新日记</th>
+    </tr>
+    <tr>
+        <th colspan="2">
+            @foreach (var item in Model.Log)
+            {
+                <h2>@item[0]</h2>
+                for (int i = 1; i < item.Count; i++)
+                {
+                    <p>@item[i]</p>
+                }
+            }
+        </th>
+    </tr>
+    <tr>
+        <th colspan="2" style="background-color:hotpink;">用户列表</th>
+    </tr>
+    <tr>
+        <td>
+            这是一个完成基本功能的程序，还有很多不完善的地方。这个是用来测试用的。
+        </td>
+        <td>
+            总用户数：@Model.AllUsers.Count <br />
+            @foreach (var item in Model.AllUsers)
+            {
+                <a asp-route="@Home" asp-route-uid="@item.Id">@item.UserName</a><br />
+            }
+        </td>
+    </tr>
+    @ViewData["test"]
+</table>

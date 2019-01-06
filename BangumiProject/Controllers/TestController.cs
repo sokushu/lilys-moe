@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
-using BangumiProject.Views.Home;
 using MoeUtilsBox.List;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -99,13 +98,5 @@ namespace BangumiProject.Controllers
         }
     }
 
-    public static class TT
-    {
-        public static void TrT(this AnimeSetting animeSetting)
-        {
-            animeSetting.IsStop = true;
-            animeSetting.StopNum = 400;
-        }
-    }
 
 }

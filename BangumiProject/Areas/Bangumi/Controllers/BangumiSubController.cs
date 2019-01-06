@@ -14,6 +14,7 @@ using BangumiProject.Areas.Bangumi.Models;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
+    [Area("Bangumi")]
     [Route("/BangumiSub")]
     [ApiController]
     public class BangumiSubController : ControllerBase

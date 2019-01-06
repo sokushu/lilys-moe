@@ -34,6 +34,7 @@ namespace BangumiProject.Services
         {
             this._db = _db;
             this._memoryCache = _memoryCache;
+            //开始加载所有的现存的动画ID
             if (AnimeIDADD == false)
             {
                 AnimeIDADD = true;
@@ -42,6 +43,18 @@ namespace BangumiProject.Services
                     AnimeIDs.Add(id);
                 });
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public virtual async Task AddAsync<T>(T t)where T : class
+        {
+            await _db.AddAsync(t);
+            await _db.SaveChangesAsync();
         }
 
         /// <summary>
@@ -202,6 +215,11 @@ namespace BangumiProject.Services
         public void RemoveAnimeID(int id)
         {
             AnimeIDs.Remove(id);
+        }
+
+        public async Task AddAsyncNoSave<T>(T t) where T : class
+        {
+            await _db.AddAsync(t);
         }
     }
     public struct KEY

@@ -54,27 +54,27 @@
 
   <ItemGroup>
     <Folder Include="Areas\Bangumi\Services\" />
-    <Folder Include="Areas\Blogs\Controllers\" />
     <Folder Include="Areas\Blogs\Process\" />
     <Folder Include="Areas\Blogs\Services\" />
     <Folder Include="Areas\Blogs\Views\" />
-    <Folder Include="Areas\Files\Controllers\" />
-    <Folder Include="Areas\Files\Process\" />
     <Folder Include="Areas\Files\Services\" />
-    <Folder Include="Areas\Files\Views\" />
+    <Folder Include="Areas\HomeBar\Models\" />
+    <Folder Include="Areas\HomeBar\Process\" />
+    <Folder Include="Areas\HomeBar\Services\" />
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Areas\Search\Controllers\" />
+    <Folder Include="Areas\Profile\Process\" />
+    <Folder Include="Areas\Profile\Services\" />
     <Folder Include="Areas\Search\Models\" />
-    <Folder Include="Areas\Search\Process\" />
     <Folder Include="Areas\Search\Services\" />
     <Folder Include="Areas\Search\Views\" />
     <Folder Include="Areas\Users\Controllers\" />
     <Folder Include="Areas\Users\Process\" />
     <Folder Include="Areas\Users\Services\" />
     <Folder Include="Areas\Users\Views\" />
+    <Folder Include="Areas\Video\Models\" />
+    <Folder Include="Areas\Video\Process\" />
+    <Folder Include="Areas\Video\Services\" />
     <Folder Include="Process\MoeMushi\Process\" />
-    <Folder Include="Views\Search\" />
-    <Folder Include="Context\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -93,7 +93,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Home\BagnumiList.cshtml">
+    <Content Update="Areas\Bangumi\Views\Bangumi\Bangumi.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Bangumi\Views\Bangumi\Bangumi_OneAnime.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Bangumi\Views\Bangumi\Memo.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\HomeBar\Views\Home\BagnumiList.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_CookieConsentPartial.cshtml">
@@ -112,6 +121,19 @@
 
   <ItemGroup>
     <PackageReference Update="Microsoft.NETCore.App" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Bangumi\Views\Bangumi\AddBangumi.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Bangumi\Views\Bangumi\AddBangumi.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Bangumi\Views\Bangumi\BangumiEdit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Bangumi\Views\Bangumi\BangumiEdit.cshtml" />
   </ItemGroup>
 
 </Project>

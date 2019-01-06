@@ -138,6 +138,16 @@ namespace BangumiProject.Controllers
         public const string Route_Bangumi_Edit_POST = "Route_Bangumi_Edit_POST";
         public const string Route_Bangumi_Delete = "Route_Bangumi_Delete";
         public const string Route_Bangumi_Delete_POST = "Route_Bangumi_Delete_POST";
+        public const string Route_Video_Index = "Route_Video_Index";
+        public const string Route_Video_Details = "Route_Video_Details";
+        public const string Route_Video_Create = "Route_Video_Create";
+        public const string Route_Video_Create_POST = "Route_Video_Create_POST";
+        public const string Route_Video_Edit = "Route_Video_Edit";
+        public const string Route_Video_Edit_POST = "Route_Video_Edit_POST";
+        public const string Route_Video_Delete = "Route_Video_Delete";
+        public const string Route_Video_Delete_POST = "Route_Video_Delete_POST";
+        public const string Route_Files_Index = "Route_Files_Index";
+        public const string Route_Files_Details = "Route_Files_Details";
         /*
          * ====================================================
          * 以下是阿里云OSS的文件使用
