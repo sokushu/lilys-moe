@@ -71,8 +71,8 @@ namespace BangumiProject.Controllers
 
 #if DEBUG
         public const string DBStr = "Data Source=BangumiProject.db";
-        public const string StaticFiles_css = "/lib/materialize/css/materialize.min.css";
-        public const string StaticFiles_JS = "/lib/materialize/js/materialize.min.js";
+        public const string StaticFiles_css = "/lib/mdui-v0.4.2/css/mdui.css";
+        public const string StaticFiles_JS = "/lib/mdui-v0.4.2/js/mdui.js";
 #else
         public const string DBStr = "Data Source="+ DateBasePath + "BangumiProject.db";
         public const string StaticFiles_css = "https://files.lilys.moe/public/lib/materialize/css/materialize.min.css";

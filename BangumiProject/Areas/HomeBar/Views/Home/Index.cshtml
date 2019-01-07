@@ -6,32 +6,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="mdui-row ">
     <h3 class="header">最近更新</h3>
     @foreach (var item in Model.Animes)
     {
-
-        <div class="col s6 m3">
-            <div class="card horizontal hoverable">
-                <div class="card-image">
-                    <img src="@Model.AnimePic(item)">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>@Model.AnimeInfo(item)</p>
-                    </div>
-                    <div class="card-action">
-                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+        <div class="mdui-col-md-3 mdui-col-sm-6 mdui-col-xs-12 ">
+            <div class="mdui-card mdui-hoverable">
+                <div class="mdui-card-media">
+                    <img class="mdui-img-fluid" src="@Model.AnimePic(item)" />
+                    <div class="mdui-card-media-covered" style="background:rgba(0, 0, 0, 0.57);">
+                        <div class="mdui-card-primary">
+                            <div class="mdui-card-primary-title">@item.AnimeName</div>
+                            <div class="mdui-card-primary-subtitle">@Model.AnimeInfo(item)</div>
+                        </div>
+                        <div class="mdui-card-actions">
+                            <a class="mdui-btn mdui-ripple mdui-ripple-white" asp-route="GetBangumi" asp-route-id="@item.AnimeID">
+                                @item.AnimeName
+                            </a>
+                            <a class="mdui-btn mdui-ripple mdui-ripple-white" asp-route="GetBangumi" asp-route-id="@item.AnimeID">
+                                @item.AnimeName
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     }
 
 </div>
-
-@{ 
+@{
     string w1 = "";
     string w2 = "";
     string w3 = "";
@@ -102,121 +105,121 @@
     <div id="weektime2" class="col s12">
         @foreach (var item in Model.WeekAnimes[2])
         {
-        <div class="col s6 m3">
-            <div class="card horizontal hoverable">
-                <div class="card-image">
-                    <img src="@Model.AnimePic(item)">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>@Model.AnimeInfo(item)</p>
+            <div class="col s6 m3">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="@Model.AnimePic(item)">
                     </div>
-                    <div class="card-action">
-                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>@Model.AnimeInfo(item)</p>
+                        </div>
+                        <div class="card-action">
+                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
     <div id="weektime3" class="col s12">
         @foreach (var item in Model.WeekAnimes[3])
         {
-        <div class="col s6 m3">
-            <div class="card horizontal hoverable">
-                <div class="card-image">
-                    <img src="@Model.AnimePic(item)">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>@Model.AnimeInfo(item)</p>
+            <div class="col s6 m3">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="@Model.AnimePic(item)">
                     </div>
-                    <div class="card-action">
-                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>@Model.AnimeInfo(item)</p>
+                        </div>
+                        <div class="card-action">
+                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
     <div id="weektime4" class="col s12">
         @foreach (var item in Model.WeekAnimes[4])
         {
-        <div class="col s6 m3">
-            <div class="card horizontal hoverable">
-                <div class="card-image">
-                    <img src="@Model.AnimePic(item)">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>@Model.AnimeInfo(item)</p>
+            <div class="col s6 m3">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="@Model.AnimePic(item)">
                     </div>
-                    <div class="card-action">
-                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>@Model.AnimeInfo(item)</p>
+                        </div>
+                        <div class="card-action">
+                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
     <div id="weektime5" class="col s12">
         @foreach (var item in Model.WeekAnimes[5])
         {
-        <div class="col s6 m3">
-            <div class="card horizontal hoverable">
-                <div class="card-image">
-                    <img src="@Model.AnimePic(item)">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>@Model.AnimeInfo(item)</p>
+            <div class="col s6 m3">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="@Model.AnimePic(item)">
                     </div>
-                    <div class="card-action">
-                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>@Model.AnimeInfo(item)</p>
+                        </div>
+                        <div class="card-action">
+                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
     <div id="weektime6" class="col s12">
         @foreach (var item in Model.WeekAnimes[6])
         {
-        <div class="col s6 m3">
-            <div class="card horizontal hoverable">
-                <div class="card-image">
-                    <img src="@Model.AnimePic(item)">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>@Model.AnimeInfo(item)</p>
+            <div class="col s6 m3">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="@Model.AnimePic(item)">
                     </div>
-                    <div class="card-action">
-                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>@Model.AnimeInfo(item)</p>
+                        </div>
+                        <div class="card-action">
+                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
     <div id="weektime0" class="col s12">
         @foreach (var item in Model.WeekAnimes[0])
         {
-        <div class="col s6 m3">
-            <div class="card horizontal hoverable">
-                <div class="card-image">
-                    <img src="@Model.AnimePic(item)">
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>@Model.AnimeInfo(item)</p>
+            <div class="col s6 m3">
+                <div class="card horizontal hoverable">
+                    <div class="card-image">
+                        <img src="@Model.AnimePic(item)">
                     </div>
-                    <div class="card-action">
-                        <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>@Model.AnimeInfo(item)</p>
+                        </div>
+                        <div class="card-action">
+                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
 </div>

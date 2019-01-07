@@ -83,6 +83,24 @@
     <None Include="wwwroot\lib\materialize\js\materialize.min.js" />
     <None Include="wwwroot\lib\materialize\LICENSE" />
     <None Include="wwwroot\lib\materialize\README.md" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\css\mdui.min.css.map" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Black.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-BlackItalic.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Bold.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-BoldItalic.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Light.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-LightItalic.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Medium.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-MediumItalic.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Regular.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-RegularItalic.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Thin.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-ThinItalic.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\icons\material-icons\MaterialIcons-Regular.ijmap" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\icons\material-icons\MaterialIcons-Regular.woff2" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.js" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.min.js" />
+    <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.min.js.map" />
   </ItemGroup>
 
   <ItemGroup>

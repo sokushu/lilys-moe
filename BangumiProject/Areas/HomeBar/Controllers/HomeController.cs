@@ -99,14 +99,21 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                         return StatusCode(Final.StatusCode403);
                 }
             }
-            
-            return View("Index", new Index
+
+            return PartialView("Index", new Index
             {
                 Animes = animes,
                 WeekAnimes = weeks,
                 AllUsers = AllUsers,
                 Log = log
             });
+            //return View("Index", new Index
+            //{
+            //    Animes = animes,
+            //    WeekAnimes = weeks,
+            //    AllUsers = AllUsers,
+            //    Log = log
+            //});
         }
 
         /// <summary>

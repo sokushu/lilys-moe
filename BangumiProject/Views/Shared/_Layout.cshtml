@@ -20,6 +20,31 @@
     <script src="@Final.StaticFiles_JS"></script>
 </head>
 <body>
+    <div class="mdui-toolbar mdui-color-pink-100 mdui-shadow-10 mdui-appbar-fixed">
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+        <span class="mdui-typo-title">Title</span>
+        <div class="mdui-toolbar-spacer"></div>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'用户'}"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" /></a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'搜索'}"><i class="mdui-icon material-icons">search</i></a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
+        <ul class="mdui-menu" id="menu-more">
+            <li class="mdui-menu-item">
+                <a href="javascript:;" class="mdui-ripple">Refresh</a>
+            </li>
+            <li class="mdui-menu-item" disabled>
+                <a href="javascript:;">Help & feedback</a>
+            </li>
+            <li class="mdui-menu-item">
+                <a href="javascript:;" class="mdui-ripple">Settings</a>
+            </li>
+            <li class="mdui-divider"></li>
+            <li class="mdui-menu-item">
+                <a href="javascript:;" class="mdui-ripple">Sign out</a>
+            </li>
+        </ul>
+    </div>
+
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper">
@@ -51,7 +76,7 @@
             });
         });
     </script>
-    <div class="container">
+    <div class="mdui-container">
         @RenderBody()
     </div>
 

@@ -251,6 +251,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             try
             {
                 var k = collection[""];
+                //上传的文件
                 var files = collection.Files;
                 
                 // TODO: Add insert logic here
