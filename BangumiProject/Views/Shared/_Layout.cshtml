@@ -1,4 +1,11 @@
 ﻿@using BangumiProject.Controllers
+@using Microsoft.AspNetCore.Identity
+@using BangumiProject.Areas.Users.Models
+@inject SignInManager<Users> SignInManager
+@inject UserManager<Users> UserManager
+@{ 
+    bool IsSignED = SignInManager.IsSignedIn(User);
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,12 +26,38 @@
     <link rel="stylesheet" href="@Final.StaticFiles_css" />
     <script src="@Final.StaticFiles_JS"></script>
 </head>
-<body>
-    <div class="mdui-toolbar mdui-color-pink-100 mdui-shadow-10 mdui-appbar-fixed">
+<body class="padding-top">
+    <div class="mdui-toolbar mdui-color-pink-100 mdui-shadow-10">
         <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
-        <span class="mdui-typo-title">Title</span>
+        <span class="mdui-typo-title">Lilys</span>
         <div class="mdui-toolbar-spacer"></div>
-        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'用户'}"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" /></a>
+        <a class="mdui-btn" asp-route="Index">主页</a>
+        <a class="mdui-btn" asp-route="About">关于</a>
+        <a class="mdui-btn" asp-route="GetAddBangumi">添加动画</a>
+        <a class="mdui-btn" asp-route="Bangumi">动画索引</a>
+        <a class="mdui-btn" asp-route="FileList">文件上传</a>
+        @if (IsSignED)
+        {
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'用户'}">
+                <img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" />
+            </a>
+        }
+        else
+        {
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'用户'}" mdui-dialog="{target:'#SignIn'}">
+                <img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" />
+            </a>
+            <div id="SignIn" class="mdui-dialog">
+                <div class="mdui-dialog-title">登录</div>
+                <form action="/Login" method="post">
+                    <input type="email" name="Email" id="Email" />
+                    <input type="password" name="Password" id="Password" />
+
+                    <button class="mdui-btn mdui-ripple mdui-color-pink-100" type="submit">登录</button>
+                </form>
+                <a class="mdui-btn mdui-ripple" asp-area="Identity" asp-page="/Account/Register">没有注册？注册一个账号！</a>
+            </div>
+        }
         <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'搜索'}"><i class="mdui-icon material-icons">search</i></a>
         <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
         <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
@@ -44,53 +77,60 @@
             </li>
         </ul>
     </div>
-
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="/" class="brand-logo">Lilys</a>
-                <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a asp-route="Index">主页</a></li>
-                    <li><a asp-route="About">关于</a></li>
-                    <li><a asp-route="GetAddBangumi">添加动画</a></li>
-                    <li><a asp-route="Bangumi">动画索引</a></li>
-                    <li><a asp-route="FileList">文件上传</a></li>
-                    <li><partial name="_LoginPartial" /></li>
-                </ul>
+    <div class="mdui-fab-wrapper" mdui-fab="{trigger: 'click'}" id="exampleFab">
+        @if (IsSignED)
+        {
+            //这里要显示已登录的用户图片
+            <a href="javascript:;" class="mdui-fab mdui-ripple mdui-color-theme-accent" mdui-tooltip="{content:'@UserManager.GetUserName(User)',position:'left'}"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" /></a>
+            <div class="mdui-fab-dial">
+                <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" mdui-tooltip="{content:'文件上传',position:'left'}"><i class="mdui-icon material-icons">backup</i></button>
+                <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" mdui-tooltip="{content:'我的追番',position:'left'}"><i class="mdui-icon material-icons">bookmark</i></button>
+                <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange"><i class="mdui-icon material-icons">access_alarms</i></button>
+                <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i class="mdui-icon material-icons">touch_app</i></button>
             </div>
-        </nav>
+        }
+        else
+        {
+            //这里要加一个未登录的用户图片
+            <a href="javascript:;" class="mdui-fab mdui-ripple mdui-color-theme-accent" mdui-tooltip="{content:'未登录',position:'left'}"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" /></a>
+            <div class="mdui-fab-dial">
+                <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange"><i class="mdui-icon material-icons">access_alarms</i></button>
+                <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i class="mdui-icon material-icons">touch_app</i></button>
+            </div>
+        }
+
     </div>
-    <ul class="sidenav" id="mobile-menu">
-        <li><a asp-route="Index">主页</a></li>
-        <li><a asp-route="About">关于</a></li>
-        <li><a asp-route="FileList">文件上传</a></li>
-        <li><partial name="_LoginPartial" /></li>
-    </ul>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems, Option = {
-                edge: 'left',
-                draggable: true
-            });
-        });
-    </script>
+
     <div class="mdui-container">
         @RenderBody()
     </div>
 
 
-    <footer class="page-footer pin-bottom">
-        <div class="container">
-            Test
-
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                © 2018 PowerBy Asp.Net Core
+    <footer class="modal-fixed-footer page-footer mdui-color-pink-100 mdui-shadow-10">
+        <div class="mdui-container mdui-typo">
+            <div class="mdui-row">
+                <div class="mdui-col-md-6">
+                    <h2>Hello, 欢迎你来到Lilys</h2>
+                    <p>
+                        Hello,Hello,Hello,<br />
+                        Hello,Hello,Hello,Hello,Hello,Hello,<br />
+                        Hello,Hello,Hello,Hello,<br />
+                        Hello,Hello,Hello,<br />
+                    </p>
+                </div>
+                <div class="mdui-col-md-6">
+                    <h2>Hello, 欢迎你来到Lilys</h2>
+                    <p>
+                        Hello,Hello,Hello,<br />
+                        Hello,Hello,Hello,Hello,Hello,Hello,<br />
+                        Hello,Hello,Hello,Hello,<br />
+                        Hello,Hello,Hello,<br />
+                    </p>
+                </div>
             </div>
         </div>
+        
+
     </footer>
 
 

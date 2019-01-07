@@ -99,7 +99,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                         return StatusCode(Final.StatusCode403);
                 }
             }
-
+            //进行渲染
             return PartialView("Index", new Index
             {
                 Animes = animes,
@@ -118,17 +118,35 @@ namespace BangumiProject.Areas.HomeBar.Controllers
 
         /// <summary>
         /// 返回关于页面
+        /// 
+        /// 返回一个Jsp格式的关于页面
+        /// 
+        /// 这个页面可以做一个纪念
+        /// 作为第一个版本的纪念
+        /// 
+        /// 第一个版本是用Java写的，
+        /// 第二个版本使用Springboot写的
+        /// 第三个版本就是现在看到的C# NetCore写的版本
+        /// 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>返回渲染的视图</returns>
         [HttpGet]
         [Route("/About.jsp", Name = "About")]
-        //[Authorize(Roles = Final.Yuri_Admin)]
         public IActionResult GetAbout()
         {
             var sb = "好消息！！好消息，偶们首家线上赌场开业啦";
 
             ViewData["About"] = sb.ToString();
             return View("About");
+        }
+
+        [HttpPost]
+        [Route("/About.jsp")]
+        public IActionResult PostAbout(string wenti)
+        {
+            ReadConfig readConfig = new ReadConfig();
+            readConfig.Add($"问题：{readConfig.Count}号", $"{wenti} || Time:{DateTime.Now}");
+            return Json("谢谢你的问题，我已经记下了，现在你可以关闭页面了");
         }
     }
 }

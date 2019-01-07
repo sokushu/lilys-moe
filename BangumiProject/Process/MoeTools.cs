@@ -94,17 +94,22 @@ namespace BangumiProject.Process
                 var Data = File.ReadAllLines(FilePath);
                 foreach (var item in Data)
                 {
-                    var k = item.Split('=');
-                    switch (k.Count())
+                    if (item.Length > 0)
                     {
-                        case 1:
-                            base.Add(k[0], string.Empty);
-                            break;
-                        case 2:
-                            base.Add(k[0], k[1]);
-                            break;
-                        default:
-                            break;
+                        int i = 0;
+                        var k = item.Substring(0, (i = item.IndexOf('=')) > 0 ? i : item.Length);
+                        var v = item.Substring(i > 0 ? i : 0);
+                        switch (k.Count())
+                        {
+                            case 1:
+                                base.Add(k[0], string.Empty);
+                                break;
+                            case 2:
+                                base.Add(k[0], k[1]);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
@@ -112,7 +117,7 @@ namespace BangumiProject.Process
         public override void Add(object key, object value)
         {
             base.Add(key, value);
-            File.AppendAllText(FilePath, key + "=" + value);
+            File.AppendAllText(FilePath, $"{key}={value}\n");
         }
     }
 }

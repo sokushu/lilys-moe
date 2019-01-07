@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>TorrentCore</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>TorrentCore</PackageId>
+    <PackageVersion>0.0-dev</PackageVersion>
+    <PackageProjectUrl>https://torrentcore.org/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SamuelFisher/torrentcore</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/SamuelFisher/torrentcore/master/LICENSE.md</PackageLicenseUrl>
+    <Description>A BitTorrent library that runs on all platforms supporting the .NET Platform Standard 1.4.</Description>
+    <Authors>SamuelFisher</Authors>
+    <NetStandardImplicitPackageVersion>2.0</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(SolutionDir)\StyleCopRules.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(SolutionDir)\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Transport\ClientPeerIds.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BencodeNET" Version="2.2.24" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+    <PackageReference Include="SimpleInjector" Version="4.4.3" />
+    <PackageReference Include="System.Net.Sockets" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

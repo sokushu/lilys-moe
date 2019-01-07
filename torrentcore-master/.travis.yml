@@ -1,0 +1,15 @@
+language: csharp
+dist: trusty
+sudo: required
+dotnet: 2.0.0
+mono: none
+
+before_install:
+  - sudo apt-get install dotnet-dev-1.0.4
+
+solution: TorrentCore.sln
+
+script:
+  - dotnet restore TorrentCore.sln
+  - dotnet build TorrentCore.sln
+  - dotnet test TorrentCore.Test/TorrentCore.Test.csproj
