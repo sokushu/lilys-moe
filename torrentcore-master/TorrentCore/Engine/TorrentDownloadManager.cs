@@ -122,9 +122,9 @@ namespace TorrentCore
 
                 using (var container = new Container())
                 {
-                    container.RegisterSingleton(ApplicationProtocol);
-                    container.RegisterSingleton(mainLoop);
-                    container.RegisterSingleton<IPiecePicker>(new PiecePicker());
+                    container.RegisterInstance(ApplicationProtocol);
+                    container.RegisterInstance(mainLoop);
+                    container.RegisterInstance<IPiecePicker>(new PiecePicker());
 
                     pipeline.Run(container, stageInterrupt, progress);
                 }

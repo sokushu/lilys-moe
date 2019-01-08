@@ -6,6 +6,7 @@ using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TorrentCore;
 
 namespace BangumiProject.Areas.Video.Controllers
 {
@@ -92,9 +93,13 @@ namespace BangumiProject.Areas.Video.Controllers
         [HttpGet]
         [Authorize(Policy = Final.Yuri_Girl)]
         [Route("/Play/Create", Name = Final.Route_Video_Create)]
-        public ActionResult Create()
+        public async Task<ActionResult> CreateAsync()
         {
-            return View();
+            var Client = new TorrentClient();
+            var download = Client.Add(@"E:\893172cf3d8e2bf2948ae80a6e88b4e73b37e8c8.torrent", @"E:\");
+            download.Start();
+            await download.WaitForDownloadCompletionAsync();
+            return Json("添加成功，正在下载");
         }
 
         /// <summary>
