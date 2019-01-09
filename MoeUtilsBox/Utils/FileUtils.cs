@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MoeUtilsBox
+namespace MoeUtilsBox.Utils
 {
     public static class FileUtils
     {

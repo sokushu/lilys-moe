@@ -6,7 +6,10 @@ using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TorrentCore;
+using System.Diagnostics;
+using System.IO;
+using System.Text.RegularExpressions;
+using BangumiProject.Areas.Video.Process;
 
 namespace BangumiProject.Areas.Video.Controllers
 {
@@ -55,6 +58,11 @@ namespace BangumiProject.Areas.Video.Controllers
     [Area("Video")]
     public class VideoController : Controller
     {
+        private static LinkedList<string> Vs = new LinkedList<string>();
+        public VideoController()
+        {
+
+        }
         /// <summary>
         /// 视频索引页面
         /// </summary>
@@ -87,19 +95,20 @@ namespace BangumiProject.Areas.Video.Controllers
 
         /// <summary>
         /// 拿到我们的页面
+        /// ！！！！！！！！！！！！！！！！！！！！！！！！
+        /// 这个下载的执行依赖Aria2进行下载，使用之前要提前安装
+        /// ！！！！！！！！！！！！！！！！！！！！！！！！
         /// </summary>
         /// <returns></returns>
         // GET: Play/Create
         [HttpGet]
         [Authorize(Policy = Final.Yuri_Girl)]
         [Route("/Play/Create", Name = Final.Route_Video_Create)]
-        public async Task<ActionResult> CreateAsync()
+        public ActionResult Create()
         {
-            var Client = new TorrentClient();
-            var download = Client.Add(@"E:\893172cf3d8e2bf2948ae80a6e88b4e73b37e8c8.torrent", @"E:\");
-            download.Start();
-            await download.WaitForDownloadCompletionAsync();
-            return Json("添加成功，正在下载");
+            return View(
+                viewName:"Create"
+                );
         }
 
         /// <summary>
@@ -115,17 +124,32 @@ namespace BangumiProject.Areas.Video.Controllers
         [Route("/Play/Create", Name = Final.Route_Video_Create_POST)]
         [Authorize(Policy = Final.Yuri_Girl)]//需要一个比较高的权限。
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(IFormFile torrentFile)
         {
             try
             {
+                string name = torrentFile.FileName;
+                using (var stream = new FileStream($"{Final.FilePath_DownLoad}{name}", FileMode.Create))
+                {
+                    torrentFile.CopyTo(stream);
+                    stream.Close();
+                }
+                Task.Run(() =>
+                {
+                    FileDownLoad downLoad = new FileDownLoad
+                    {
+                        SavePath = Final.FilePath_DownLoad,
+                        ToolPath = @"C:\Users\myweb\Downloads\aria2-1.34.0-win-64bit-build1\aria2-1.34.0-win-64bit-build1\aria2c.exe",
+                        TorrentFile = $"{Final.FilePath_DownLoad}{name}"
+                    };
+                    downLoad.Start();
+                });
 
-
-                return RedirectToRoute("");
+                return Json("正在下载中，请坐宽和放松");
             }
             catch
             {
-                return View();
+                return Json("下载错误，请重新上传文件");
             }
         }
 

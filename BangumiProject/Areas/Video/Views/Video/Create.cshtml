@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "添加下载";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>添加下载</h1>
+
+<div class="mdui-row">
+    <form method="post" enctype="multipart/form-data">
+        <div class="mdui-textfield">
+            <input type="file" class="mdui-textfield-input mdui-btn-raised" name="torrentFile" placeholder="种子文件上传" />
+        </div>
+        <button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple mdui-color-amber-700" type="submit">上传并下载</button>
+    </form>
+</div>
+

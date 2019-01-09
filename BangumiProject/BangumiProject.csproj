@@ -68,12 +68,7 @@
     <Folder Include="Areas\Search\Models\" />
     <Folder Include="Areas\Search\Services\" />
     <Folder Include="Areas\Search\Views\" />
-    <Folder Include="Areas\Users\Controllers\" />
-    <Folder Include="Areas\Users\Process\" />
-    <Folder Include="Areas\Users\Services\" />
-    <Folder Include="Areas\Users\Views\" />
     <Folder Include="Areas\Video\Models\" />
-    <Folder Include="Areas\Video\Process\" />
     <Folder Include="Areas\Video\Services\" />
     <Folder Include="Process\MoeMushi\Process\" />
   </ItemGroup>

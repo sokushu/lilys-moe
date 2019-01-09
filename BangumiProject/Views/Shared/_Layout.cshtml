@@ -3,7 +3,7 @@
 @using BangumiProject.Areas.Users.Models
 @inject SignInManager<Users> SignInManager
 @inject UserManager<Users> UserManager
-@{ 
+@{
     bool IsSignED = SignInManager.IsSignedIn(User);
 }
 <!DOCTYPE html>
@@ -36,6 +36,7 @@
         <a class="mdui-btn" asp-route="GetAddBangumi">添加动画</a>
         <a class="mdui-btn" asp-route="Bangumi">动画索引</a>
         <a class="mdui-btn" asp-route="FileList">文件上传</a>
+        <a class="mdui-btn" asp-route="@Final.Route_Video_Create_POST">BT文件上传</a>
         @if (IsSignED)
         {
             <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'用户'}">
@@ -129,7 +130,7 @@
                 </div>
             </div>
         </div>
-        
+
 
     </footer>
 

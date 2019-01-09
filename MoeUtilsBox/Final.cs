@@ -38,11 +38,15 @@ namespace BangumiProject.Controllers
         /// </summary>
         public const string FilePath_Image_Thumb = @"E:\TEST\TESTPIC\Thumb\";
         public const string FilePath_ImageProcess_Thumb = @"E:\TEST\TESTPIC\ProcessThumb\";
+        public const string FilePath_DownLoad = @"E:\TEST\DownLoad\";
+        public const string FilePath_DownLoad_Log = @"E:\TEST\DownLoad\Log\";
 #else
         
         /// <summary>
         /// 文件存储地址
         /// </summary>
+        public const string FilePath_DownLoad = "/home/BangumiFiles/FileDownLoad/";
+        public const string FilePath_DownLoad_Log = "/home/BangumiFiles/FileDownLoad/Log/";
         public const string FilePath = "/home/BangumiFiles/";
         public const string FilePath_VersionLog = "/home/BangumiFiles/TestLog";
         public const string DateBasePath = "/home/datebase/";
