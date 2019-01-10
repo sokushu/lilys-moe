@@ -217,7 +217,7 @@ namespace BangumiProject.Areas.Video.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToRoute(Final.Route_Video_Index);
+                return NotFound();
             }
             catch
             {
@@ -231,7 +231,7 @@ namespace BangumiProject.Areas.Video.Controllers
         [Authorize(Policy = Final.Yuri_Girl)]
         public ActionResult Delete(int id)
         {
-            return View();
+            return NotFound();
         }
 
         // POST: Play/Delete/5
@@ -245,11 +245,11 @@ namespace BangumiProject.Areas.Video.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
             catch
             {
-                return View();
+                return NotFound();
             }
         }
     }
