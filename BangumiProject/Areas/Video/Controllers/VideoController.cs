@@ -10,13 +10,16 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using BangumiProject.Areas.Video.Process;
+using BangumiProject.Services;
+using System.Timers;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace BangumiProject.Areas.Video.Controllers
 {
     /// <summary>
     /// 我的机子每个月
     /// 2T流量
-    /// 30M带宽（有点小，不过也支持同时3，4个人看视屏了，视频不太大的话）
+    /// 30M带宽（有点小，不过也支持同时3，4个人看视频了，视频不太大的话）
     /// 
     /// 测试功能，测试一下视频播放
     /// 关键是荒野的科特布奇飞行队（第三飞行少女队精神续作）B站没有啊，我又不想下载，
@@ -58,10 +61,40 @@ namespace BangumiProject.Areas.Video.Controllers
     [Area("Video")]
     public class VideoController : Controller
     {
-        private static LinkedList<string> Vs = new LinkedList<string>();
-        public VideoController()
+        private readonly ICommDB _DBService;
+        /// <summary>
+        /// 用于视频的一个集合
+        /// </summary>
+        private static List<VideoDB> Video = new List<VideoDB>();
+        private static HashSet<string> VideoSet = new HashSet<string>();
+        private static Timer Timer = new Timer()
         {
-
+            Enabled = true,
+            Interval = (60 * 1000) * 10//十分钟检查一次
+        };
+        private void Check(object obj, ElapsedEventArgs args)
+        {
+            string Path = Final.FilePath_DownLoad;
+            foreach (var FilePath in Directory.GetFiles(Path))
+            {
+                if (!VideoSet.Contains(FilePath))
+                {
+                    if (FilePath.EndsWith(".mp4"))
+                    {
+                        VideoSet.Add(FilePath);
+                    }
+                }
+            }
+            
+        }
+        /// <summary>
+        /// 依赖注入
+        /// </summary>
+        /// <param name="_DBService"></param>
+        public VideoController(ICommDB _DBService)
+        {
+            this._DBService = _DBService;
+            //Timer.Elapsed += Check;
         }
         /// <summary>
         /// 视频索引页面
@@ -80,6 +113,7 @@ namespace BangumiProject.Areas.Video.Controllers
 
         /// <summary>
         /// 视频播放页面
+        /// ^_^还是把视频的各类信息保存到数据库中吧
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -88,9 +122,21 @@ namespace BangumiProject.Areas.Video.Controllers
         [Route("/Play/Video{id:int}", Name = Final.Route_Video_Details)]
         public ActionResult Details(int id = -1)
         {
-            return View(
-                viewName:"VideoPlay"
+            try
+            {
+                var VideoInfo = Video[id];
+                //对视频路径进行一定的处理
+                VideoInfo.VideoPath = "";
+                return View(
+                viewName: "VideoPlay",
+                model:VideoInfo
                 );
+            }
+            catch
+            {
+                return NotFound();
+            }
+            
         }
 
         /// <summary>
@@ -158,7 +204,7 @@ namespace BangumiProject.Areas.Video.Controllers
         [Route("/Play/Edit/Video{id:int}", Name = Final.Route_Video_Edit)]
         public ActionResult Edit(int id)
         {
-            return View();
+            return NotFound();
         }
 
         // POST: Play/Edit/5
@@ -171,11 +217,11 @@ namespace BangumiProject.Areas.Video.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToRoute(Final.Route_Video_Index);
             }
             catch
             {
-                return View();
+                return NotFound();
             }
         }
 
@@ -206,5 +252,16 @@ namespace BangumiProject.Areas.Video.Controllers
                 return View();
             }
         }
+    }
+
+    /// <summary>
+    /// 视频的一些基本信息
+    /// </summary>
+    public struct VideoDB
+    {
+        public string Name { get; set; }
+        public string Info { get; set; }
+        public DateTime Time { get; set; }
+        public string VideoPath { get; set; }
     }
 }
