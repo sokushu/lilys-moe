@@ -54,6 +54,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
     <Folder Include="Areas\Bangumi\Services\" />
     <Folder Include="Areas\Blogs\Process\" />
     <Folder Include="Areas\Blogs\Services\" />
@@ -68,7 +71,6 @@
     <Folder Include="Areas\Search\Models\" />
     <Folder Include="Areas\Search\Services\" />
     <Folder Include="Areas\Search\Views\" />
-    <Folder Include="Areas\Video\Models\" />
     <Folder Include="Areas\Video\Services\" />
     <Folder Include="Process\MoeMushi\Process\" />
   </ItemGroup>
