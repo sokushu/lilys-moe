@@ -45,6 +45,7 @@ namespace BangumiProject.Areas.Error.Controllers
                 switch (Code)
                 {
                     case (int)HttpStatusCode.NotFound:          // 404
+                    case (int)HttpStatusCode.MethodNotAllowed:
                         exception.SetMessage("网页走丢了 >.<");
                         break;
                     case (int)HttpStatusCode.Forbidden:         // 403

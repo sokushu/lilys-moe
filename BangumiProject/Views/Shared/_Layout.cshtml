@@ -1,6 +1,8 @@
 ﻿@using BangumiProject.Controllers
 @using Microsoft.AspNetCore.Identity
 @using BangumiProject.Areas.Users.Models
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 @inject SignInManager<Users> SignInManager
 @inject UserManager<Users> UserManager
 @{
@@ -12,17 +14,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BangumiProject</title>
-
-    @*<environment include="Development">
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-            <link rel="stylesheet" href="~/css/site.css" />
-        </environment>
-        <environment exclude="Development">
-            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        </environment>*@
     <link rel="stylesheet" href="@Final.StaticFiles_css" />
     <script src="@Final.StaticFiles_JS"></script>
 </head>
@@ -33,50 +24,56 @@
         <div class="mdui-toolbar-spacer"></div>
         <a class="mdui-btn" asp-route="Index">主页</a>
         <a class="mdui-btn" asp-route="About">关于</a>
-        <a class="mdui-btn" asp-route="GetAddBangumi">添加动画</a>
         <a class="mdui-btn" asp-route="Bangumi">动画索引</a>
-        <a class="mdui-btn" asp-route="FileList">文件上传</a>
-        <a class="mdui-btn" asp-route="@Final.Route_Video_Create_POST">BT文件上传</a>
         @if (IsSignED)
         {
-            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'用户'}">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#user-menu'}" mdui-tooltip="{content:'@UserManager.GetUserName(User)'}">
                 <img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" />
             </a>
+            <ul class="mdui-menu" id="user-menu">
+                <li class="mdui-menu-item">
+                    <a href="javascript:;" class="mdui-ripple">我的追番《10集》</a>
+                </li>
+            </ul>
         }
         else
         {
-            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'用户'}" mdui-dialog="{target:'#SignIn'}">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'请登录'}" mdui-dialog="{target:'#SignIn'}">
                 <img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" />
             </a>
             <div id="SignIn" class="mdui-dialog">
                 <div class="mdui-dialog-title">登录</div>
-                <form action="/Login" method="post">
-                    <input type="email" name="Email" id="Email" />
-                    <input type="password" name="Password" id="Password" />
-
-                    <button class="mdui-btn mdui-ripple mdui-color-pink-100" type="submit">登录</button>
-                </form>
+                <a class="mdui-btn mdui-ripple" asp-area="Identity" asp-page="/Account/Login">立即登录</a>
                 <a class="mdui-btn mdui-ripple" asp-area="Identity" asp-page="/Account/Register">没有注册？注册一个账号！</a>
             </div>
         }
         <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'搜索'}"><i class="mdui-icon material-icons">search</i></a>
         <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
-        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
-        <ul class="mdui-menu" id="menu-more">
-            <li class="mdui-menu-item">
-                <a href="javascript:;" class="mdui-ripple">Refresh</a>
-            </li>
-            <li class="mdui-menu-item" disabled>
-                <a href="javascript:;">Help & feedback</a>
-            </li>
-            <li class="mdui-menu-item">
-                <a href="javascript:;" class="mdui-ripple">Settings</a>
-            </li>
-            <li class="mdui-divider"></li>
-            <li class="mdui-menu-item">
-                <a href="javascript:;" class="mdui-ripple">Sign out</a>
-            </li>
-        </ul>
+        @if (IsSignED)
+        {
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
+            <ul class="mdui-menu" id="menu-more">
+                <li class="mdui-menu-item">
+                    <a href="javascript:;" class="mdui-ripple">Refresh</a>
+                </li>
+                @if ((await AuthorizationService.AuthorizeAsync(User, Final.Yuri_Girl)).Succeeded)
+                {
+                    <li class="mdui-menu-item">
+                        <a class="mdui-ripple" asp-route="@Final.Route_Video_Create_POST">BT文件上传</a>
+                    </li>
+                }
+                <li class="mdui-menu-item">
+                    <a class="mdui-ripple" asp-route="@Final.Route_Bangumi_Create">添加动画</a>
+                </li>
+                <li class="mdui-menu-item">
+                    <a class="mdui-ripple" asp-route="@Final.Route_Files_Index">文件上传</a>
+                </li>
+                <li class="mdui-divider"></li>
+                <li class="mdui-menu-item">
+                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" class="mdui-ripple">退出登录</a>
+                </li>
+            </ul>
+        }
     </div>
     <div class="mdui-fab-wrapper" mdui-fab="{trigger: 'click'}" id="exampleFab">
         @if (IsSignED)
@@ -99,14 +96,12 @@
                 <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i class="mdui-icon material-icons">touch_app</i></button>
             </div>
         }
-
     </div>
-
+    @* 这里显示的就是内容了 *@
     <div class="mdui-container">
         @RenderBody()
     </div>
-
-
+    @* 这里显示的就是页面下部了 *@
     <footer class="modal-fixed-footer page-footer mdui-color-pink-100 mdui-shadow-10">
         <div class="mdui-container mdui-typo">
             <div class="mdui-row">
@@ -130,33 +125,7 @@
                 </div>
             </div>
         </div>
-
-
     </footer>
-
-
-    <partial name="_CookieConsentPartial" />
-    @*<environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
-        <environment exclude="Development">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-        </environment>*@
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -16,6 +16,8 @@ using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
 using BangumiProject.Areas.Bangumi.Models;
 using Microsoft.EntityFrameworkCore;
 using MoeUtilsBox.Utils;
+using System.Net;
+using BangumiProject.Areas.Error.Models;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -166,7 +168,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             ICollection<AnimeTag> animeTags = new List<AnimeTag>();     //动画的标签
             ICollection<AnimeSouce> animeSouces = new List<AnimeSouce>();//动画的播放源
             ICollection<AnimeComm> animeComms = new List<AnimeComm>();  //动画的评论
-            var SubNum = 0;                                             //用户订阅量
+            //var SubNum = 0;                                             //用户订阅量（暂时用不到呢）
 
             animeTags = Anime.Tags;
             animeSouces = Anime.Souce;
@@ -238,7 +240,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/Create", Name = Final.Route_Bangumi_Create)]
         public ActionResult Create()
         {
-            return View();
+            //返回视图
+            return View(
+                viewName:"AddBangumi"
+                );
         }
 
         // POST: Bangumi/Create
@@ -246,49 +251,122 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Policy = Final.Yuri_Yuri4)]
         [Route("/Bangumi/Create", Name = Final.Route_Bangumi_Create_POST)]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> CreateAsync(IFormCollection collection)
         {
             try
             {
-                var k = collection[""];
                 //上传的文件
                 var files = collection.Files;
-                
-                // TODO: Add insert logic here
-                _DBServices.AddAnimeID(99);//这里不要忘记添加动画ID
-                return RedirectToAction(nameof(IndexAsync));
+                if (files != null)
+                {
+                    //上传文件的操作
+                }
+                var AnimeNum = collection["AnimeNum"];
+                if (!int.TryParse(AnimeNum, out int Num))
+                {
+                    Num = 1;
+                }
+                var AnimeTime = collection["AnimePlayTime"];
+                if (!DateTime.TryParse(AnimeTime, out DateTime dateTime))
+                {
+                    dateTime = DateTime.Now;
+                }
+                var End = collection["IsEnd"];
+                if (!bool.TryParse(End, out bool IsEnd))
+                {
+                    IsEnd = false;
+                }
+                //的到最后的动画ID
+                Anime anime = new Anime
+                {
+                    AnimeName = collection["AnimeName"],
+                    AnimeNum = Num,
+                    AnimePic = collection["AnimePic"],
+                    AnimeInfo = collection["AnimeInfo"],
+                    AnimePlayTime = dateTime,
+                    IsEnd = IsEnd
+                };
+                //将动画数据写入数据库
+                await _DBServices.AddAsync(anime);
+                //最新发现，到这一步ID会有值o(*￣▽￣*)ブ
+
+                _DBServices.AddAnimeID(anime.AnimeID);//这里不要忘记添加动画ID
+                return RedirectToRoute(Final.Route_Bangumi_Index, anime.AnimeID);
             }
             catch
             {
-                return View();
+                throw;//显示错误页面
             }
         }
 
         // GET: Bangumi/Edit/5
         [HttpGet]
         [Authorize(Policy = Final.Yuri_Admin)]
-        [Route("/Bangumi/Edit/{id?}", Name = Final.Route_Bangumi_Edit)]
-        public ActionResult Edit(int id)
+        [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit)]
+        public async Task<ActionResult> EditAsync(int id)
         {
-            return View();
+            if (_DBServices.HasAnimeID(id))
+            {
+                var key = new KEY { Key = CacheKey.Anime_One(id).ToCharArray() };
+                if (!_DBServices.GetDate(key, out Anime Anime))
+                {
+                    //如果缓存中没有就临时读取一下，因为提交后会删除缓存，所以不保存了
+                    Anime = await _DBServices.GetDateOneAsync<Anime>(db =>
+                            db.Where(a => a.AnimeID == id)
+                            .Include(a => a.Tags));
+                }
+                return View(
+                viewName: "BangumiEdit",
+                model: new BangumiEdit
+                {
+                    Anime = Anime
+                }
+                );
+            }
+            return NotFound();
         }
 
         // POST: Bangumi/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = Final.Yuri_Admin)]
-        [Route("/Bangumi/Edit/{id?}", Name = Final.Route_Bangumi_Edit_POST)]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit_POST)]
+        public async Task<ActionResult> EditAsync(int id, BangumiEdit bangumiEdit)
         {
             try
             {
+                if (_DBServices.HasAnimeID(id))
+                {
+                    Anime Anime = bangumiEdit.Anime;
+                    var NewTag = bangumiEdit.AddTag;
 
+                    Anime anime = await _DBServices.GetDateOneAsync<Anime>(db => db.Where(a => a.AnimeID == id).Include(a => a.Tags));
 
-                return RedirectToRoute(Final.Route_Bangumi_Details, id);
+                    anime.AnimeInfo = Anime.AnimeInfo;
+                    anime.AnimeName = Anime.AnimeName;
+                    anime.AnimeNum = Anime.AnimeNum;
+                    anime.AnimePic = Anime.AnimePic;
+                    anime.AnimeType = Anime.AnimeType;
+                    anime.IsEnd = Anime.IsEnd;
+                    anime.AnimePlayTime = Anime.AnimePlayTime;
+                    if (!string.IsNullOrEmpty(NewTag) && !string.IsNullOrWhiteSpace(NewTag))
+                    {
+                        anime.Tags.Add(new AnimeTag
+                        {
+                            TagName = bangumiEdit.AddTag
+                        });
+                    }
+
+                    await _DBServices.UpdateAsync(anime);
+                    //清除旧缓存
+                    _DBServices.Remove(new KEY { Key = CacheKey.Anime_One(id).ToCharArray() });
+                    return RedirectToRoute(Final.Route_Bangumi_Details, id);
+                }
+                return NotFound();
             }
             catch
             {
-                return View();
+                throw;
             }
         }
 
@@ -298,7 +376,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/Delete/{id?}", Name = Final.Route_Bangumi_Delete)]
         public ActionResult Delete(int id)
         {
-            return View();
+            return NotFound();
         }
 
         /// <summary>
@@ -319,13 +397,25 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             try
             {
                 // TODO: Add delete logic here
-                _DBServices.RemoveAnimeID(id);
-                return RedirectToAction(nameof(IndexAsync));
+                //_DBServices.RemoveAnimeID(id);
+                return NotFound();
             }
             catch
             {
-                return View();
+                throw;
             }
+        }
+
+        ///===========================================================================
+        ///===========================================================================
+        ///===========================================================================
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void GetAnimeByID(int ID)
+        {
+
         }
     }
 }

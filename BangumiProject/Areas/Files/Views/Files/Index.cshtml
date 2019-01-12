@@ -1,4 +1,4 @@
-﻿
+﻿@using BangumiProject.Controllers
 @model IndexModel
 @{ 
     ViewData["title"] = Model.Tilte;
@@ -28,11 +28,11 @@
                 图片URL：
                 @if (string.IsNullOrEmpty(item.ReadUsers))
                 {
-                    <a asp-route="GetImagePublic" asp-route-imageID="@item.ImageID">点击打开</a>
+                    <a asp-route="@Final.Route_Files_Details" asp-route-imageID="@item.ImageID">点击打开</a>
                 }
                 else
                 {
-                    <a asp-route="GetImages" asp-route-imageid="@item.ImageID">点击打开</a>
+                    <a asp-route="@Final.Route_Files_Details" asp-route-imageid="@item.ImageID">点击打开</a>
                 }
 
             </th>
@@ -42,12 +42,12 @@
 
 </table>
 
-<form method="post" asp-route="UploadFiles" enctype="multipart/form-data">
+<form method="post" asp-route="@Final.Route_Files_Create_POST" enctype="multipart/form-data">
     <div class="form-group">
         <div class="col-md-10">
             <p>上传一张图片：</p>
-            <input type="file" name="Files" multiple />
-            <input name="IsStaticFile" type="checkbox" />
+            <input type="file" name="files" multiple />
+            是不是静态文件：<input name="isStaticFile" type="checkbox" />
         </div>
     </div>
     <div class="form-group">

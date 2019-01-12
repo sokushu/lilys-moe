@@ -24,8 +24,9 @@ namespace BangumiProject.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet(string returnUrl = null)
         {
+            return await OnPost(returnUrl);
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
@@ -38,7 +39,7 @@ namespace BangumiProject.Areas.Identity.Pages.Account
             }
             else
             {
-                return Page();
+                return RedirectToRoute("Index");
             }
         }
     }

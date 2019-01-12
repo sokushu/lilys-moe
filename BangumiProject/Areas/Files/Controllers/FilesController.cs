@@ -53,7 +53,7 @@ namespace BangumiProject.Areas.Files.Controllers
 
             //获取文件名，方便获取静态文件
             Images.ForEach(img =>
-                img.ImagePath.GetFileName()
+                img.ImagePath = img.ImagePath.GetFileName()
             );
 
             return View("Index", new IndexModel
@@ -103,10 +103,15 @@ namespace BangumiProject.Areas.Files.Controllers
         // POST: Files/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("/Files/Create", Name = Final.Route_Files_Create_POST)]
         public async Task<ActionResult> CreateAsync(IFormCollection collection)
         {
             var files = collection.Files[0];
-
+            if (files == null)//没有上传文件，回到上传页面去
+            {
+                throw new ErrorException(1);
+            }
+            bool IsStatic = collection["isStaticFile"].Equals("on");//on的状态代表选中
             FileUpLoadProcess fileUpLoadProcess = new FileUpLoadProcess();
 
             var User = await _userManager.GetUserAsync(HttpContext.User);

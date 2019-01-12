@@ -221,6 +221,11 @@ namespace BangumiProject.Services
         {
             await _db.AddAsync(t);
         }
+
+        public async Task<T> GetLastAsync<T>() where T : class
+        {
+            return await _db.Set<T>().LastAsync();
+        }
     }
     public struct KEY
     {

@@ -28,5 +28,6 @@ namespace BangumiProject.Services
         void RemoveAnimeID(int id);
         Task AddAsync<T>(T t) where T : class;
         Task AddAsyncNoSave<T>(T t) where T : class;
+        Task<T> GetLastAsync<T>() where T : class;
     }
 }
