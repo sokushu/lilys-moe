@@ -223,7 +223,7 @@ namespace BangumiProject
                 Directory.CreateDirectory(Final.FilePath_Image_Thumb);
             if (!File.Exists(Final.FilePath_VersionLog))
                 File.CreateText(Final.FilePath_VersionLog);
-#if DEBUG
+#if !DEBUG
             if (!Directory.Exists(Final.DateBasePath))
                 Directory.CreateDirectory(Final.DateBasePath);
             string ProjectPath = System.IO.Directory.GetCurrentDirectory();
