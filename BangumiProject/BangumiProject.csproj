@@ -77,10 +77,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\lib\materialize\js\materialize.js" />
-    <None Include="wwwroot\lib\materialize\js\materialize.min.js" />
-    <None Include="wwwroot\lib\materialize\LICENSE" />
-    <None Include="wwwroot\lib\materialize\README.md" />
     <None Include="wwwroot\lib\mdui-v0.4.2\css\mdui.min.css.map" />
     <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Black.woff2" />
     <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-BlackItalic.woff2" />
