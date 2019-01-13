@@ -79,8 +79,8 @@ namespace BangumiProject.Controllers
         public const string StaticFiles_JS = "/lib/mdui-v0.4.2/js/mdui.js";
 #else
         public const string DBStr = "Data Source="+ DateBasePath + "BangumiProject.db";
-        public const string StaticFiles_css = "https://files.lilys.moe/public/lib/materialize/css/materialize.min.css";
-        public const string StaticFiles_JS = "https://files.lilys.moe/public/lib/materialize/js/materialize.min.js";
+        public const string StaticFiles_css = "https://files.lilys.moe/public/lib/mdui/css/mdui.min.css";
+        public const string StaticFiles_JS = "https://files.lilys.moe/public/lib/mdui/js/mdui.min.js";
 #endif
         public const string DBStr_MoeMushi = "Data Source=" + DateBasePath + "MoeMushi.db";
         /*
