@@ -1,4 +1,5 @@
-﻿@model Bangumi_OneAnime
+﻿@using BangumiProject.Controllers
+@model Bangumi_OneAnime
 @{
     ViewData["Title"] = "Bangumi_OneAnime";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,7 +12,7 @@
             @Model.Anime.AnimeName <br />
             @if (Model.IsShowEdit)
             {
-                <a asp-route="AnimeEdit" asp-route-id="@Model.Anime.AnimeID">编辑动画</a>
+                <a asp-route="@Final.Route_Bangumi_Edit" asp-route-id="@Model.Anime.AnimeID">编辑动画</a>
             }
 
         </td>
@@ -67,47 +68,33 @@
         <td>动画集数：</td>
         <td>
             <div class="row">
-                @{ 
-                    int page = Model.Page.AllPage;
-                }
-                <div class="col s12">
-                    <ul class="tabs">
-                        @if (page >= 1)
-                        {
-                            <li class="tab col s3"><a class="active" href="#test0">1 话 - 10 话</a></li>
-                        }
-                        @if (page >= 2)
-                        {
-                            <li class="tab col s3"><a href="#test1">11 话 - 20 话</a></li>
-                        }
-                        @if (page >= 3)
-                        {
-                            <li class="tab col s3"><a href="#test2">21 话 - 30 话</a></li>
-                        }
-                        @if (page >= 4)
-                        {
-                            <li class="tab col s3"><a href="#test3">31 话 - 40 话</a></li>
-                        }
-                    </ul>
-                </div>
                 @{
+                    int k = 0;
                     var num = Model.Anime.AnimeNum;
                     int a = 1;
                     int b = 10;
                 }
+                <div class="mdui-tab" mdui-tab>
+                    @foreach (var item in Model.Page.PageName)
+                    {
+                        string id = $"#test{k}";
+                        <a class="mdui-ripple" href="@id">@item</a>
+                        k++;
+                    }
+                </div>
                 @for (int i = 0; i < Model.Page.AllPage; i++)
                 {
                     string id = $"test{i}";
-                    <div id="@id" class="col s12">
+                    <div id="@id">
                         @for (int j = a; j <= b; j++)
                         {
                             @if (j == Model.UserAnimeNumber)
                             {
-                                <button onclick="upload(@j);" class="btn red">现在看到：第 @j 集</button><br />
+                                <button onclick="upload(@j);" class="mdui-btn mdui-color-amber mdui-ripple">现在看到：第 @j 集</button><br />
                             }
                             else
                             {
-                                <button onclick="upload(@j);" class="btn">@j 集</button><br />
+                                <button onclick="upload(@j);" class="mdui-btn mdui-color-pink-100">@j 集</button><br />
                             }
                             @if ((num = num - 1) == 0)
                             {
@@ -118,10 +105,6 @@
                     a = a + 10;
                     b = b + 10;
                 }
-                @*<div id="test1" class="col s12">Test 1</div>
-                    <div id="test2" class="col s12">Test 2</div>
-                    <div id="test3" class="col s12">Test 3</div>
-                    <div id="test4" class="col s12">Test 4</div>*@
             </div>
         </td>
     </tr>
@@ -143,8 +126,8 @@
         <td>
             @foreach (var item in Model.Anime.Tags)
             {
-                <div class="chip">
-                    @item.TagName
+                <div class="mdui-chip">
+                    <span class="mdui-chip-title">@item.TagName</span>
                 </div>
             }
         </td>
@@ -183,8 +166,10 @@
 
         new Ajax().Ajax(
             "POST",
-            "/Bangumi/" + AnimeID + "/Sub",
-            {},
+            "/BangumiSub" + AnimeID,
+            { 
+                "AnimeNum": -1
+            },
             function (res) {
                 var objs = eval(res);
                 if (objs[0] == "false" || objs[0] == "true") {
@@ -207,10 +192,9 @@
         }
         new Ajax().Ajax(
             "POST",
-            "/Bangumi/" + AnimeID + "/Up",
+            "/BangumiSub"+AnimeID,
             {
-                //"__RequestVerificationToken": document.getElementsByName("__RequestVerificationToken")[0].getAttribute("value"),
-                "Num": number
+                "AnimeNum": number
             },
             function (res) {
                 var objs = eval(res);

@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="mdui-row ">
+<div class="mdui-row mdui-grid-list">
     <h3 class="header">最近更新</h3>
     @foreach (var item in Model.Animes)
     {
@@ -69,159 +69,146 @@
     }
 }
 
-<div class="row">
-    <div class="col s12">
-        <ul class="tabs" id="Test">
-            <li class="tab col s1"><a id="week1" class="@w1" href="#weektime1">星期一</a></li>
-            <li class="tab col s2"><a id="week2" class="@w2" href="#weektime2">星期二</a></li>
-            <li class="tab col s2"><a id="week3" class="@w3" href="#weektime3">星期三</a></li>
-            <li class="tab col s2"><a id="week4" class="@w4" href="#weektime4">星期四</a></li>
-            <li class="tab col s2"><a id="week5" class="@w5" href="#weektime5">星期五</a></li>
-            <li class="tab col s2"><a id="week6" class="@w6" href="#weektime6">星期六</a></li>
-            <li class="tab col s1"><a id="week0" class="@w7" href="#weektime0">星期天</a></li>
-        </ul>
-    </div>
-    <div id="weektime1" class="col s12">
-        @foreach (var item in Model.WeekAnimes[1])
-        {
-            <div class="col s6 m3">
-                <div class="card horizontal hoverable">
-                    <div class="card-image">
-                        <img src="@Model.AnimePic(item)">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>@Model.AnimeInfo(item)</p>
+<div class="mdui-row">
+    <br />
+    <div class="mdui-divider"></div>
+    <br />
+</div>
+
+<div class="mdui-row mdui-grid-list">
+    <div class="mdui-col-md-12">
+        <div class="mdui-tab" mdui-tab>
+            <a href="#week-tab1" class="@w1 mdui-ripple">星期一</a>
+            <a href="#week-tab2" class="@w2 mdui-ripple">星期二</a>
+            <a href="#week-tab3" class="@w3 mdui-ripple">星期三</a>
+            <a href="#week-tab4" class="@w4 mdui-ripple">星期四</a>
+            <a href="#week-tab5" class="@w5 mdui-ripple">星期五</a>
+            <a href="#week-tab6" class="@w6 mdui-ripple">星期六</a>
+            <a href="#week-tab7" class="@w7 mdui-ripple">星期天</a>
+        </div>
+        <div id="week-tab1" class="mdui-row mdui-grid-list">
+            <ul class="mdui-list">
+                @foreach (var item in Model.WeekAnimes[1])
+                {
+                    <li class="mdui-list-item mdui-ripple mdui-col-md-6">
+                        <div class="mdui-list-item-avatar"><img src="@Model.AnimePic(item)" /></div>
+                        <div class="mdui-list-item-content">
+                            <div class="mdui-list-item-title">
+                                <a asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                            </div>
+                            <div class="mdui-list-item-text mdui-list-item-three-line">@Model.AnimeInfo(item)</div>
                         </div>
-                        <div class="card-action">
-                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="week-tab2" class="mdui-row mdui-grid-list">
+            <ul class="mdui-list">
+                @foreach (var item in Model.WeekAnimes[2])
+                {
+                    <li class="mdui-list-item mdui-ripple mdui-col-md-6">
+                        <div class="mdui-list-item-avatar"><img src="@Model.AnimePic(item)" /></div>
+                        <div class="mdui-list-item-content">
+                            <div class="mdui-list-item-title">
+                                <a asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                            </div>
+                            <div class="mdui-list-item-text mdui-list-item-three-line">@Model.AnimeInfo(item)</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div id="weektime2" class="col s12">
-        @foreach (var item in Model.WeekAnimes[2])
-        {
-            <div class="col s6 m3">
-                <div class="card horizontal hoverable">
-                    <div class="card-image">
-                        <img src="@Model.AnimePic(item)">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>@Model.AnimeInfo(item)</p>
+                        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="week-tab3" class="mdui-row mdui-grid-list">
+            <ul class="mdui-list">
+                @foreach (var item in Model.WeekAnimes[3])
+                {
+                    <li class="mdui-list-item mdui-ripple mdui-col-md-6">
+                        <div class="mdui-list-item-avatar"><img src="@Model.AnimePic(item)" /></div>
+                        <div class="mdui-list-item-content">
+                            <div class="mdui-list-item-title">
+                                <a asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                            </div>
+                            <div class="mdui-list-item-text mdui-list-item-three-line">@Model.AnimeInfo(item)</div>
                         </div>
-                        <div class="card-action">
-                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="week-tab4" class="mdui-row mdui-grid-list">
+            <ul class="mdui-list">
+                @foreach (var item in Model.WeekAnimes[4])
+                {
+                    <li class="mdui-list-item mdui-ripple mdui-col-md-6">
+                        <div class="mdui-list-item-avatar"><img src="@Model.AnimePic(item)" /></div>
+                        <div class="mdui-list-item-content">
+                            <div class="mdui-list-item-title">
+                                <a asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                            </div>
+                            <div class="mdui-list-item-text mdui-list-item-three-line">@Model.AnimeInfo(item)</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div id="weektime3" class="col s12">
-        @foreach (var item in Model.WeekAnimes[3])
-        {
-            <div class="col s6 m3">
-                <div class="card horizontal hoverable">
-                    <div class="card-image">
-                        <img src="@Model.AnimePic(item)">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>@Model.AnimeInfo(item)</p>
+                        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="week-tab5" class="mdui-row mdui-grid-list">
+            <ul class="mdui-list">
+                @foreach (var item in Model.WeekAnimes[5])
+                {
+                    <li class="mdui-list-item mdui-ripple mdui-col-md-6">
+                        <div class="mdui-list-item-avatar"><img src="@Model.AnimePic(item)" /></div>
+                        <div class="mdui-list-item-content">
+                            <div class="mdui-list-item-title">
+                                <a asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                            </div>
+                            <div class="mdui-list-item-text mdui-list-item-three-line">@Model.AnimeInfo(item)</div>
                         </div>
-                        <div class="card-action">
-                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="week-tab6" class="mdui-row mdui-grid-list">
+            <ul class="mdui-list">
+                @foreach (var item in Model.WeekAnimes[6])
+                {
+                    <li class="mdui-list-item mdui-ripple mdui-col-md-6">
+                        <div class="mdui-list-item-avatar"><img src="@Model.AnimePic(item)" /></div>
+                        <div class="mdui-list-item-content">
+                            <div class="mdui-list-item-title">
+                                <a asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                            </div>
+                            <div class="mdui-list-item-text mdui-list-item-three-line">@Model.AnimeInfo(item)</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div id="weektime4" class="col s12">
-        @foreach (var item in Model.WeekAnimes[4])
-        {
-            <div class="col s6 m3">
-                <div class="card horizontal hoverable">
-                    <div class="card-image">
-                        <img src="@Model.AnimePic(item)">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>@Model.AnimeInfo(item)</p>
+                        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div id="week-tab7" class="mdui-row mdui-grid-list">
+            <ul class="mdui-list">
+                @foreach (var item in Model.WeekAnimes[0])
+                {
+                    <li class="mdui-list-item mdui-ripple mdui-col-md-6">
+                        <div class="mdui-list-item-avatar"><img src="@Model.AnimePic(item)" /></div>
+                        <div class="mdui-list-item-content">
+                            <div class="mdui-list-item-title">
+                                <a asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">@item.AnimeName</a>
+                            </div>
+                            <div class="mdui-list-item-text mdui-list-item-three-line">@Model.AnimeInfo(item)</div>
                         </div>
-                        <div class="card-action">
-                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div id="weektime5" class="col s12">
-        @foreach (var item in Model.WeekAnimes[5])
-        {
-            <div class="col s6 m3">
-                <div class="card horizontal hoverable">
-                    <div class="card-image">
-                        <img src="@Model.AnimePic(item)">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>@Model.AnimeInfo(item)</p>
-                        </div>
-                        <div class="card-action">
-                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div id="weektime6" class="col s12">
-        @foreach (var item in Model.WeekAnimes[6])
-        {
-            <div class="col s6 m3">
-                <div class="card horizontal hoverable">
-                    <div class="card-image">
-                        <img src="@Model.AnimePic(item)">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>@Model.AnimeInfo(item)</p>
-                        </div>
-                        <div class="card-action">
-                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div id="weektime0" class="col s12">
-        @foreach (var item in Model.WeekAnimes[0])
-        {
-            <div class="col s6 m3">
-                <div class="card horizontal hoverable">
-                    <div class="card-image">
-                        <img src="@Model.AnimePic(item)">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>@Model.AnimeInfo(item)</p>
-                        </div>
-                        <div class="card-action">
-                            <a asp-route="GetBangumi" asp-route-id="@item.AnimeID">@item.AnimeName</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+                        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
 </div>
+
+
 
 <script>
     var el = document.querySelectorAll(".tabs");

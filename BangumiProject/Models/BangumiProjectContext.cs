@@ -6,6 +6,7 @@ using BangumiProject.Areas.Bangumi.Models;
 using BangumiProject.Areas.Blogs.Models;
 using BangumiProject.Areas.Files.Models;
 using BangumiProject.Areas.Users.Models;
+using BangumiProject.Areas.Video.Models;
 using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -30,6 +31,7 @@ namespace BangumiProject.Models
         public DbSet<FilePhoto> Photos { get; set; }
         public DbSet<AnimeMemo> Memos { get; set; }
         public DbSet<AnimeUserInfo> UserAnimeInfos { get; set; }
+        public DbSet<VideoInfo> VideoInfos { get; set; }
 
         /// <summary>
         /// 

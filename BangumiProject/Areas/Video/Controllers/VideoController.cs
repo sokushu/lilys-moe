@@ -67,26 +67,7 @@ namespace BangumiProject.Areas.Video.Controllers
         /// </summary>
         private static List<VideoDB> Video = new List<VideoDB>();
         private static HashSet<string> VideoSet = new HashSet<string>();
-        private static Timer Timer = new Timer()
-        {
-            Enabled = true,
-            Interval = (60 * 1000) * 10//十分钟检查一次
-        };
-        private void Check(object obj, ElapsedEventArgs args)
-        {
-            string Path = Final.FilePath_DownLoad;
-            foreach (var FilePath in Directory.GetFiles(Path))
-            {
-                if (!VideoSet.Contains(FilePath))
-                {
-                    if (FilePath.EndsWith(".mp4"))
-                    {
-                        VideoSet.Add(FilePath);
-                    }
-                }
-            }
-            
-        }
+        
         /// <summary>
         /// 依赖注入
         /// </summary>
@@ -94,7 +75,6 @@ namespace BangumiProject.Areas.Video.Controllers
         public VideoController(ICommDB _DBService)
         {
             this._DBService = _DBService;
-            //Timer.Elapsed += Check;
         }
         /// <summary>
         /// 视频索引页面
@@ -190,8 +170,8 @@ namespace BangumiProject.Areas.Video.Controllers
                     };
                     downLoad.Start();
                 });
-
-                return Json("正在下载中，请坐宽和放松");
+                //返回首页
+                return RedirectToRoute("Index");
             }
             catch
             {
