@@ -16,109 +16,11 @@ using System.Net;
 using BangumiProject.Process.MoeMushi.Model;
 using BangumiProject.Models;
 using Microsoft.EntityFrameworkCore;
+using BangumiProject.Process.MoeMushi.DataSource;
+using BangumiProject.Process.MoeMushi.Process;
 
 namespace BangumiProject.Process.MoeMushi
 {
-    /// <summary>
-    /// BILIBILI API 整理
-    /// 
-    /// 新番时间表
-    /// https://bangumi.bilibili.com/web_api/timeline_global
-    /// 
-    /// 动画集数信息
-    /// https://api.bilibili.com/pgc/web/season/section?season_id=24588
-    /// season_id   动画ID JSON字段：season_id
-    /// 
-    /// 动画索引（所有的动画）
-    /// https://bangumi.bilibili.com/media/web_api/search/result?season_version=-1&area=-1&is_finish=-1&copyright=-1&season_status=-1&season_month=-1&pub_date=-1&style_id=-1&order=3&st=1&sort=0&page=1&season_type=1&pagesize=20
-    /// 
-    /// 
-    /// 
-    /// 
-    /// 一些字段：
-    /// media_id ： 这个字段是查询动画的
-    /// 例如：https://www.bilibili.com/bangumi/media/md135652/
-    /// 这个135652就是media_id
-    /// 
-    /// season_id：似乎可以查询动画的集数信息
-    /// 
-    /// </summary>
-    public class MushiParams
-    {
-        /// <summary>
-        /// 开始的URL
-        /// </summary>
-        public string Url { get; set; }
-        /// <summary>
-        /// 方法GET？POST？
-        /// </summary>
-        public string Method { get; set; }
-        /// <summary>
-        /// 传输的信息（POST）
-        /// </summary>
-        public string PostData { get; set; }
-        /// <summary>
-        /// 选择的一个节点
-        /// </summary>
-        public string SelectNode { get; set; }
-        /// <summary>
-        /// 数据库连接
-        /// </summary>
-        public MoeMushiContext _MoeMushiDB { get; set; }
-    }
-
-    /// <summary>
-    /// 内置的爬虫链接源
-    /// BILIBILI系列
-    /// </summary>
-    class BILIBILI
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string BILIBILI_Timeline_Global()
-        {
-            return "https://bangumi.bilibili.com/web_api/timeline_global";
-        }
-
-        /// <summary>
-        /// 
-        /// 默认是《工作细胞》的剧集信息（用于测试）
-        /// </summary>
-        /// <param name="season_id"></param>
-        /// <returns></returns>
-        public static string BILIBILI_AnimeNumInfo(int season_id = 24588)
-        {
-            return $"https://api.bilibili.com/pgc/web/season/section?season_id={season_id}";
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="season_version"></param>
-        /// <param name="area"></param>
-        /// <param name="is_finish"></param>
-        /// <param name="copyright"></param>
-        /// <param name="season_status"></param>
-        /// <param name="season_month"></param>
-        /// <param name="pub_date"></param>
-        /// <param name="style_id"></param>
-        /// <param name="order"></param>
-        /// <param name="st"></param>
-        /// <param name="sort"></param>
-        /// <param name="page"></param>
-        /// <param name="season_type"></param>
-        /// <param name="pagesize"></param>
-        /// <returns></returns>
-        public static string BILIBILI_BangumiFilter(
-            int season_version = -1, int area = -1, int is_finish = -1, int copyright = -1, int season_status = -1, 
-            int season_month = -1, int pub_date = -1, int style_id = -1, int order = 3, int st = 1, int sort = 0, 
-            int page = 1, int season_type = 1, int pagesize = 20)
-        {
-            return $"https://bangumi.bilibili.com/media/web_api/search/result?season_version={season_version}&area={area}&is_finish={is_finish}&copyright={copyright}&season_status={season_status}&season_month={season_month}&pub_date={pub_date}&style_id={style_id}&order={order}&st={st}&sort={sort}&page={page}&season_type={season_type}&pagesize={pagesize}";
-        }
-    }
     /// <summary>
     /// 
     /// </summary>
@@ -346,34 +248,4 @@ namespace BangumiProject.Process.MoeMushi
             });
         }
     }
-
-    public class CommClass
-    {
-        public const char _ = '"';
-        public const char _A = '{';
-        public const char _B = '}';
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    class MushiProcess
-    {
-        public Task BILIBILI_Timeline_Global()
-        {
-            return new Task(Test);
-        }
-
-        public void Test()
-        {
-
-        }
-
-        public async Task TAsync()
-        {
-            await BILIBILI_Timeline_Global();
-        }
-    }
-
-
 }

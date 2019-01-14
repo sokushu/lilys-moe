@@ -15,7 +15,7 @@ namespace BangumiProject.Areas.Video.Process
     public class FileDownLoad
     {
         private bool Has = !Directory.Exists(Final.FilePath_DownLoad);
-        public string ToolPath { get; set; } //= @"C:\Users\myweb\Downloads\aria2-1.34.0-win-64bit-build1\aria2-1.34.0-win-64bit-build1\aria2c.exe";
+        public string ToolPath { get; set; } = "aria2c";
         public string TorrentFile { get; set; }
         public string SavePath { get; set; }
         private LinkedList<string> Vs = new LinkedList<string>();

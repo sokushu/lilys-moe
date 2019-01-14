@@ -143,6 +143,10 @@ namespace BangumiProject.Areas.Video.Controllers
         /// 上传多费劲哪！！！
         /// 所以这里是放上一个BT链接，下载链接就会自动下载的下载器
         /// 当下载完成之后，就会放到指定的文件夹中，然后Html5视频播放喽
+        /// 
+        /// 
+        /// 暂时还不能在Docker容器下正常工作，让我再研究一下
+        /// 
         /// </summary>
         /// <returns></returns>
         // POST: Play/Create
@@ -154,22 +158,23 @@ namespace BangumiProject.Areas.Video.Controllers
         {
             try
             {
-                string name = torrentFile.FileName;
-                using (var stream = new FileStream($"{Final.FilePath_DownLoad}{name}", FileMode.Create))
-                {
-                    torrentFile.CopyTo(stream);
-                    stream.Close();
-                }
-                Task.Run(() =>
-                {
-                    FileDownLoad downLoad = new FileDownLoad
-                    {
-                        SavePath = Final.FilePath_DownLoad,
-                        ToolPath = @"C:\Users\myweb\Downloads\aria2-1.34.0-win-64bit-build1\aria2-1.34.0-win-64bit-build1\aria2c.exe",
-                        TorrentFile = $"{Final.FilePath_DownLoad}{name}"
-                    };
-                    downLoad.Start();
-                });
+                //string name = torrentFile.FileName;
+                //using (var stream = new FileStream($"{Final.FilePath_DownLoad}{name}", FileMode.Create))
+                //{
+                //    torrentFile.CopyTo(stream);
+                //    stream.Close();
+                //}
+                ////视频后台下载
+                //Task.Run(() =>
+                //{
+                //    FileDownLoad downLoad = new FileDownLoad
+                //    {
+                //        SavePath = Final.FilePath_DownLoad,
+                //        ToolPath = @"C:\Users\myweb\Downloads\aria2-1.34.0-win-64bit-build1\aria2-1.34.0-win-64bit-build1\aria2c.exe",
+                //        TorrentFile = $"{Final.FilePath_DownLoad}{name}"
+                //    };
+                //    downLoad.Start();
+                //});
                 //返回首页
                 return RedirectToRoute("Index");
             }

@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Cors;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
+    /// <summary>
+    /// 动画的订阅相关处理
+    /// </summary>
     [Area("Bangumi")]
     public class BangumiSubsController : Controller
     {

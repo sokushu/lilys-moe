@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using User = BangumiProject.Areas.Users.Models.Users;
-
+using Microsoft.EntityFrameworkCore;
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
     /// <summary>
@@ -41,6 +41,11 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             return Json("Error");
         }
 
+        /// <summary>
+        /// 返回一个超详细的Memo信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: BangumiMemo/Details/5
         public ActionResult Details(int id)
         {
@@ -94,21 +99,44 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         }
 
         // GET: BangumiMemo/Edit/5
-        public ActionResult Edit(int id)
+        [Authorize]
+        [Route("/Bangumi/Memo/Edit{memoid:int}")]
+        public async Task<ActionResult> EditAsync(int memoid)
         {
-            return Json("Error");
+            var Memo = await _DBServices.GetFirstAsync<AnimeMemo>(memo => memo.ID == memoid);
+            if (Memo != null)
+            {
+                return View(
+                    viewName:"Memo",
+                    model:new AnimeMemo
+                    {
+                        MemoStr = Memo.MemoStr,
+                        NowAnimeNum = Memo.NowAnimeNum
+                    }
+                    );
+            }
+            return RedirectToRoute("Index");
         }
 
         // POST: BangumiMemo/Edit/5
         [HttpPost]
+        [Authorize]
+        [Route("/Bangumi/Memo/Edit{memoid:int}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int memoid, AnimeMemo animeMemo)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return Json("Error");
+                var Memo = await _DBServices.GetDateOneAsync<AnimeMemo>(db => db.Include(me => me.UserAnimeInfo).ThenInclude(info => info.SubAnime).Where(memo => memo.ID == memoid));
+                if (Memo != null)
+                {
+                    Memo.NowAnimeNum = animeMemo.NowAnimeNum;
+                    Memo.MemoStr = animeMemo.MemoStr;
+                    await _DBServices.UpdateAsync(Memo);
+                    //返回动画页面
+                    return RedirectToRoute(Final.Route_Bangumi_Details, Memo.UserAnimeInfo.SubAnime.AnimeID);
+                }
+                return RedirectToRoute("Index");
             }
             catch
             {
