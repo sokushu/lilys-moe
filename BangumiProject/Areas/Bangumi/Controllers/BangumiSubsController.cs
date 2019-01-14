@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
+    [Area("Bangumi")]
     public class BangumiSubsController : Controller
     {
         private readonly ICommDB _DBServices;
@@ -34,19 +35,19 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         // GET: BangumiSubs
         public ActionResult Index()
         {
-            return View();
+            return Json("Error");
         }
 
         // GET: BangumiSubs/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return Json("Error");
         }
 
         // GET: BangumiSubs/Create
         public ActionResult Create()
         {
-            return View();
+            return Json("Error");
         }
 
         // POST: BangumiSubs/Create
@@ -58,21 +59,21 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return Json("Error");
             }
             catch
             {
-                return View();
+                return Json("Error");
             }
         }
 
         // GET: BangumiSubs/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return Json("Error");
         }
 
-        // POST: BangumiSubs/Edit/5
+        // POST: BangumiSub5
         [HttpPost]
         [EnableCors("Test")]
         [Route("/BangumiSub{animeid:int}")]
@@ -132,25 +133,38 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         }
 
         // GET: BangumiSubs/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, int b)
         {
-            return View();
+            return Json("Error");
         }
 
-        // POST: BangumiSubs/Delete/5
+        // POST: BangumiSubDel5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [EnableCors("Test")]
+        [Authorize]//要登陆的
+        [Route("/BangumiSubDel{animeid:int}")]
+        public async Task<ActionResult> DeleteAsync(int animeid)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                // 取消订阅动画
+                if (_DBServices.HasAnimeID(animeid))
+                {
+                    //未来将改为使用软删除
+                    var UID = _userManager.GetUserId(HttpContext.User);
+                    var Info = await _DBServices.GetFirstAsync<AnimeUserInfo>(info => info.SubAnime.AnimeID == animeid && info.Users.Id == UID);
+                    if (Info != null)
+                    {
+                        await _DBServices.RemoveFromDBAsync(Info);
+                        return Json(new List<string> { "true", "成功取消" });
+                    }
+                    return Json(new List<string> { "true", "动画未订阅" });
+                }
+                return Json("Error");
             }
             catch
             {
-                return View();
+                return Json("Error");
             }
         }
     }

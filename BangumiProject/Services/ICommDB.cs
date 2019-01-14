@@ -29,5 +29,7 @@ namespace BangumiProject.Services
         Task AddAsync<T>(T t) where T : class;
         Task AddAsyncNoSave<T>(T t) where T : class;
         Task<T> GetLastAsync<T>() where T : class;
+        Task RemoveFromDBAsync<T>(T t) where T : class;
+        void RemoveFormDB<T>(T t) where T : class;
     }
 }

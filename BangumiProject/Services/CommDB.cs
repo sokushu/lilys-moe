@@ -226,6 +226,17 @@ namespace BangumiProject.Services
         {
             return await _db.Set<T>().LastAsync();
         }
+
+        public async Task RemoveFromDBAsync<T>(T t) where T : class
+        {
+            _db.Set<T>().Remove(t);
+            await _db.SaveChangesAsync();
+        }
+
+        public void RemoveFormDB<T>(T t) where T : class
+        {
+            _db.Set<T>().Remove(t);
+        }
     }
     public struct KEY
     {
