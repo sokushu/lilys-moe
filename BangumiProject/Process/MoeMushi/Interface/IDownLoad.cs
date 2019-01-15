@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace BangumiProject.Process.MoeMushi.Interface
         /// <typeparam name="T"></typeparam>
         /// <param name="uri"></param>
         /// <returns></returns>
-        T HttpConnect<T>(Uri uri);
-
+        string HttpHtml(string url);
+        Stream HttpStream(string url);
     }
 }

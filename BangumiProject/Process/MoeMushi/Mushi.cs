@@ -18,6 +18,7 @@ using BangumiProject.Models;
 using Microsoft.EntityFrameworkCore;
 using BangumiProject.Process.MoeMushi.DataSource;
 using BangumiProject.Process.MoeMushi.Process;
+using System.Reflection;
 
 namespace BangumiProject.Process.MoeMushi
 {
@@ -81,13 +82,54 @@ namespace BangumiProject.Process.MoeMushi
         /// <param name="mushiParams"></param>
         public Task Start(MoeMushiContext _MoeMushiDB)
         {
+            if (jsonAnalyzer == null)
+                ThrowNullReferenceException();
+            IDownLoad downLoad;
+            if (Down != null)
+            {
+                //使用自定义的
+                downLoad = Down;
+            }
+            else
+            {
+                //使用默认的
+                downLoad = new HttpGet();
+            }
+            //返回的是Html或是Json串
+            string HtmlorJson = downLoad.HttpHtml(Url.GetURL());
+            var assem = Assembly.GetExecutingAssembly();
+            //创建对象并解析
+            dynamic obj = assem.CreateInstance(jsonAnalyzer.FullName, true, BindingFlags.Default, null, new object[] { HtmlorJson }, null, null);
+            var data = obj.Data;//获取解析之后的数据集
+
+            //对解析的数据进行进一步处理
+
             return Task.Run(() =>
             {
                 var aw = BILIBILI_Timeline_Global(_MoeMushiDB);
                 //全部执行完毕
                 IsEnd = true;
             });
-            
+        }
+        /// <summary>
+        /// 添加下载器
+        /// </summary>
+        public IDownLoad Down { set; private get; } = null;
+        public IUrl Url { private get; set; } = new UrlKuBaRu();
+        private Type jsonAnalyzer { get; set; } = null;
+        public Mushi AddUrl(string url)
+        {
+            Url.AddURL(url);
+            return this;
+        }
+        private void ThrowNullReferenceException()
+        {
+            throw new NullReferenceException();
+        }
+        public Mushi SetJsonAnalyzer<T>() where T : class
+        {
+            jsonAnalyzer = typeof(T);
+            return this;
         }
 
         /// <summary>
