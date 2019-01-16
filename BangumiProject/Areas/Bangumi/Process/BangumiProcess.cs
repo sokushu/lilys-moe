@@ -10,6 +10,7 @@ namespace BangumiProject.Areas.Bangumi.Process
 {
     public static class BangumiProcess
     {
+
         /// <summary>
         /// 计算动画最新集数（动画集数机制变更）
         /// 

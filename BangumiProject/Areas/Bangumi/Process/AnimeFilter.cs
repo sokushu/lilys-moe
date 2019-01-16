@@ -1,0 +1,44 @@
+﻿using BangumiProject.Areas.Bangumi.Interface;
+using BangumiProject.Areas.Bangumi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BangumiProject.Areas.Bangumi.Process
+{
+    public class AnimeFilter
+    {
+
+        private ICollection<IBangumiCase> BangumiCase { get; set; }
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public AnimeFilter()
+        {
+            BangumiCase = new List<IBangumiCase>();
+        }
+        /// <summary>
+        /// 添加过滤处理
+        /// </summary>
+        /// <param name="bangumiCase">自定义的过滤处理</param>
+        public void SetAnimeFilter(IBangumiCase bangumiCase)
+        {
+            BangumiCase.Add(bangumiCase);
+        }
+        /// <summary>
+        /// 返回最终的结果集
+        /// </summary>
+        /// <param name="InputAnime">输入的动画集</param>
+        /// <returns>返回经过多次过滤后的动画数据</returns>
+        public List<Anime> GetAnimeFilter(List<Anime> InputAnime)
+        {
+            List<Anime> animes = InputAnime;
+            foreach (IBangumiCase item in BangumiCase)
+            {
+                animes = item.AnimeFilter(animes);
+            }
+            return animes;
+        }
+    }
+}

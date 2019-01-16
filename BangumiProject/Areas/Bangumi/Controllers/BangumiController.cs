@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using MoeUtilsBox.Utils;
 using System.Net;
 using BangumiProject.Areas.Error.Models;
+using BangumiProject.Areas.Bangumi.Process.AnimeFilterC;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -97,31 +98,28 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 ListTag = await _DBServices.GetDateToListAsync<AnimeTag>(db => db.Include(a => a.Anime));
                 _DBServices.SetCache(key, ListTag);
             }
-            AnimeStats stats = BangumiFilter.GetAnimeStats(animeStats);
-            AnimeType type = BangumiFilter.GetAnimeType(animetype);
-            bool IsAnimeTypeAll = BangumiFilter.GetAnimeTypeAll(animeTypeAll);
-            BangumiFilter filter = new BangumiFilter()
-            {
-                Year = year,
-                AnimeStats = stats,
-                AnimeType = type,
-                AnimeTypeAll = IsAnimeTypeAll,
-                TypeName = TagName
-            };
+            /*
+             * 这下面是演示，暂时不能返回需要的数据
+             */
+            AnimeFilter animeFilter = new AnimeFilter();
 
-            List<Anime> animes = filter.Filter(ListAnime, ListTag);
+            animeFilter.SetAnimeFilter(new AnimeFilterByEnd(Process.AnimeFilterC.AnimeStats.End));
+            animeFilter.SetAnimeFilter(new AnimeFilterByYear(2019));
+            animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(AnimeType.TVAnime));
+
+            //返回最终的结果集
+            var Animes = animeFilter.GetAnimeFilter(ListAnime);
             PageHelper pageHelper = new PageHelper(20);
-            
             return View(
                 viewName:"Bangumi",
-                model:new Views.Bangumi.Model.Bangumi
+                model: new Views.Bangumi.Model.Bangumi
                 {
                     AllPage = pageHelper.GetAllPage(),      //处理后动画的全部页数
                     NowPage = pageHelper.GetNowPage(),      //现在看到的页数
-                    Animes = pageHelper.GetListPage(Page, animes),        //处理后的动画集合
+                    Animes = pageHelper.GetListPage(Page, Animes),        //处理后的动画集合
                     AnimeSeason = new List<int> { 1, 2, 3, 4 },//动画的季度（总共就4个季度，而且是常量的）
-                    AnimeTags = filter.AnimeTagName,  //动画的标签合集
-                    AnimeYear = filter.AnimeYear   //动画的年份合集
+                    //AnimeTags = filter.AnimeTagName,  //动画的标签合集
+                    //AnimeYear = filter.AnimeYear   //动画的年份合集
                 }
                 );
         }
