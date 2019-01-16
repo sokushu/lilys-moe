@@ -37,6 +37,9 @@ namespace BangumiProject.Areas.Bangumi.Process
             foreach (IBangumiCase item in BangumiCase)
             {
                 animes = item.AnimeFilter(animes);
+                //都已经没了，不需要继续筛选了
+                if (animes.Count == 0)
+                    break;
             }
             return animes;
         }
