@@ -104,7 +104,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             AnimeFilter animeFilter = new AnimeFilter();
 
             animeFilter.SetAnimeFilter(new AnimeFilterByEnd(Process.AnimeFilterC.AnimeStats.End));
-            animeFilter.SetAnimeFilter(new AnimeFilterByYear(2019));
+            animeFilter.SetAnimeFilter(new AnimeFilterByYear(2018));
             animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(AnimeType.TVAnime));
 
             //返回最终的结果集

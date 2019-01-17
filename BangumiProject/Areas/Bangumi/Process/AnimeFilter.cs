@@ -9,7 +9,9 @@ namespace BangumiProject.Areas.Bangumi.Process
 {
     public class AnimeFilter
     {
-
+        /// <summary>
+        /// 要执行的所有过滤类
+        /// </summary>
         private ICollection<IBangumiCase> BangumiCase { get; set; }
         /// <summary>
         /// 初始化

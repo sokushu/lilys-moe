@@ -8,13 +8,30 @@ using System.Threading.Tasks;
 namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
 {
     public class AnimeFilterByEnd : IBangumiCase
-    {
+    { 
         private AnimeStats stats { get; set; }
         public AnimeFilterByEnd(AnimeStats stats)
         {
             this.stats = stats;
         }
-
+        public AnimeFilterByEnd(int Input)
+        {
+            switch (Input)
+            {
+                case -1:
+                    stats = AnimeStats.All;
+                    break;
+                case 0:
+                    stats = AnimeStats.End;
+                    break;
+                case 1:
+                    stats = AnimeStats.Play;
+                    break;
+                default:
+                    stats = AnimeStats.All;
+                    break;
+            }
+        }
         public List<Anime> AnimeFilter(List<Anime> animes)
         {
             List<Anime> returnanime = new List<Anime>();

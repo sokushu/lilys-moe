@@ -7,14 +7,22 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
 {
+
     public class AnimeFilterByAnimeType : IBangumiCase
     {
         private AnimeType AnimeType { get; set; }
         private bool All { get; set; }
+        /// <summary>
+        /// 指定动画类型
+        /// </summary>
+        /// <param name="animeType"></param>
         public AnimeFilterByAnimeType(AnimeType animeType)
         {
             AnimeType = animeType;
         }
+        /// <summary>
+        /// 不指定动画类型，直接返回全部动画
+        /// </summary>
         public AnimeFilterByAnimeType()
         {
             All = true;

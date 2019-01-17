@@ -22,19 +22,19 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
         /// <returns></returns>
         public List<Anime> AnimeFilter(List<Anime> animes)
         {
+            if (Year == -1)//年份-1代表不过滤
+                return animes;
+            List<Anime> ReturnAnime = new List<Anime>();
             Span<Anime> Animes = animes.ToArray();
             int ArrLen = Animes.Length;
-            return Get(ArrLen, Animes).ToList();
-        }
-        private IEnumerable<Anime> Get(int ArrLen, Span<Anime> Animes)
-        {
             for (int i = 0; i < ArrLen; i++)
             {
                 if (Animes[i].AnimePlayTime.Year == Year)
                 {
-                    yield return(Animes[i]);
+                    ReturnAnime.Add(Animes[i]);
                 }
             }
+            return ReturnAnime;
         }
     }
 }
