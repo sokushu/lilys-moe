@@ -20,6 +20,31 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
         {
             AnimeType = animeType;
         }
+
+        public AnimeFilterByAnimeType(int AnimeType)
+        {
+            switch (AnimeType)
+            {
+                case -1:
+                    All = true;
+                    break;
+                case 0:
+                    this.AnimeType = Models.AnimeType.TVAnime;
+                    break;
+                case 1:
+                    this.AnimeType = Models.AnimeType.OVA;
+                    break;
+                case 2:
+                    this.AnimeType = Models.AnimeType.MovieAnime;
+                    break;
+                case 3:
+                    this.AnimeType = Models.AnimeType.Other;
+                    break;
+                default:
+                    All = true;
+                    break;
+            }
+        }
         /// <summary>
         /// 不指定动画类型，直接返回全部动画t
         /// </summary>

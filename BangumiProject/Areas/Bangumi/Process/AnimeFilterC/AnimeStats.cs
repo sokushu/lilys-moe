@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BangumiProject.Areas.Bangumi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
     /// <summary>
     /// 动画的状态
     /// </summary>
-    public enum AnimeStats
+    public enum AnimeStats : int
     {
         /// <summary>
         /// 已完结

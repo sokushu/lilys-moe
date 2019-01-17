@@ -63,6 +63,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         }
 
         /// <summary>
+        /// 
         /// 查询所有的动画数据，
         /// 动画索引页面
         /// 
@@ -75,19 +76,23 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// 具体可以参考Bilibili的动画分类页面
         /// 
         /// 参数是过滤选项。
+        /// 
         /// </summary>
-        /// <param name="TagName"></param>
-        /// <param name="Page"></param>
-        /// <param name="year"></param>
-        /// <param name="session"></param>
-        /// <param name="animeStats"></param>
-        /// <param name="animetype"></param>
-        /// <param name="animeTypeAll"></param>
+        /// <param name="Page">页数，第几页</param>
+        /// <param name="tagname">动画标签名</param>
+        /// <param name="year">动画播出年份</param>
+        /// <param name="season">动画播出季度</param>
+        /// <param name="animestats">动画状态，完结了吗</param>
+        /// <param name="animetype">动画类型，TV动画吗</param>
+        /// <param name="dayofweek">动画是星期几播放的</param>
         /// <returns></returns>
         // GET: Bangumi
         [HttpGet]
         [Route("/Bangumi", Name = Final.Route_Bangumi_Index)]
-        public async Task<ActionResult> IndexAsync(string TagName = "", int Page = -1, int year = -1, int session = -1, int animeStats = -1, int animetype = -1, int animeTypeAll = 0)
+        public async Task<ActionResult> IndexAsync(
+            int Page = 1, string tagname = "", int year = -1, int season = -1, int animestats = -1,
+            int animetype = -1, int dayofweek = -1
+            )
         {
             KEY key = new KEY { Key = CacheKey.Anime_All().ToCharArray() };
             if (!_DBServices.GetDate(key, out List<Anime> ListAnime))
@@ -105,15 +110,17 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             AnimeFilter animeFilter = new AnimeFilter();
 
             //动画是否完结
-            animeFilter.SetAnimeFilter(new AnimeFilterByEnd(Process.AnimeFilterC.AnimeStats.End));
+            animeFilter.SetAnimeFilter(new AnimeFilterByEnd(animestats));
             //动画的年份
             animeFilter.SetAnimeFilter(new AnimeFilterByYear(year));
             //动画的类型
-            animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(AnimeType.TVAnime));
+            animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(animetype));
             //动画播出日是星期几
-            animeFilter.SetAnimeFilter(new AnimeFilterByWeek(2));
+            animeFilter.SetAnimeFilter(new AnimeFilterByWeek(dayofweek));
             //这是哪一季度的动画
-            animeFilter.SetAnimeFilter(new AnimeFilterBySeason(2));
+            animeFilter.SetAnimeFilter(new AnimeFilterBySeason(season));
+            //添加标签过滤
+            animeFilter.SetAnimeFilter(new AnimeFilterByTagName(tagname, ListTag));
 
             //返回最终的过滤结果集
             var Animes = animeFilter.GetAnimeFilter(ListAnime);

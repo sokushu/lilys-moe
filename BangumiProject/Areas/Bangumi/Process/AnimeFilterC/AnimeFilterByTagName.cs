@@ -11,8 +11,13 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
     {
         private string TagName { get; set; }
         private ICollection<AnimeTag> animeTags { get; set; }
+        private bool All { get; set; } = false;
         public AnimeFilterByTagName(string TagName, ICollection<AnimeTag> animeTags)
         {
+            if (TagName == string.Empty)
+            {
+                All = true;
+            }
             this.TagName = TagName;
             this.animeTags = animeTags;
         }
@@ -35,10 +40,10 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
         /// <returns></returns>
         private HashSet<int> GetAnimeIDs(ICollection<AnimeTag> animeTags)
         {
-            HashSet<int> Animeids = new HashSet<int> { 0 };
+            HashSet<int> Animeids = new HashSet<int>();
             foreach (var item in animeTags)
             {
-                if (item.TagName == TagName)
+                if (All || item.TagName == TagName)
                 {
                     Animeids.Add(item.Anime.AnimeID);
                 }
