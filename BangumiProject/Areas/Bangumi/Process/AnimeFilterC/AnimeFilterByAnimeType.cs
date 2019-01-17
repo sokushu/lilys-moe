@@ -21,7 +21,7 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
             AnimeType = animeType;
         }
         /// <summary>
-        /// 不指定动画类型，直接返回全部动画
+        /// 不指定动画类型，直接返回全部动画t
         /// </summary>
         public AnimeFilterByAnimeType()
         {
