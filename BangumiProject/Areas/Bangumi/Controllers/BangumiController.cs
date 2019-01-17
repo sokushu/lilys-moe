@@ -76,10 +76,13 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// 
         /// 参数是过滤选项。
         /// </summary>
-        /// <param name="TagName">标签</param>
-        /// <param name="Page">分页，页数</param>
-        /// <param name="year">哪一年的动画</param>
-        /// <param name="session">哪一季的动画（1月4月7月10月）</param>
+        /// <param name="TagName"></param>
+        /// <param name="Page"></param>
+        /// <param name="year"></param>
+        /// <param name="session"></param>
+        /// <param name="animeStats"></param>
+        /// <param name="animetype"></param>
+        /// <param name="animeTypeAll"></param>
         /// <returns></returns>
         // GET: Bangumi
         [HttpGet]
@@ -98,16 +101,21 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 ListTag = await _DBServices.GetDateToListAsync<AnimeTag>(db => db.Include(a => a.Anime));
                 _DBServices.SetCache(key, ListTag);
             }
-            /*
-             * 这下面是演示，暂时不能返回需要的数据
-             */
+
             AnimeFilter animeFilter = new AnimeFilter();
 
+            //动画是否完结
             animeFilter.SetAnimeFilter(new AnimeFilterByEnd(Process.AnimeFilterC.AnimeStats.End));
-            animeFilter.SetAnimeFilter(new AnimeFilterByYear(2018));
+            //动画的年份
+            animeFilter.SetAnimeFilter(new AnimeFilterByYear(year));
+            //动画的类型
             animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(AnimeType.TVAnime));
+            //动画播出日是星期几
+            animeFilter.SetAnimeFilter(new AnimeFilterByWeek(2));
+            //这是哪一季度的动画
+            animeFilter.SetAnimeFilter(new AnimeFilterBySeason(2));
 
-            //返回最终的结果集
+            //返回最终的过滤结果集
             var Animes = animeFilter.GetAnimeFilter(ListAnime);
             PageHelper pageHelper = new PageHelper(20);
             return View(

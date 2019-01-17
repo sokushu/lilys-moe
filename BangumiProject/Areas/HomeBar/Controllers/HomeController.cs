@@ -38,9 +38,6 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             this._userManager = _userManager;
             this.DB = DB;
             this._roleManager = _roleManager;
-
-            // 确认是否存在管理员用户
-            new CreateDB(_userManager);
         }
 
         /// <summary>

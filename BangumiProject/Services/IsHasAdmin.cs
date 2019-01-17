@@ -3,11 +3,11 @@ using BangumiProject.Controllers;
 using BangumiProject.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace BangumiProject.Process
+namespace BangumiProject.Services
 {
-    public class CreateDB
+    public class IsHasAdmin : IEmpty
     {
-        public CreateDB(UserManager<Users> _userManager)
+        public IsHasAdmin(UserManager<Users> _userManager)
         {
             // 确认是否存在管理员用户
             var count = _userManager.GetUsersInRoleAsync(Final.Yuri_Admin).Result.Count;
@@ -24,4 +24,3 @@ namespace BangumiProject.Process
         }
     }
 }
-

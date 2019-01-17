@@ -35,6 +35,8 @@ namespace BangumiProject.Areas.Bangumi.Process
         /// <returns>返回经过多次过滤后的动画数据</returns>
         public List<Anime> GetAnimeFilter(List<Anime> InputAnime)
         {
+            if (InputAnime == null)
+                return new List<Anime>();
             List<Anime> animes = InputAnime;
             foreach (IBangumiCase item in BangumiCase)
             {

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using BangumiProject.Controllers;
 using User = BangumiProject.Areas.Users.Models.Users;
+using BangumiProject.Services;
 
 namespace BangumiProject.Areas.Identity.Pages.Account
 {
@@ -27,12 +28,15 @@ namespace BangumiProject.Areas.Identity.Pages.Account
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            // 是否有管理员用户
+            new IsHasAdmin(_userManager);
         }
 
         [BindProperty]
