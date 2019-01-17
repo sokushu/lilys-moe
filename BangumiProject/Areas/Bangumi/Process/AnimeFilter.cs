@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process
 {
+    /// <summary>
+    /// 动画过滤管理器。
+    /// 请结合IBangumiCase接口使用
+    /// </summary>
     public class AnimeFilter
     {
         /// <summary>

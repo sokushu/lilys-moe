@@ -106,7 +106,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 ListTag = await _DBServices.GetDateToListAsync<AnimeTag>(db => db.Include(a => a.Anime));
                 _DBServices.SetCache(key, ListTag);
             }
-
+            /*
+             * 这里是一个变化高发区
+             * 未来可能会加入不同的过滤条件
+             */
             AnimeFilter animeFilter = new AnimeFilter();
 
             //动画是否完结
@@ -181,7 +184,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             ICollection<AnimeTag> animeTags = new List<AnimeTag>();     //动画的标签
             ICollection<AnimeSouce> animeSouces = new List<AnimeSouce>();//动画的播放源
             ICollection<AnimeComm> animeComms = new List<AnimeComm>();  //动画的评论
-            //var SubNum = 0;                                             //用户订阅量（暂时用不到呢）
+            //var SubNum = 0;                                           //用户订阅量（暂时用不到呢）
 
             animeTags = Anime.Tags;
             animeSouces = Anime.Souce;
@@ -191,7 +194,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 //需要更新动画信息
                 _DBServices.SetCache(key, Anime);//全部的数据读取好之后，缓存一下
                 await _DBServices.UpdateAsync(Anime);
-                
             }
             //动画集数列表的相关计算
             AnimeNumberInfo animeNumberInfo = Anime.AnimeNumPage();
