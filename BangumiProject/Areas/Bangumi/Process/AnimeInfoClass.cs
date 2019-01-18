@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process
 {
+    /// <summary>
+    /// 渲染动画页面的页数信息
+    /// 
+    /// </summary>
     public struct AnimeNumberInfo
     {
         public int AllPage { get; set; }

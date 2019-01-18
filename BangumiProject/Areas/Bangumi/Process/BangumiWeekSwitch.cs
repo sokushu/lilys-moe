@@ -401,6 +401,11 @@ namespace BangumiProject.Areas.Bangumi.Process
             }
         }
 
+        public enum AnimeStats
+        {
+            End,Play,All
+        }
+
         /// <summary>
         /// 
         /// </summary>

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProject.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BangumiProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Policy = Final.Yuri_Admin)]
     public class AdminController : Controller
     {
         // GET: Admin
