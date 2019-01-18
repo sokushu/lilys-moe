@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Interface
 {
-    public interface AnimeShow<T>
+    public interface IAnimeShow<T>
     {
         
     }
