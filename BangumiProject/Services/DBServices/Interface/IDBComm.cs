@@ -1,14 +1,13 @@
-﻿using BangumiProject.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace BangumiProject.Services
+namespace BangumiProject.Services.DBServices.Interface
 {
-    public interface ICommDB
+    public interface IDBComm
     {
         bool AutoCache { set; get; }
         Task<List<T>> GetDateToListAsync<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class;

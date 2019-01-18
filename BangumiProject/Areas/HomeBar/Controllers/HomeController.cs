@@ -20,6 +20,7 @@ using BangumiProject.Controllers;
 using BangumiProject.Areas.Bangumi.Process;
 using User = BangumiProject.Areas.Users.Models.Users;
 using BangumiProject.Areas.HomeBar.Views.Home.Model;
+using BangumiProject.Services;
 
 namespace BangumiProject.Areas.HomeBar.Controllers
 {
@@ -30,14 +31,18 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         /// 用户数据库，以及工具的初始化
         /// </summary>
         private readonly UserManager<User> _userManager;
+        private readonly ICommDB _DBServer;
         private readonly BangumiProjectContext DB;
         private readonly MoeTools moeTools = new MoeTools();
         private readonly RoleManager<IdentityRole> _roleManager;
-        public HomeController(UserManager<User> _userManager, BangumiProjectContext DB, RoleManager<IdentityRole> _roleManager)
+        public HomeController(
+            UserManager<User> _userManager, BangumiProjectContext DB, 
+            RoleManager<IdentityRole> _roleManager, ICommDB _DBServer)
         {
             this._userManager = _userManager;
             this.DB = DB;
             this._roleManager = _roleManager;
+            this._DBServer = _DBServer;
         }
 
         /// <summary>
