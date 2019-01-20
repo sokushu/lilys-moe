@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BangumiProject.Areas.Bangumi.Interface
+namespace BangumiProject.Process.Interface
 {
-    public interface IAnimeShow<T>
+    public interface IPage
     {
-        
     }
 }

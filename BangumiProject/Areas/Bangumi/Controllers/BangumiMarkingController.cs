@@ -9,6 +9,8 @@ namespace BangumiProject.Areas.Bangumi.Controllers
 {
     /// <summary>
     /// 这个是给动画打分的
+    /// 未来的事情了
+    /// 不着急
     /// </summary>
     [Area("Bangumi")]
     public class BangumiMarkingController : Controller

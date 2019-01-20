@@ -65,9 +65,14 @@ namespace BangumiProject.Controllers
         [Route("/Test")]
         public async Task<IActionResult> GetIndexAsync(string b)
         {
-            _commdb.HasAnimeID(3);
+            return View("AAA");
+        }
 
-            return Json(_commdb.HasAnimeID(3));
+        [HttpGet]
+        [Route("/TestGet")]
+        public IActionResult Get()
+        {
+            return PartialView("View", new List<string> { "TEST" });
         }
 
         public T GetDate<T>(Func<string, T> func)

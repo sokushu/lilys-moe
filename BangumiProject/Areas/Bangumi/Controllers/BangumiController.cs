@@ -150,7 +150,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// <returns></returns>
         // GET: Bangumi/5
         [HttpGet]
-        [Route("/Bangumi/{id?}", Name = Final.Route_Bangumi_Details)]
+        [Route("/Bangumi/{id:int}", Name = Final.Route_Bangumi_Details)]
         public async Task<ActionResult> DetailsAsync(int id = -1)
         {
             //从数据库中读取数据
@@ -159,6 +159,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             var key = new KEY { Key = CacheKey.Anime_One(id).ToCharArray() };
             if (!_DBServices.GetDate(key, out Anime Anime))
             {
+                /**
+                 * 我有话要说：
+                 * 下面这个就是要对
+                 */
                 Anime = await _DBServices.GetDateOneAsync<Anime>(db =>
                         db.Where(a => a.AnimeID == id)
                         .Include(a => a.Souce)
@@ -172,7 +176,11 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 blogs = await _DBServices.GetDateToListAsync<Blog>(db => db.Where(b => b.AnimeID == id).OrderByDescending(a => a.Time).Take(10));
                 _DBServices.SetCache(key, blogs);
             }
-
+            /**
+             * 这里是变化的数据
+             * 未来可能会加入不同的页面展示模块
+             * 想办法把这里拆分出来
+             */
             //初始化数据
             var userAnimeNumber = 0;                                    //动画观看集数
             var IsSignIn = false;                                       //用户是否登录
@@ -417,6 +425,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             }
             catch
             {
+                new Tuple<string, User>("", new User());
                 throw;
             }
         }

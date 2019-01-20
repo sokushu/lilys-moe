@@ -157,7 +157,7 @@ namespace BangumiProject.Areas.Files.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            return Json("Error");
         }
 
         // POST: Files/Edit/5
@@ -169,11 +169,11 @@ namespace BangumiProject.Areas.Files.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(IndexAsync));
+                return Json("Error");
             }
             catch
             {
-                return View();
+                return Json("Error");
             }
         }
 
@@ -193,11 +193,11 @@ namespace BangumiProject.Areas.Files.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(IndexAsync));
+                return Json("Error");
             }
             catch
             {
-                return View();
+                return Json("Error");
             }
         }
     }

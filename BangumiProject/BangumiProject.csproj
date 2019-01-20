@@ -63,7 +63,6 @@
     <Folder Include="Areas\Blogs\Views\" />
     <Folder Include="Areas\Files\Services\" />
     <Folder Include="Areas\HomeBar\Models\" />
-    <Folder Include="Areas\HomeBar\Process\" />
     <Folder Include="Areas\HomeBar\Services\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\Profile\Process\" />

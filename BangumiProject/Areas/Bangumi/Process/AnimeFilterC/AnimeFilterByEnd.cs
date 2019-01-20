@@ -1,5 +1,6 @@
-﻿using BangumiProject.Areas.Bangumi.Interface;
+﻿
 using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Process.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
