@@ -73,20 +73,36 @@ namespace BangumiProject.Areas.Profile.Controllers
         public async Task<IActionResult> GetMyProfile()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
             var animes = await _DB.UserAnimeInfos.Where(infos => infos.Users.Equals(user))
                 .Include(infos => infos.SubAnime)
                 .ToListAsync();
-
             WeekSwitch Switch = new WeekSwitch();
             var AnimeList = Switch.SwitchAnimeByStats(animes);
-
             return View("Profile", new Views.Profile.Model.Profile
             {
                 Users = user,
                 IsMe = true,
                 AnimeInfos = AnimeList
             });
+        }
+
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/Profile/{uid?}", Name = "")]
+        public async Task<IActionResult> GetComm(int PageInt, string uid)
+        {
+            var User = await _userManager.FindByIdAsync(uid);
+            if (User == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView(
+                viewName:""
+                );
         }
     }
 

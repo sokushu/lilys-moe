@@ -20,7 +20,11 @@
         </a>
         <ul class="mdui-menu" id="user-menu">
             <li class="mdui-menu-item">
-                <a href="javascript:;" class="mdui-ripple">我的追番《10集》</a>
+                <a asp-route="@Final.Route_Profile_UID" class="mdui-ripple">我的主页</a>
+            </li>
+            <li class="mdui-divider"></li>
+            <li class="mdui-menu-item">
+                <a asp-area="Identity" asp-page="/Account/Manage/Index"  class="mdui-ripple">自定义设置</a>
             </li>
         </ul>
     }
