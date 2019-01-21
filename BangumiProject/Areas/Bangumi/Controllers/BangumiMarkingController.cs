@@ -24,6 +24,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         // GET: BangumiMarking/Details/5
         public ActionResult Details(int id)
         {
+            //分数的详细信息
             return View();
         }
 
@@ -42,11 +43,11 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return View("Create");
             }
             catch
             {
-                return View();
+                throw;
             }
         }
 
