@@ -1,8 +1,9 @@
 ﻿@{
     ViewData["Title"] = "关于Lilys.moe";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var config = ((ReadConfig)ViewData["About"]);
 }
-
+@using BangumiProject.Process
 <h2>@ViewData["Title"]</h2>
 <p>
 
@@ -55,6 +56,15 @@
     <textarea name="wenti" id="wenti"></textarea><br />
     <button type="submit">问这个问题</button>
 </form>
+
+<p>
+    让我们看看其他人的问题：<br />
+    @foreach (var item in config.Keys)
+    {
+        <p>@item</p><br />
+        <p>问题： @config[item]</p><br />
+    }
+</p>
 
 
 

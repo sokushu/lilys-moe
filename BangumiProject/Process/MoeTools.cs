@@ -96,6 +96,7 @@ namespace BangumiProject.Process
                 {
                     if (item.Length > 0)
                     {
+                        //出现BUG，待修复
                         int i = 0;
                         var k = item.Substring(0, (i = item.IndexOf('=')) > 0 ? i : item.Length);
                         var v = item.Substring(i > 0 ? i : 0);
@@ -119,5 +120,7 @@ namespace BangumiProject.Process
             base.Add(key, value);
             File.AppendAllText(FilePath, $"{key}={value}\n");
         }
+
+        
     }
 }

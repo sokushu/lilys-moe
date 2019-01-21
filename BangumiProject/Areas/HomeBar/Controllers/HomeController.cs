@@ -136,9 +136,8 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         [Route("/About.jsp", Name = "About")]
         public IActionResult GetAbout()
         {
-            var sb = "好消息！！好消息，偶们首家线上赌场开业啦";
-
-            ViewData["About"] = sb.ToString();
+            ReadConfig readConfig = new ReadConfig();
+            ViewData["About"] = readConfig;
             return View("About");
         }
 
