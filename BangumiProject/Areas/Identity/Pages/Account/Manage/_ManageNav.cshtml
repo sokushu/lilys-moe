@@ -1,15 +1,19 @@
-﻿@using BangumiProject.Areas.Users.Models
-@inject SignInManager<Users> SignInManager
-@{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
-}
-<ul class="nav nav-pills nav-stacked">
-    <li @*class="@ManageNavPages.IndexNavClass(ViewContext)"*@><a asp-page="./Index">Profile</a></li>
-    <li @*class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"*@><a id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a id="external-login" asp-page="./ExternalLogins">External logins</a></li>
-    }
-    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="@ManageNavPages.PersonalDataNavClass(ViewContext)"><a asp-page="./PersonalData">Personal data</a></li>
+﻿<ul class="mdui-list">
+    <li class="mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="mdui-list-item-content">更改密码</a>
+    </li>
+    <li class="mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="mdui-list-item-content">更改密码</a>
+    </li>
+    <li class="mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="mdui-list-item-content">更改密码</a>
+    </li>
+    <li class="mdui-divider"></li>
+    <li class="mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
+        <a asp-area="Identity" asp-page="/Account/Manage/PersonalData" class="mdui-list-item-content">个人资料管理</a>
+    </li>
 </ul>

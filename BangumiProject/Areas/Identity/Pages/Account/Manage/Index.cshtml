@@ -2,12 +2,14 @@
 @model IndexModel
 @{
     ViewData["Title"] = "自定义设置";
+    Layout = "_Layout.cshtml";
 }
 
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" model="Model.StatusMessage"/>
 <div class="mdui-row">
-    <div class="mdui-col-md-9">
+    <div class="mdui-col-sm-12">
+        
         <form id="profile-form" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -37,26 +39,6 @@
             </div>
             <button type="submit" class="btn btn-default">Save</button>
         </form>
-    </div>
-    <div class="mdui-col-md-3">
-        <ul class="mdui-list">
-            <li class="mdui-list-item mdui-ripple">
-                <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
-                <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="mdui-list-item-content">更改密码</a>
-            </li>
-            <li class="mdui-list-item mdui-ripple">
-                <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
-                <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="mdui-list-item-content">更改密码</a>
-            </li>
-            <li class="mdui-list-item mdui-ripple">
-                <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
-                <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="mdui-list-item-content">更改密码</a>
-            </li>
-            <li class="mdui-list-item mdui-ripple">
-                <i class="mdui-list-item-icon mdui-icon material-icons">chat_bubble</i>
-                <a asp-area="Identity" asp-page="/Account/Manage/PersonalData" class="mdui-list-item-content">个人资料管理</a>
-            </li>
-        </ul>
     </div>
 </div>
 
