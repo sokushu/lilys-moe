@@ -58,7 +58,7 @@ namespace BangumiProject.Areas.Profile.Controllers
             return View("Profile", new Views.Profile.Model.Profile
             {
                 Users = user,
-                IsMe = false,
+                IsMe = user.Id == _userManager.GetUserId(HttpContext.User),
                 AnimeInfos = AnimeList
             });
         }

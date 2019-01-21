@@ -31,8 +31,9 @@ namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "还没有填写密码哦")]
             [DataType(DataType.Password)]
+            [Display(Name = "密码")]
             public string Password { get; set; }
         }
 
@@ -61,9 +62,9 @@ namespace BangumiProject.Areas.Identity.Pages.Account.Manage
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword)
             {
-                if (!await _userManager.CheckPasswordAsync(user, Input.Password))
+                if (!await _userManager.CheckPasswordAsync(user, Input.Password??string.Empty))
                 {
-                    ModelState.AddModelError(string.Empty, "Password not correct.");
+                    ModelState.AddModelError(string.Empty, "密码错误.");
                     return Page();
                 }
             }

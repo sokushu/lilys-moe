@@ -1,7 +1,7 @@
 ﻿@page
 @model PersonalDataModel
 @{
-    ViewData["Title"] = "Personal Data";
+    ViewData["Title"] = "个人资料";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
     Layout = "_Layout.cshtml";
 }
@@ -15,10 +15,10 @@
             <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
         </p>
         <form asp-page="DownloadPersonalData" method="post" class="form-group">
-            <button class="btn btn-default" type="submit">Download</button>
+            <button class="mdui-btn mdui-color-green-300 mdui-btn-raised" type="submit">下载账户资料</button>
         </form>
         <p>
-            <a asp-page="DeletePersonalData" class="btn btn-default">Delete</a>
+            <a asp-page="DeletePersonalData" class="mdui-btn mdui-btn-raised mdui-color-red">删除账户</a>
         </p>
     </div>
 </div>

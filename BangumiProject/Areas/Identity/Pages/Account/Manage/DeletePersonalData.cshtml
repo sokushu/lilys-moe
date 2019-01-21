@@ -1,7 +1,7 @@
-﻿@page
+﻿@page "/Profile/Setting/DeletePerson"
 @model DeletePersonalDataModel
 @{
-    ViewData["Title"] = "Delete Personal Data";
+    ViewData["Title"] = "删除全部账户数据";
     ViewData["ActivePage"] = ManageNavPages.DeletePersonalData;
     Layout = "_Layout.cshtml";
 }
@@ -11,7 +11,7 @@
 <div class="alert alert-warning" role="alert">
     <p>
         <span class="glyphicon glyphicon-warning-sign"></span>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+        <strong class="mdui-text-color-red">警告！ 这将会删除您的全部账户资料，将没有恢复的机会，请确定您不是误操作</strong>
     </p>
 </div>
 
@@ -25,8 +25,9 @@
             <input asp-for="Input.Password" class="form-control" />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
+        <br />
         }
-        <button class="btn btn-danger" type="submit">Delete data and close my account</button>
+        <button class="mdui-btn mdui-color-red mdui-btn-raised" type="submit">删除并彻底关闭我的账户</button>
     </form>
 </div>
 

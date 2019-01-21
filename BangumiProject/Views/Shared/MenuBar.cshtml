@@ -15,7 +15,7 @@
     <a class="mdui-btn" asp-route="Bangumi">动画索引</a>
     @if (Model.Item1)
     {
-        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#user-menu'}" mdui-tooltip="{content:'@Model.Item2'}">
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{position:'bottom', target:'#user-menu'}" mdui-tooltip="{content:'@Model.Item2'}">
             <img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" />
         </a>
         <ul class="mdui-menu" id="user-menu">
@@ -43,6 +43,34 @@
     <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
     @if (Model.Item1)
     {
+        <a href="javascript:;" mdui-menu="{target:'#Infostream', subMenuTrigger:'hover', subMenuDelay:200}">动态<span>(3)</span></a>
+        <ul class="mdui-list mdui-menu mdui-menu-cascade" style="max-width:400px; min-width:400px;" id="Infostream">
+            <li class="mdui-menu-item mdui-list-item mdui-ripple">
+                <div class="mdui-list-item-avatar"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" /></div>
+                <div class="mdui-list-item-content">
+                    <div class="mdui-list-item-title">你的订阅动画更新了</div>
+                    <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">All Connors</span> - I'll be in your neighborhood ...</div>
+                </div>
+            </li>
+            <li class="mdui-divider-inset mdui-m-y-0"></li>
+            <li class="mdui-menu-item mdui-list-item mdui-ripple">
+                <div class="mdui-list-item-avatar"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" /></div>
+                <div class="mdui-list-item-content">
+                    <div class="mdui-list-item-title">JOJO第十集</div>
+                    <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">to Alex, Scott, Jennifer</span> - Wish I could ...</div>
+                </div>
+            </li>
+            <li class="mdui-divider-inset mdui-m-y-0"></li>
+            <li class="mdui-menu-item mdui-list-item mdui-ripple">
+                <div class="mdui-list-item-avatar"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" /></div>
+                <div class="mdui-list-item-content">
+                    <div class="mdui-list-item-title">新的图片</div>
+                    <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">Sandra Adams</span> - Do you have Paris reco ...</div>
+                </div>
+            </li>
+        </ul>
+
+
         <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
         <ul class="mdui-menu" id="menu-more">
             <li class="mdui-menu-item">
