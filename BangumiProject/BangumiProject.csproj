@@ -56,7 +56,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Bangumi\ParamsModels\" />
     <Folder Include="Areas\Bangumi\Services\" />
     <Folder Include="Areas\Blogs\Process\" />
     <Folder Include="Areas\Blogs\Services\" />

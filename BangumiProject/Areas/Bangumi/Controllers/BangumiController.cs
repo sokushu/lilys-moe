@@ -19,6 +19,7 @@ using MoeUtilsBox.Utils;
 using System.Net;
 using BangumiProject.Areas.Error.Models;
 using BangumiProject.Areas.Bangumi.Process.AnimeFilterC;
+using BangumiProject.Areas.Bangumi.Process.AnimeProcessC;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -206,20 +207,22 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             //动画集数列表的相关计算
             AnimeNumberInfo animeNumberInfo = Anime.AnimeNumPage();
 
+            AnimeProcess animeProcess = new AnimeProcess();
+
             if (!(IsSignIn = _signInManager.IsSignedIn(HttpContext.User))) //如果没登陆，后面的就不需要处理了
             {
                 return View(
                     viewName: "Bangumi_OneAnime",
-                    model:new Bangumi_OneAnime
+                    model: animeProcess.BuildModel<Bangumi_OneAnime>(model => 
                     {
-                        Anime = Anime,
-                        UserAnimeNumber = userAnimeNumber,
-                        Memos = memo,
-                        IsSub = IsSub,
-                        IsSignIn = IsSignIn,
-                        IsShowEdit = IsShowEdit,
-                        Page = animeNumberInfo
-                    }
+                        model.Anime = Anime;
+                        model.UserAnimeNumber = userAnimeNumber;
+                        model.Memos = memo;
+                        model.IsSub = IsSub;
+                        model.IsSignIn = IsSignIn;
+                        model.IsShowEdit = IsShowEdit;
+                        model.Page = animeNumberInfo;
+                    })
                     );
             }
             //如果没有登陆，返回Null
