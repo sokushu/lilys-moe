@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BangumiProject.Migrations
 {
     [DbContext(typeof(BangumiProjectContext))]
-    [Migration("20181230110932_Bangumi00")]
-    partial class Bangumi00
+    [Migration("20190122094335_Project00")]
+    partial class Project00
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
 
-            modelBuilder.Entity("BangumiProject.Models.Anime", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.Anime", b =>
                 {
                     b.Property<int>("AnimeID")
                         .ValueGeneratedOnAdd();
@@ -50,7 +50,7 @@ namespace BangumiProject.Migrations
                     b.ToTable("Anime");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.AnimeComm", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeComm", b =>
                 {
                     b.Property<int>("CommID")
                         .ValueGeneratedOnAdd();
@@ -76,7 +76,65 @@ namespace BangumiProject.Migrations
                     b.ToTable("AnimeComms");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.AnimeSouce", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeMemo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MemoStr");
+
+                    b.Property<int>("NowAnimeNum");
+
+                    b.Property<DateTime>("Time")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("datetime('now')");
+
+                    b.Property<int?>("UserAnimeInfoID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserAnimeInfoID");
+
+                    b.ToTable("Memos");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeNumInfo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AnimeID");
+
+                    b.Property<int>("AnimeNum");
+
+                    b.Property<string>("AnimeNumbInfo");
+
+                    b.Property<bool>("IsStop");
+
+                    b.Property<bool>("IsStopLong");
+
+                    b.Property<DateTime>("PlayTime");
+
+                    b.Property<string>("PlayURL");
+
+                    b.Property<int>("StopCause");
+
+                    b.Property<string>("StopLongStartPlay");
+
+                    b.Property<bool>("StopLongStartPlayDVD");
+
+                    b.Property<int>("StopNum");
+
+                    b.Property<DateTime>("StopTime");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AnimeNums");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeSouce", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -106,7 +164,7 @@ namespace BangumiProject.Migrations
                     b.ToTable("AnimeSouces");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.AnimeSouceComm", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeSouceComm", b =>
                 {
                     b.Property<int>("CommID")
                         .ValueGeneratedOnAdd();
@@ -131,7 +189,7 @@ namespace BangumiProject.Migrations
                     b.ToTable("AnimeSouceComms");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.AnimeTag", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeTag", b =>
                 {
                     b.Property<int>("TagID")
                         .ValueGeneratedOnAdd();
@@ -153,7 +211,31 @@ namespace BangumiProject.Migrations
                     b.ToTable("AnimeTag");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.Blog", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeUserInfo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("NowAnimeNum");
+
+                    b.Property<int?>("SubAnimeAnimeID");
+
+                    b.Property<DateTime>("Time")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("datetime('now')");
+
+                    b.Property<string>("UsersId");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SubAnimeAnimeID");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserAnimeInfos");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Blogs.Models.Blogs", b =>
                 {
                     b.Property<int>("BlogID")
                         .ValueGeneratedOnAdd();
@@ -182,27 +264,7 @@ namespace BangumiProject.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.BlogTags", b =>
-                {
-                    b.Property<int>("BolgTagID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BlogTagString");
-
-                    b.Property<int?>("BlogsBlogID");
-
-                    b.Property<DateTime>("Time")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("datetime('now')");
-
-                    b.HasKey("BolgTagID");
-
-                    b.HasIndex("BlogsBlogID");
-
-                    b.ToTable("BlogTags");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.Comment", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Blogs.Models.BlogsComm", b =>
                 {
                     b.Property<int>("CommID")
                         .ValueGeneratedOnAdd();
@@ -226,7 +288,27 @@ namespace BangumiProject.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.Images", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Blogs.Models.BlogsTags", b =>
+                {
+                    b.Property<int>("BolgTagID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BlogTagString");
+
+                    b.Property<int?>("BlogsBlogID");
+
+                    b.Property<DateTime>("Time")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("datetime('now')");
+
+                    b.HasKey("BolgTagID");
+
+                    b.HasIndex("BlogsBlogID");
+
+                    b.ToTable("BlogTags");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Files.Models.FileImages", b =>
                 {
                     b.Property<string>("ImageID")
                         .ValueGeneratedOnAdd();
@@ -260,29 +342,7 @@ namespace BangumiProject.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.Memo", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("MemoStr");
-
-                    b.Property<int>("NowAnimeNum");
-
-                    b.Property<DateTime>("Time")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("datetime('now')");
-
-                    b.Property<int?>("UserAnimeInfoID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserAnimeInfoID");
-
-                    b.ToTable("Memos");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.Photos", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Files.Models.FilePhoto", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -300,31 +360,7 @@ namespace BangumiProject.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.UserAnimeInfo", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("NowAnimeNum");
-
-                    b.Property<int?>("SubAnimeAnimeID");
-
-                    b.Property<DateTime>("Time")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("datetime('now')");
-
-                    b.Property<string>("UsersId");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("SubAnimeAnimeID");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("UserAnimeInfos");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.UserRole", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Users.Models.UserRole", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -341,7 +377,7 @@ namespace BangumiProject.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.Users", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Users.Models.Users", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -403,6 +439,24 @@ namespace BangumiProject.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("BangumiProject.Areas.Video.Models.VideoInfo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTime>("Time");
+
+                    b.Property<string>("VInfo");
+
+                    b.Property<string>("VideoName");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("VideoInfos");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -428,57 +482,57 @@ namespace BangumiProject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "36987946-a120-4e1d-9404-5e5fb201d20e",
-                            ConcurrencyStamp = "c77e1c0f-a7be-486b-9848-e901c82d6c96",
+                            Id = "855ac6ed-72b5-4d56-9786-0f32e03da3e7",
+                            ConcurrencyStamp = "4631c981-4c57-4b7d-958c-e1a42f78ce98",
                             Name = "Admin,",
                             NormalizedName = "ADMIN,"
                         },
                         new
                         {
-                            Id = "6e068d89-5a94-424a-bef6-3a6493191daf",
-                            ConcurrencyStamp = "4c7729d4-9414-4921-97ea-8776e178343c",
+                            Id = "fdf41a43-688a-4294-881f-bf59fa6b1738",
+                            ConcurrencyStamp = "dd9dcdf1-1ff1-45be-9924-d092308cabd6",
                             Name = "Girl,",
                             NormalizedName = "GIRL,"
                         },
                         new
                         {
-                            Id = "fcfbbb4b-bb77-479e-b4b8-32e7ee598653",
-                            ConcurrencyStamp = "1be843ba-347c-42a5-bd1f-951c851f5ab9",
+                            Id = "cb3420c5-2d47-4b24-ac02-e403d93d9ea3",
+                            ConcurrencyStamp = "5b690d0d-6e1a-43b3-b7ee-d58243d84412",
                             Name = "Yuri5,",
                             NormalizedName = "YURI5,"
                         },
                         new
                         {
-                            Id = "8d2f0252-f11d-49a9-9044-7bf1f5799654",
-                            ConcurrencyStamp = "2403b8dd-f653-4b70-b45c-eb2af7b25d15",
+                            Id = "0292817c-324f-46ff-bdd7-a62988a9a914",
+                            ConcurrencyStamp = "b9ec249e-7d87-40f3-8a2a-f4dc612bf7bf",
                             Name = "Yuri4,",
                             NormalizedName = "YURI4,"
                         },
                         new
                         {
-                            Id = "bae2461f-bfa1-4d26-b41d-5a0bdf732a29",
-                            ConcurrencyStamp = "21406832-f12e-46bb-8755-3290e4f04112",
+                            Id = "7e9ba309-320d-4d6f-a978-a62a52bcd80a",
+                            ConcurrencyStamp = "3f3c087a-e084-4d05-b37e-3f85962fe07e",
                             Name = "Yuri3,",
                             NormalizedName = "YURI3,"
                         },
                         new
                         {
-                            Id = "f0362f00-883c-45ad-8ec0-c703a11bfe44",
-                            ConcurrencyStamp = "dff2eec3-5205-437e-9ba8-67a169e2aef7",
+                            Id = "329dc6b2-19f2-4026-b22a-e716a4dff7f0",
+                            ConcurrencyStamp = "ccc813c2-4803-41c6-bbd9-5ecc6e63806f",
                             Name = "Yuri2,",
                             NormalizedName = "YURI2,"
                         },
                         new
                         {
-                            Id = "b2f11ac6-6fcf-4b09-93c2-0ee4e0d9d784",
-                            ConcurrencyStamp = "a032f1e8-dbc8-447a-81dc-a86c2cbf1d69",
+                            Id = "86211fa7-2c8f-4b3d-b4d8-ca89a5fa29c2",
+                            ConcurrencyStamp = "f99bdf4b-e392-4ada-930c-0025b7e91b27",
                             Name = "Yuri1,",
                             NormalizedName = "YURI1,"
                         },
                         new
                         {
-                            Id = "b34f4a98-355b-4e03-bde7-b139e8a3703b",
-                            ConcurrencyStamp = "a1160c79-20b9-4dbc-9208-5fb6c89a9b33",
+                            Id = "1157339b-2e85-4e30-9cb8-6a0dee8ecebd",
+                            ConcurrencyStamp = "613de846-f82f-4f83-82f0-be40e895d690",
                             Name = "Boy,",
                             NormalizedName = "BOY,"
                         });
@@ -555,120 +609,120 @@ namespace BangumiProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.AnimeComm", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeComm", b =>
                 {
-                    b.HasOne("BangumiProject.Models.Anime", "Anime")
+                    b.HasOne("BangumiProject.Areas.Bangumi.Models.Anime", "Anime")
                         .WithMany("AnimeComms")
                         .HasForeignKey("AnimeID")
                         .HasConstraintName("AnimeComm_Anime_PK");
 
-                    b.HasOne("BangumiProject.Models.Users", "Users")
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users", "Users")
                         .WithMany("AnimeComms")
                         .HasForeignKey("UsersId")
                         .HasConstraintName("AnimeComm_User_PK")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.AnimeSouce", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeMemo", b =>
                 {
-                    b.HasOne("BangumiProject.Models.Anime", "Anime")
-                        .WithMany("Souce")
-                        .HasForeignKey("AnimeID")
-                        .HasConstraintName("AnimeSouce_Anime_PK");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.AnimeSouceComm", b =>
-                {
-                    b.HasOne("BangumiProject.Models.AnimeSouce", "AnimeSouce")
-                        .WithMany("AnimeSouceComms")
-                        .HasForeignKey("AnimeSouceID")
-                        .HasConstraintName("AnimeSouceComm_AnimeSouce_PK");
-
-                    b.HasOne("BangumiProject.Models.Users", "Users")
-                        .WithMany("AnimeSouceComms")
-                        .HasForeignKey("UsersId")
-                        .HasConstraintName("AnimeSouceComm_User_PK");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.AnimeTag", b =>
-                {
-                    b.HasOne("BangumiProject.Models.Anime", "Anime")
-                        .WithMany("Tags")
-                        .HasForeignKey("AnimeID")
-                        .HasConstraintName("AnimeTag_Anime_PK");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.Blog", b =>
-                {
-                    b.HasOne("BangumiProject.Models.Users", "UpLoadUser")
-                        .WithMany("Blogs")
-                        .HasForeignKey("UpLoadUserId")
-                        .HasConstraintName("Blog_User_PK");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.BlogTags", b =>
-                {
-                    b.HasOne("BangumiProject.Models.Blog", "Blogs")
-                        .WithMany("TagIDs")
-                        .HasForeignKey("BlogsBlogID")
-                        .HasConstraintName("BlogTags_Blog_PK");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.Comment", b =>
-                {
-                    b.HasOne("BangumiProject.Models.Blog", "Blogs")
-                        .WithMany("Comments")
-                        .HasForeignKey("BlogsBlogID")
-                        .HasConstraintName("Comment_Blogs_PK");
-
-                    b.HasOne("BangumiProject.Models.Users", "Users")
-                        .WithMany("Comments")
-                        .HasForeignKey("UsersId")
-                        .HasConstraintName("Comment_User_PK");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.Images", b =>
-                {
-                    b.HasOne("BangumiProject.Models.Photos", "Photos")
-                        .WithMany("Images")
-                        .HasForeignKey("PhotosID")
-                        .HasConstraintName("Image_Photo_PK");
-
-                    b.HasOne("BangumiProject.Models.Users", "UpLoadUsers")
-                        .WithMany("Images")
-                        .HasForeignKey("UpLoadUsersId")
-                        .HasConstraintName("Images_User_PK");
-                });
-
-            modelBuilder.Entity("BangumiProject.Models.Memo", b =>
-                {
-                    b.HasOne("BangumiProject.Models.UserAnimeInfo", "UserAnimeInfo")
+                    b.HasOne("BangumiProject.Areas.Bangumi.Models.AnimeUserInfo", "UserAnimeInfo")
                         .WithMany("Memos")
                         .HasForeignKey("UserAnimeInfoID")
                         .HasConstraintName("Memo_UserAnimeInfo_PK");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.UserAnimeInfo", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeSouce", b =>
                 {
-                    b.HasOne("BangumiProject.Models.Anime", "SubAnime")
+                    b.HasOne("BangumiProject.Areas.Bangumi.Models.Anime", "Anime")
+                        .WithMany("Souce")
+                        .HasForeignKey("AnimeID")
+                        .HasConstraintName("AnimeSouce_Anime_PK");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeSouceComm", b =>
+                {
+                    b.HasOne("BangumiProject.Areas.Bangumi.Models.AnimeSouce", "AnimeSouce")
+                        .WithMany("AnimeSouceComms")
+                        .HasForeignKey("AnimeSouceID")
+                        .HasConstraintName("AnimeSouceComm_AnimeSouce_PK");
+
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users", "Users")
+                        .WithMany("AnimeSouceComms")
+                        .HasForeignKey("UsersId")
+                        .HasConstraintName("AnimeSouceComm_User_PK");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeTag", b =>
+                {
+                    b.HasOne("BangumiProject.Areas.Bangumi.Models.Anime", "Anime")
+                        .WithMany("Tags")
+                        .HasForeignKey("AnimeID")
+                        .HasConstraintName("AnimeTag_Anime_PK");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Bangumi.Models.AnimeUserInfo", b =>
+                {
+                    b.HasOne("BangumiProject.Areas.Bangumi.Models.Anime", "SubAnime")
                         .WithMany("UserAnimeInfos")
                         .HasForeignKey("SubAnimeAnimeID")
                         .HasConstraintName("UserAnimeInfo_Anime_PK");
 
-                    b.HasOne("BangumiProject.Models.Users", "Users")
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users", "Users")
                         .WithMany("UserAnimeInfos")
                         .HasForeignKey("UsersId")
                         .HasConstraintName("UserAnimeInfo_User_PK");
                 });
 
-            modelBuilder.Entity("BangumiProject.Models.UserRole", b =>
+            modelBuilder.Entity("BangumiProject.Areas.Blogs.Models.Blogs", b =>
+                {
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users", "UpLoadUser")
+                        .WithMany("Blogs")
+                        .HasForeignKey("UpLoadUserId")
+                        .HasConstraintName("Blog_User_PK");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Blogs.Models.BlogsComm", b =>
+                {
+                    b.HasOne("BangumiProject.Areas.Blogs.Models.Blogs", "Blogs")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogsBlogID")
+                        .HasConstraintName("Comment_Blogs_PK");
+
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users", "Users")
+                        .WithMany("Comments")
+                        .HasForeignKey("UsersId")
+                        .HasConstraintName("Comment_User_PK");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Blogs.Models.BlogsTags", b =>
+                {
+                    b.HasOne("BangumiProject.Areas.Blogs.Models.Blogs", "Blogs")
+                        .WithMany("TagIDs")
+                        .HasForeignKey("BlogsBlogID")
+                        .HasConstraintName("BlogTags_Blog_PK");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Files.Models.FileImages", b =>
+                {
+                    b.HasOne("BangumiProject.Areas.Files.Models.FilePhoto", "Photos")
+                        .WithMany("Images")
+                        .HasForeignKey("PhotosID")
+                        .HasConstraintName("Image_Photo_PK");
+
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users", "UpLoadUsers")
+                        .WithMany("Images")
+                        .HasForeignKey("UpLoadUsersId")
+                        .HasConstraintName("Images_User_PK");
+                });
+
+            modelBuilder.Entity("BangumiProject.Areas.Users.Models.UserRole", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BangumiProject.Models.Users")
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -684,7 +738,7 @@ namespace BangumiProject.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("BangumiProject.Models.Users")
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -692,7 +746,7 @@ namespace BangumiProject.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("BangumiProject.Models.Users")
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -700,7 +754,7 @@ namespace BangumiProject.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("BangumiProject.Models.Users")
+                    b.HasOne("BangumiProject.Areas.Users.Models.Users")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

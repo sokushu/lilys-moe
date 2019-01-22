@@ -71,6 +71,7 @@
     <Folder Include="Areas\Search\Services\" />
     <Folder Include="Areas\Search\Views\" />
     <Folder Include="Areas\Video\Services\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

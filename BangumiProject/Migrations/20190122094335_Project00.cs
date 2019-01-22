@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BangumiProject.Migrations
 {
-    public partial class Bangumi00 : Migration
+    public partial class Project00 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,6 +25,31 @@ namespace BangumiProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Anime", x => x.AnimeID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AnimeNums",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AnimeID = table.Column<int>(nullable: false),
+                    AnimeNum = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    PlayURL = table.Column<string>(nullable: true),
+                    AnimeNumbInfo = table.Column<string>(nullable: true),
+                    PlayTime = table.Column<DateTime>(nullable: false),
+                    IsStop = table.Column<bool>(nullable: false),
+                    StopNum = table.Column<int>(nullable: false),
+                    StopTime = table.Column<DateTime>(nullable: false),
+                    IsStopLong = table.Column<bool>(nullable: false),
+                    StopLongStartPlay = table.Column<string>(nullable: true),
+                    StopLongStartPlayDVD = table.Column<bool>(nullable: false),
+                    StopCause = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnimeNums", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,6 +109,22 @@ namespace BangumiProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Photos", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VideoInfos",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    VideoName = table.Column<string>(nullable: true),
+                    VInfo = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    Time = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VideoInfos", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -453,42 +494,42 @@ namespace BangumiProject.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "36987946-a120-4e1d-9404-5e5fb201d20e", "c77e1c0f-a7be-486b-9848-e901c82d6c96", "Admin,", "ADMIN," });
+                values: new object[] { "855ac6ed-72b5-4d56-9786-0f32e03da3e7", "4631c981-4c57-4b7d-958c-e1a42f78ce98", "Admin,", "ADMIN," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6e068d89-5a94-424a-bef6-3a6493191daf", "4c7729d4-9414-4921-97ea-8776e178343c", "Girl,", "GIRL," });
+                values: new object[] { "fdf41a43-688a-4294-881f-bf59fa6b1738", "dd9dcdf1-1ff1-45be-9924-d092308cabd6", "Girl,", "GIRL," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "fcfbbb4b-bb77-479e-b4b8-32e7ee598653", "1be843ba-347c-42a5-bd1f-951c851f5ab9", "Yuri5,", "YURI5," });
+                values: new object[] { "cb3420c5-2d47-4b24-ac02-e403d93d9ea3", "5b690d0d-6e1a-43b3-b7ee-d58243d84412", "Yuri5,", "YURI5," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "8d2f0252-f11d-49a9-9044-7bf1f5799654", "2403b8dd-f653-4b70-b45c-eb2af7b25d15", "Yuri4,", "YURI4," });
+                values: new object[] { "0292817c-324f-46ff-bdd7-a62988a9a914", "b9ec249e-7d87-40f3-8a2a-f4dc612bf7bf", "Yuri4,", "YURI4," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "bae2461f-bfa1-4d26-b41d-5a0bdf732a29", "21406832-f12e-46bb-8755-3290e4f04112", "Yuri3,", "YURI3," });
+                values: new object[] { "7e9ba309-320d-4d6f-a978-a62a52bcd80a", "3f3c087a-e084-4d05-b37e-3f85962fe07e", "Yuri3,", "YURI3," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f0362f00-883c-45ad-8ec0-c703a11bfe44", "dff2eec3-5205-437e-9ba8-67a169e2aef7", "Yuri2,", "YURI2," });
+                values: new object[] { "329dc6b2-19f2-4026-b22a-e716a4dff7f0", "ccc813c2-4803-41c6-bbd9-5ecc6e63806f", "Yuri2,", "YURI2," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "b2f11ac6-6fcf-4b09-93c2-0ee4e0d9d784", "a032f1e8-dbc8-447a-81dc-a86c2cbf1d69", "Yuri1,", "YURI1," });
+                values: new object[] { "86211fa7-2c8f-4b3d-b4d8-ca89a5fa29c2", "f99bdf4b-e392-4ada-930c-0025b7e91b27", "Yuri1,", "YURI1," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "b34f4a98-355b-4e03-bde7-b139e8a3703b", "a1160c79-20b9-4dbc-9208-5fb6c89a9b33", "Boy,", "BOY," });
+                values: new object[] { "1157339b-2e85-4e30-9cb8-6a0dee8ecebd", "613de846-f82f-4f83-82f0-be40e895d690", "Boy,", "BOY," });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Anime_AnimeID_AnimeName_AnimeType",
@@ -624,6 +665,9 @@ namespace BangumiProject.Migrations
                 name: "AnimeComms");
 
             migrationBuilder.DropTable(
+                name: "AnimeNums");
+
+            migrationBuilder.DropTable(
                 name: "AnimeSouceComms");
 
             migrationBuilder.DropTable(
@@ -655,6 +699,9 @@ namespace BangumiProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Memos");
+
+            migrationBuilder.DropTable(
+                name: "VideoInfos");
 
             migrationBuilder.DropTable(
                 name: "AnimeSouces");

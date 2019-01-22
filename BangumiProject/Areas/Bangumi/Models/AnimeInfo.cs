@@ -6,14 +6,35 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Models
 {
-    public class AnimeStop
+    public class AnimeNumInfo
     {
         [Key]
         public int ID { get; set; }
         /// <summary>
         /// 动画
         /// </summary>
+        [Required]
         public int AnimeID { get; set; }
+        /// <summary>
+        /// 动画的集数
+        /// </summary>
+        public int AnimeNum { get; set; }
+        /// <summary>
+        /// 这一集显示的标题
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
+        /// 这一集的播放地址
+        /// </summary>
+        public string PlayURL { get; set; }
+        /// <summary>
+        /// 这一集的信息
+        /// </summary>
+        public string AnimeNumbInfo { get; set; }
+        /// <summary>
+        /// 这一集正常播放时间
+        /// </summary>
+        public DateTime PlayTime { get; set; }
         /// <summary>
         /// 是否停播
         /// </summary>
@@ -54,15 +75,20 @@ namespace BangumiProject.Areas.Bangumi.Models
         /// <summary>
         /// 过年了
         /// </summary>
+        [Display(Name = "电视台档期原因")]
         Year,
         /// <summary>
         /// 播放事故
         /// 例如，烂的没法看了，停播整顿
         /// </summary>
+        [Display(Name = "播放事故")]
         NONONO,
         /// <summary>
         /// 地震，海啸，之类的
         /// </summary>
+        [Display(Name = "灾难原因")]
         Calamity,
+        [Display(Name = "其他原因")]
+        Other
     }
 }

@@ -32,7 +32,7 @@ namespace BangumiProject.Models
         public DbSet<AnimeMemo> Memos { get; set; }
         public DbSet<AnimeUserInfo> UserAnimeInfos { get; set; }
         public DbSet<VideoInfo> VideoInfos { get; set; }
-
+        public DbSet<AnimeNumInfo> AnimeNums { get; set; }
         /// <summary>
         /// 
         /// </summary>
