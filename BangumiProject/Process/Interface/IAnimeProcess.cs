@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Process.Interface
 {
-    public interface IAnimeProcess
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T">处理数据返回类型</typeparam>
+    public interface IAnimeProcess<T>
     {
-        bool Process(ref Anime anime);
+        T Process();
     }
 }

@@ -9,8 +9,6 @@ namespace BangumiProject.Areas.Bangumi.Process
 {
     public class AnimeProcess
     {
-        private readonly List<IAnimeProcess> animeProcesses = new List<IAnimeProcess>();
-
         /// <summary>
         /// 
         /// </summary>
@@ -24,29 +22,10 @@ namespace BangumiProject.Areas.Bangumi.Process
             return obj;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="animeProcess"></param>
-        public void SetProcess(IAnimeProcess animeProcess)
+        public R RunProcess<R>(IAnimeProcess<R> process)
         {
-            animeProcesses.Add(animeProcess);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="anime"></param>
-        /// <returns></returns>
-        public bool Run(Anime anime)
-        {
-            HashSet<bool> vs = new HashSet<bool>();
-            foreach (IAnimeProcess item in animeProcesses)
-            {
-                vs.Add(item.Process(ref anime));
-            }
-            return vs.Count == 1;
-        }
+            return process.Process();
+        } 
 
     }
 }

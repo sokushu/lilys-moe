@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process.AnimeProcessC
 {
-    public class AnimeProcessByNumber : IAnimeProcess
+    public class AnimeProcessByNumber : IAnimeProcess<bool>
     {
         private readonly List<AnimeNumInfo> AnimeNumInfo;
-        public AnimeProcessByNumber(List<AnimeNumInfo> AnimeNumInfo)
+        private readonly Anime ProcessAnime;
+        public AnimeProcessByNumber(List<AnimeNumInfo> AnimeNumInfo, ref Anime anime)
         {
             this.AnimeNumInfo = AnimeNumInfo.OrderBy(info => info.AnimeNum).ToList();
+            this.ProcessAnime = anime;
         }
         /// <summary>
         /// 计算动画最新集数（动画集数机制变更）
@@ -23,9 +25,9 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeProcessC
         /// 如果遇到动画事故等需要停播的情况，会有对应的设置的
         /// </summary>
         /// <param name="anime">要处理的动画</param>
-        public bool Process(ref Anime anime)
+        public bool Process()
         {
-            if (anime.IsEnd == false)//这里只选取没有完结的动画做修改
+            if (ProcessAnime.IsEnd == false)//这里只选取没有完结的动画做修改
             {
                 ////获取数据库中的动画集数
                 //var AnimeNumber = anime.AnimeNum;
@@ -60,9 +62,9 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeProcessC
                 //}
 
                 //获取动画的集数
-                var AnimeNumber = anime.AnimeNum;
+                var AnimeNumber = ProcessAnime.AnimeNum;
                 //检查是否停播
-                CheckStop(ref anime, AnimeNumInfo);
+                CheckStop(ProcessAnime, AnimeNumInfo);
             }
             //动画没有被修改
             return false;
@@ -73,7 +75,7 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeProcessC
         /// </summary>
         /// <param name="anime"></param>
         /// <param name="animeNumInfo"></param>
-        private void CheckStop(ref Anime anime, List<AnimeNumInfo> animeNumInfo)
+        private void CheckStop(Anime anime, List<AnimeNumInfo> animeNumInfo)
         {
             var Stop = animeNumInfo.Where(info => info.IsStop).ToList();
         }

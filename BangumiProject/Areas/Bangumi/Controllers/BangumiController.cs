@@ -209,6 +209,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
 
             AnimeProcess animeProcess = new AnimeProcess();
 
+            bool IsChange = animeProcess.RunProcess(new AnimeProcessByNumber(new List<AnimeNumInfo> { }, ref Anime));
+            if (IsChange)
+            {
+                //操作
+            }
+
             if (!(IsSignIn = _signInManager.IsSignedIn(HttpContext.User))) //如果没登陆，后面的就不需要处理了
             {
                 return View(
