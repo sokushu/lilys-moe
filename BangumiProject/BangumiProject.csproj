@@ -51,6 +51,9 @@
     <Folder Include="Areas\HomeBar\Models\" />
     <Folder Include="Areas\HomeBar\Services\" />
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Areas\Lilys\Model\" />
+    <Folder Include="Areas\Lilys\Process\" />
+    <Folder Include="Areas\Lilys\Views\Lilys\Model\" />
     <Folder Include="Areas\Profile\Process\" />
     <Folder Include="Areas\Profile\Services\" />
     <Folder Include="Areas\Search\Models\" />
