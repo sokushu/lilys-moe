@@ -65,6 +65,7 @@ namespace BangumiProject.Controllers
         [Route("/Test")]
         public async Task<IActionResult> GetIndexAsync(string b)
         {
+            await Task.Run(() => { });
             return View("AAA");
         }
 

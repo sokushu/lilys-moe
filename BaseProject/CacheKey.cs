@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MoeUtilsBox
+namespace System
 {
     public static class CacheKey
     {

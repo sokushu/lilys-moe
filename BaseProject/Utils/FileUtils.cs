@@ -1,14 +1,12 @@
-﻿using BangumiProject.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MoeUtilsBox.Utils
+namespace System
 {
     public static class FileUtils
     {
-        
         /// <summary>
         /// 得到文件的文件名
         /// </summary>

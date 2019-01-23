@@ -4,5 +4,6 @@ namespace MoeMushi
 {
     public class Class1
     {
+        
     }
 }
