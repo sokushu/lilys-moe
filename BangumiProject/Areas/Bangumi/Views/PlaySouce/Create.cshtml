@@ -1,0 +1,26 @@
+﻿@model CreatePlaySouce
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string Action = Final.Route_PlaySouce_Create_POST;
+}
+
+<h1>新添加一个播放动画网站信息</h1>
+
+<form method="post" asp-route="@Action" enctype="multipart/form-data">
+
+    <input asp-for="SiteName" />
+    <br />
+    <input asp-for="SiteURL" />
+    <br />
+    <input asp-for="Info" />
+    <br />
+    <input asp-for="Pic" />
+    <br />
+    <input asp-for="SitePic" />
+
+    <input type="submit" value="提交" />
+
+</form>
+

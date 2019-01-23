@@ -146,6 +146,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// <summary>
         /// 查询一部动画的数据
         /// 如果用户登陆，还可以返回登陆过后用户对这部动画做的信息
+        /// 
+        /// 待添加功能：
+        /// 
+        /// 
         /// </summary>
         /// <param name="id">需要查询的动画ID</param>
         /// <returns></returns>
@@ -198,21 +202,18 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             animeTags = Anime.Tags;
             animeSouces = Anime.Souce;
             animeComms = Anime.AnimeComms;
-            if (Anime.AnimeNumUpdata())//计算动画集数
-            {
-                //需要更新动画信息
-                _DBServices.SetCache(key, Anime);//全部的数据读取好之后，缓存一下
-                await _DBServices.UpdateAsync(Anime);
-            }
             //动画集数列表的相关计算
             AnimeNumberInfo animeNumberInfo = Anime.AnimeNumPage();
 
             AnimeProcess animeProcess = new AnimeProcess();
 
+            //动画集数处理
             bool IsChange = animeProcess.RunProcess(new AnimeProcessByNumber(new List<AnimeNumInfo> { }, ref Anime));
             if (IsChange)
             {
-                //操作
+                //需要更新动画信息
+                _DBServices.SetCache(key, Anime);//全部的数据读取好之后，缓存一下
+                await _DBServices.UpdateAsync(Anime);
             }
 
             if (!(IsSignIn = _signInManager.IsSignedIn(HttpContext.User))) //如果没登陆，后面的就不需要处理了
