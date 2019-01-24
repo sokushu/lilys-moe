@@ -26,7 +26,7 @@ namespace BangumiProject.Areas.Lilys.Controllers
     public class LilysController : Controller
     {
         // GET: Lilys
-        [Route("/lilys", Name = "")]
+        [Route("/lilys", Name = "lilys")]
         public ActionResult Index()
         {
             return View();
@@ -35,7 +35,7 @@ namespace BangumiProject.Areas.Lilys.Controllers
         // GET: Lilys/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return Json("Error");
         }
 
         // GET: Lilys/Create

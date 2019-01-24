@@ -1,209 +1,159 @@
 ﻿@using BangumiProject.Controllers
 @model Bangumi_OneAnime
 @{
-    ViewData["Title"] = "Bangumi_OneAnime";
+    ViewData["Title"] = Model.Anime.AnimeName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table border="1" style="width:100%;table-layout:fixed;">
-    <tr>
-        <td><img src="@Model.AnimePic" style="width:100%;" /></td>
-        <td>
-            @Model.Anime.AnimeName <br />
-            @if (Model.IsShowEdit)
-            {
-                <a asp-route="@Final.Route_Bangumi_Edit" asp-route-id="@Model.Anime.AnimeID">编辑动画</a>
-            }
+<div class="mdui-row mdui-m-t-4">
+    @* 图片 *@
+    <div class="mdui-col-md-3">
+        <img src="@Model.AnimePic" class="mdui-img-fluid" />
+    </div>
 
-        </td>
-    </tr>
-    <tr style="background-color:mistyrose;">
-        <td>
+    @* 动画的一些信息 *@
+    <div class="mdui-col-md-9">
+        @* 动画的标题 *@
+        <div class="mdui-col-md-8">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="mdui-col-md-4">
             @if (Model.IsSignIn)
             {
-                <button id="AnimeSub" onclick="Sub();">订阅动画</button>
-            }
-            else
-            {
-                <a asp-area="Identity" asp-page="/Account/Login">请登录</a>
-            }
-        </td>
-
-        <td>
-            状态：
-            @{
-                var str = "";
-                if (Model.IsSub)
+                @if (Model.IsSub)
                 {
-                    str = "连载中，正在看";
-                    if (Model.Anime.AnimeNum == Model.UserAnimeNumber)
-                    {
-                        if (Model.Anime.IsEnd)
-                        {
-                            str = "已完结，已经全部看完";
-                        }
-                        else
-                        {
-                            str = "连载中，已看完最新更新";
-                        }
-
-                    }
+                    <button class="mdui-btn mdui-btn-raised" >已经订阅</button>
                 }
                 else
                 {
-                    if (Model.Anime.IsEnd)
-                    {
-                        str = "已完结，未订阅";
-                    }
-                    else
-                    {
-                        str = "连载中，未订阅";
-                    }
+                    <button class="mdui-btn mdui-btn-raised" id="AnimeSub" onclick="Sub();">订阅动画</button>
                 }
-            }
-            @str
-        </td>
-    </tr>
-    <tr>
-        <td>动画集数：</td>
-        <td>
-            <div class="row">
-                @{
-                    int k = 0;
-                    var num = Model.Anime.AnimeNum;
-                    int a = 1;
-                    int b = 10;
-                }
-                <div class="mdui-tab" mdui-tab>
-                    @foreach (var item in Model.Page.PageName)
-                    {
-                        string id = $"#test{k}";
-                        <a class="mdui-ripple" href="@id">@item</a>
-                        k++;
-                    }
-                </div>
-                @for (int i = 0; i < Model.Page.AllPage; i++)
+
+
+                @if (Model.IsShowEdit)
                 {
-                    string id = $"test{i}";
-                    <div id="@id">
-                        @for (int j = a; j <= b; j++)
-                        {
-                            @if (j == Model.UserAnimeNumber)
-                            {
-                                <button onclick="upload(@j);" class="mdui-btn mdui-color-amber mdui-ripple">现在看到：第 @j 集</button><br />
-                            }
-                            else
-                            {
-                                <button onclick="upload(@j);" class="mdui-btn mdui-color-pink-100">@j 集</button><br />
-                            }
-                            @if ((num = num - 1) == 0)
-                            {
-                                break;
-                            }
-                        }
-                    </div>
-                    a = a + 10;
-                    b = b + 10;
+                    <a class="mdui-btn mdui-btn-raised" asp-route="@Final.Route_Bangumi_Edit" asp-route-id="@Model.Anime.AnimeID">编辑动画</a>
                 }
+            }
+            else
+            {
+                <a class="mdui-btn mdui-btn-raised" asp-area="Identity" asp-page="/Account/Login">登录</a>
+            }
+        </div>
+        <div class="mdui-col-md-12">
+            <div class="mdui-table-fluid">
+                <table class="mdui-table mdui-table-hoverable">
+                    <tbody>
+                        <tr>
+                            <td>动画简介：</td>
+                            <td>@Model.Anime.AnimeInfo</td>
+                        </tr>
+                        <tr>
+                            <td>放送时间：</td>
+                            <td>@Model.AnimeTime</td>
+                        </tr>
+                        <tr>
+                            <td>动画类型：</td>
+                            <td>@Html.DisplayTextFor(f => f.Anime.AnimeType)</td>
+                        </tr>
+                        <tr>
+                            <td>标签：</td>
+                            <td>
+                                @foreach (var item in Model.Anime.Tags)
+                                {
+                                    <div class="mdui-chip">
+                                        <span class="mdui-chip-title">@item.TagName</span>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </td>
-    </tr>
+        </div>
+    </div>
+</div>
 
-    <tr>
-        <td>动画简介：</td>
-        <td>@Model.Anime.AnimeInfo</td>
-    </tr>
-    <tr>
-        <td>放送时间：</td>
-        <td>@Model.Anime.AnimePlayTime</td>
-    </tr>
-    <tr>
-        <td>动画类型：</td>
-        <td>@Html.DisplayTextFor(f => f.Anime.AnimeType)</td>
-    </tr>
-    <tr>
-        <td>标签：</td>
-        <td>
-            @foreach (var item in Model.Anime.Tags)
-            {
-                <div class="mdui-chip">
-                    <span class="mdui-chip-title">@item.TagName</span>
-                </div>
-            }
-        </td>
-    </tr>
+@* 功能面板 *@
+@* 集数计算 *@
+<div class="mdui-row">
 
-    @if (Model.IsSignIn && Model.IsSub)
-    {
-        <tr>
-            <th colspan="2">Memo <a asp-route="GetMemo" asp-route-id="@Model.Anime.AnimeID">添加</a></th>
-        </tr>
-        @foreach (var item in Model.Memos)
+    @{
+        int k = 0;
+        var num = Model.Anime.AnimeNum;
+        int a = 1;
+        int b = 10;
+    }
+    <div class="mdui-tab" mdui-tab>
+        @foreach (var item in Model.Page.PageName)
         {
-            <tr>
-                <th colspan="2">
-                    <a asp-route="GetEditMemo" asp-route-id="@Model.Anime.AnimeID" asp-route-memoid="@item.ID">编辑</a>
-                    记事的集数：@item.NowAnimeNum<br />
-                    @item.MemoStr
-                </th>
-            </tr>
+            string id = $"#test{k}";
+            <a class="mdui-ripple" href="@id">@item</a>
+            k++;
         }
-
-    }
-
-
-
-</table>
-@Html.AntiForgeryToken()
-<script src="~/js/Ajax.js"></script>
-<script>
-
-    var el = document.querySelectorAll(".tabs");
-    M.Tabs.init(el);
-
-    function Sub() {
-        var AnimeID = @Model.Anime.AnimeID;
-
-        new Ajax().Ajax(
-            "POST",
-            "/BangumiSub" + AnimeID,
-            { 
-                "AnimeNum": -1
-            },
-            function (res) {
-                var objs = eval(res);
-                if (objs[0] == "false" || objs[0] == "true") {
-                    alert(objs[1]);
-                }
-            }
-        );
-    }
-
-    function upload(number) {
-        var AnimeID = @Model.Anime.AnimeID;
-
-        var NowNum = @Model.UserAnimeNumber;
-        if (number < NowNum) {
-            if (confirm("是否确定更改至看过的集数？") == false) {
-                return;
-            }
-        } else if (number == NowNum) {
-            return;
-        }
-        new Ajax().Ajax(
-            "POST",
-            "/BangumiSub"+AnimeID,
+    </div>
+    @for (int i = 0; i < Model.Page.AllPage; i++)
+    {
+        string id = $"test{i}";
+        <div id="@id">
+            @for (int j = a; j <= b; j++)
             {
-                "AnimeNum": number
-            },
-            function (res) {
-                var objs = eval(res);
-                if (objs[0] == "false" || objs[0] == "true") {
-                    alert(objs[1]);
+
+                <div class="mdui-col-md-3 mdui-col-sm-6 mdui-m-t-1">
+                    <div class="mdui-card">
+                        <div class="mdui-card-header">
+                            <img class="mdui-card-header-avatar" src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" />
+                            <div class="mdui-card-header-title">
+                                第 @j 集
+                                @if (j == Model.UserAnimeNumber)
+                                {
+                                    <span class="mdui-float-right">已看</span>
+                                }
+                            </div>
+                            <div class="mdui-card-header-subtitle">动画小标题</div>
+                        </div>
+                        <div class="mdui-card-actions">
+                            <button onclick="upload(@j);" class="mdui-btn mdui-ripple">去B站看</button>
+                        </div>
+                    </div>
+                </div>
+                @if ((num = num - 1) == 0)
+                {
+                    break;
                 }
             }
-        );
+        </div>
+        a = a + 10;
+        b = b + 10;
     }
-</script>
+</div>
+
+<div class="mdui-row">
+    <div class="mdui-col-md-8">
+        <div class="mdui-row">
+            @if (Model.IsSignIn && Model.IsSub)
+            {
+                <a asp-route="@Final.Route_BangumiMemo_Create" class="mdui-btn mdui-btn-raised" asp-route-animeid="@Model.Anime.AnimeID">添加</a><br/>
+                @foreach (var item in Model.Memos)
+                {
+                    <div class="mdui-card mdui-col-md-4 mdui-col-sm-6">
+                        <div class="mdui-card-primary">
+                            <div class="mdui-card-primary-title">大标题</div>
+                            <div class="mdui-card-primary-subtitle">@item.NowAnimeNum</div>
+                        </div>
+                        <div class="mdui-card-content">@item.MemoStr</div>
+                        <div class="mdui-card-actions">
+                            <a class="mdui-btn mdui-btn-raised" asp-route="GetEditMemo" asp-route-id="@Model.Anime.AnimeID" asp-route-memoid="@item.ID">编辑</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="mdui-col-md-4">
+        推荐
+    </div>
+</div>
+<partial name="Bangumi_OneAJAX"/>
 
 

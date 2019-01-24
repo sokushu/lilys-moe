@@ -100,7 +100,7 @@
     <Content Update="Areas\Bangumi\Views\Bangumi\Bangumi_OneAnime.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Areas\Bangumi\Views\Bangumi\Memo.cshtml">
+    <Content Update="Areas\Bangumi\Views\BangumiMemo\Memo.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="Areas\HomeBar\Views\Home\BagnumiList.cshtml">

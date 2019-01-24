@@ -54,7 +54,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("/Bangumi/Memo/Create{animeid:int}")]
+        [Route("/Bangumi/Memo/Create{animeid:int}", Name = Final.Route_BangumiMemo_Create)]
         public ActionResult Create()
         {
             //返回一个专门的添加页面
@@ -71,7 +71,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Route("/Bangumi/Memo/Create{animeid:int}")]
+        [Route("/Bangumi/Memo/Create{animeid:int}", Name = Final.Route_BangumiMemo_Create_POST)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(int animeid, AnimeMemo animeMemo)
         {
@@ -80,7 +80,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 if (_DBServices.HasAnimeID(animeid))
                 {
                     var uid = _userManager.GetUserId(HttpContext.User);
-                    var Info = await _DBServices.GetFirstAsync<AnimeUserInfo>(info => info.SubAnime.AnimeID == animeid && info.Users.Id == uid);
+                    var Info = await _DBServices.GetDateOneAsync<AnimeUserInfo>(db => db.Include(infp => infp.Memos).Where(info => info.SubAnime.AnimeID == animeid && info.Users.Id == uid));
                     if (Info != null)
                     {
                         Info.Memos.Add(animeMemo);
@@ -88,7 +88,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     }
                     //没有订阅，不能添加
                     //最终返回到动画详细页面
-                    return RedirectToRoute(Final.Route_Bangumi_Details, animeid);
+                    return Redirect($"/Bangumi/{animeid}");
                 }
                 return Json("Error");
             }

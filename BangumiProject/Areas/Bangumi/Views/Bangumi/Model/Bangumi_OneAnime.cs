@@ -18,6 +18,8 @@ namespace BangumiProject.Areas.Bangumi.Views.Bangumi.Model
 
         public int UserAnimeNumber { get; set; }
 
+        public string AnimeTime => Anime.AnimePlayTime.ToString("yyyy年MM月dd日");
+
         public bool IsSub { get; set; }
 
         public bool IsSignIn { get; set; }

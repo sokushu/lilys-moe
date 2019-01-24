@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<script src="~/js/Ajax.js"></script>
+<script>
+
+    var el = document.querySelectorAll(".tabs");
+    M.Tabs.init(el);
+
+    function Sub() {
+        var AnimeID = @Model.Anime.AnimeID;
+
+        new Ajax().Ajax(
+            "POST",
+            "/BangumiSub" + AnimeID,
+            {
+                "AnimeNum": -1
+            },
+            function (res) {
+                var objs = eval(res);
+                if (objs[0] == "false" || objs[0] == "true") {
+                    alert(objs[1]);
+                }
+            }
+        );
+    }
+
+    function upload(number) {
+        var AnimeID = @Model.Anime.AnimeID;
+
+        var NowNum = @Model.UserAnimeNumber;
+        if (number < NowNum) {
+            if (confirm("是否确定更改至看过的集数？") == false) {
+                return;
+            }
+        } else if (number == NowNum) {
+            return;
+        }
+        new Ajax().Ajax(
+            "POST",
+            "/BangumiSub"+AnimeID,
+            {
+                "AnimeNum": number
+            },
+            function (res) {
+                var objs = eval(res);
+                if (objs[0] == "false" || objs[0] == "true") {
+                    alert(objs[1]);
+                }
+            }
+        );
+    }
+</script>

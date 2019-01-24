@@ -153,6 +153,8 @@ namespace System
         public const string Route_PlaySouce_Details = "Route_PlaySouce_Details";
         public const string Route_PlaySouce_Create_POST = "Route_PlaySouce_Create_POST";
         public const string Route_PlaySouce_Create = "Route_PlaySouce_Create";
+        public const string Route_BangumiMemo_Create_POST = "Route_BangumiMemo_Create_POST";
+        public const string Route_BangumiMemo_Create = "Route_BangumiMemo_Create";
         /*
          * ====================================================
          * 以下是阿里云OSS的文件使用
