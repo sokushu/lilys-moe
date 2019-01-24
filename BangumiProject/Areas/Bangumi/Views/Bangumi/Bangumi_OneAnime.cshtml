@@ -67,6 +67,13 @@
                                 }
                             </td>
                         </tr>
+                        @if (Model.IsSub)
+                        {
+                            <tr>
+                                <td>已经看到：</td>
+                                <td>第 @Model.UserAnimeNumber 集 / 已播出 @Model.Anime.AnimeNum 集</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -128,7 +135,7 @@
     }
 </div>
 
-<div class="mdui-row">
+<div class="mdui-row mdui-m-t-2">
     <div class="mdui-col-md-8">
         <div class="mdui-row">
             @if (Model.IsSignIn && Model.IsSub)
@@ -136,14 +143,16 @@
                 <a asp-route="@Final.Route_BangumiMemo_Create" class="mdui-btn mdui-btn-raised" asp-route-animeid="@Model.Anime.AnimeID">添加</a><br/>
                 @foreach (var item in Model.Memos)
                 {
-                    <div class="mdui-card mdui-col-md-4 mdui-col-sm-6">
-                        <div class="mdui-card-primary">
-                            <div class="mdui-card-primary-title">大标题</div>
-                            <div class="mdui-card-primary-subtitle">@item.NowAnimeNum</div>
-                        </div>
-                        <div class="mdui-card-content">@item.MemoStr</div>
-                        <div class="mdui-card-actions">
-                            <a class="mdui-btn mdui-btn-raised" asp-route="GetEditMemo" asp-route-id="@Model.Anime.AnimeID" asp-route-memoid="@item.ID">编辑</a>
+                    <div class="mdui-col-md-4 mdui-col-sm-6 mdui-m-t-2">
+                        <div class="mdui-card">
+                            <div class="mdui-card-primary">
+                                <div class="mdui-card-primary-title">大标题</div>
+                                <div class="mdui-card-primary-subtitle">@item.NowAnimeNum</div>
+                            </div>
+                            <div class="mdui-card-content">@item.MemoStr</div>
+                            <div class="mdui-card-actions">
+                                <a class="mdui-btn mdui-btn-raised" asp-route="GetEditMemo" asp-route-id="@Model.Anime.AnimeID" asp-route-memoid="@item.ID">编辑</a>
+                            </div>
                         </div>
                     </div>
                 }
