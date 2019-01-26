@@ -72,13 +72,6 @@ namespace BangumiProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
-            });
-
             //加载爬虫数据库
             services.AddDbContext<MoeMushiContext>(option =>
                 option.UseSqlite(Final.DBStr_MoeMushi)
@@ -108,6 +101,7 @@ namespace BangumiProject
                 // Cookie设置
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                options.Cookie.Name = "_lily_cookie";
 
                 options.LoginPath = "/Login";
                 options.AccessDeniedPath = "/AccessDenied";
@@ -131,10 +125,12 @@ namespace BangumiProject
             {
                 session.IdleTimeout = TimeSpan.FromHours(1);
                 session.IOTimeout = TimeSpan.FromHours(1);
+                session.Cookie.Name = "_ss";
+                session.Cookie.HttpOnly = true;
             });
-            services.AddAuthorization(option => 
+            services.AddAuthorization(option =>
             {
-                List<string> Yuris = new List<string>{ Final.Yuri_Admin, Final.Yuri_Girl, Final.Yuri_Yuri5, Final.Yuri_Yuri4, Final.Yuri_Yuri3, Final.Yuri_Yuri2, Final.Yuri_Yuri1, Final.Yuri_Boy };
+                List<string> Yuris = new List<string> { Final.Yuri_Admin, Final.Yuri_Girl, Final.Yuri_Yuri5, Final.Yuri_Yuri4, Final.Yuri_Yuri3, Final.Yuri_Yuri2, Final.Yuri_Yuri1, Final.Yuri_Boy };
 
                 option.AddPolicy(Final.Yuri_Admin, policy => policy.RequireRole(Yuris.Take(1).ToArray()));
                 option.AddPolicy(Final.Yuri_Girl, policy => policy.RequireRole(Yuris.Take(2).ToArray()));

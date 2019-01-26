@@ -76,6 +76,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             return Json("Error");
         }
 
+        /// <summary>
+        /// 动画订阅与更新
+        /// </summary>
+        /// <param name="animeid"></param>
+        /// <param name="AnimeNum"></param>
+        /// <returns></returns>
         // POST: BangumiSub5
         [HttpPost]
         [EnableCors("Test")]
@@ -86,10 +92,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 if (_DBServices.HasAnimeID(animeid))
                 {
+                    var UID = _userManager.GetUserId(HttpContext.User);
+                    if (UID == null)
+                        return Json(new List<string> { "false", "请先登录" });
                     //订阅动画
                     if (animeid != -1 && AnimeNum == -1)
                     {
-                        var UID = _userManager.GetUserId(HttpContext.User);
                         var info = await _DBServices.GetFirstAsync<AnimeUserInfo>(animeinfo => animeinfo.Users.Id == UID && animeinfo.SubAnime.AnimeID == animeid);
                         if (info == null)
                         {
@@ -116,22 +124,19 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                         // 对传送过来的动画集数做检查
                         if (1 > AnimeNum)
                             return new JsonResult("Error");
-                        var UID = _userManager.GetUserId(HttpContext.User);
                         var info = await _DBServices.GetFirstAsync<AnimeUserInfo>(animeinfo => animeinfo.Users.Id == UID && animeinfo.SubAnime.AnimeID == animeid);
                         if (info == null)
-                        {
                             return Json(new List<string> { "false", "没有订阅动画，请先订阅动画" });
-                        }
                         info.NowAnimeNum = AnimeNum;
                         await _DBServices.UpdateAsync(info);
                         return Json(new List<string> { "true", "更改成功" });
                     }
                 }
-                return Json("Error");
+                return Json("没有这个动画");
             }
             catch
             {
-                return Json("Error");
+                return Json("出现未知错误");
             }
         }
 

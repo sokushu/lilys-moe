@@ -73,7 +73,8 @@ namespace BangumiProject.Controllers
         [Route("/TestGet")]
         public IActionResult Get()
         {
-            return PartialView("View", new List<string> { "TEST" });
+            HttpContext.Session.SetString("Test","Hello");
+            return Json("OK");
         }
 
         public T GetDate<T>(Func<string, T> func)
@@ -93,14 +94,12 @@ namespace BangumiProject.Controllers
         }
 
         [HttpGet]
-        [Route("/cache")]
+        [Route("/session")]
         public IActionResult Cache()
         {
-            var animes = _DB.Anime.First(anime => anime.AnimeID == 5);
-
-            _cache.Set("Test", animes);
-
-            return Json("OK");
+            var aad = HttpContext.Session.Id;
+            HttpContext.Session.SetString("Test", "HelloWorld");
+            return Json($"{aad}   {HttpContext.Session.GetString("Test")}");
         }
     }
 

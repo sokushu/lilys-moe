@@ -167,6 +167,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 /**
                  * 我有话要说：
                  * 下面这个就是要对
+                 * 
+                 * ...../(ㄒoㄒ)/~~
+                 * 我要说什么来着
                  */
                 Anime = await _DBServices.GetDateOneAsync<Anime>(db =>
                         db.Where(a => a.AnimeID == id)
