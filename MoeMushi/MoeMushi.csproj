@@ -9,4 +9,9 @@
     <ProjectReference Include="..\BaseProject\BaseProject.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Params\" />
+  </ItemGroup>
+
 </Project>

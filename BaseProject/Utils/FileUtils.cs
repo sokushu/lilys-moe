@@ -8,7 +8,7 @@ namespace System
     public static class FileUtils
     {
         /// <summary>
-        /// 得到文件的文件名
+        /// 得到文件路径中的文件名
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
