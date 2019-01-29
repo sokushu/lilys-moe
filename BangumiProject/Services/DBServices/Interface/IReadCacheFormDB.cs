@@ -12,11 +12,4 @@ namespace BangumiProject.Services.DBServices.Interface
 
         T GetCacheFormDB(Func<DbSet<T>, T> func);
     }
-
-    public interface IReadCacheFormDBA<T>
-    {
-        List<C> GetCacheFormDB<C>(Func<DbSet<T>, List<C>> func);
-
-        C GetCacheFormDB<C>(Func<DbSet<T>, C> func);
-    }
 }
