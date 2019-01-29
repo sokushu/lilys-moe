@@ -10,11 +10,11 @@ namespace BangumiProject.Services.DBServices.Interface
     public interface ICache
     {
         BangumiProjectContext _db { get; }
-        Data SaveCache<Data>(Data model);
+        Data SaveCache<Data>(Data model) where Data : class;
 
         void RemoveCache();
 
-        CacheFormDB<Data> GetCache<Data>();
+        IReadCacheFormDB<Data> GetCache<Data>() where Data : class;
 
         ICache BuildKey(string Key);
     }

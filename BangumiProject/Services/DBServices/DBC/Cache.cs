@@ -9,28 +9,46 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Services.DBServices.DBC
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Cache : ICache
     {
-        private char[] Key { get; set; }
+        private string Key { get; set; }
         private readonly IMemoryCache _memoryCache;
-        private static HashSet<char[]> Keys { set; get; } = new HashSet<char[]>();
+        private static HashSet<string> Keys { set; get; } = new HashSet<string>();
 
         public BangumiProjectContext _db { get; private set; }
 
-        public Cache(char[] Key, IMemoryCache _memoryCache, BangumiProjectContext _db)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <param name="_memoryCache"></param>
+        /// <param name="_db"></param>
+        public Cache(string Key, IMemoryCache _memoryCache, BangumiProjectContext _db)
         {
-            Keys.Add(Key);
             this.Key = Key;
             this._memoryCache = _memoryCache;
             this._db = _db;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <returns></returns>
         public ICache BuildKey(string Key)
         {
-            return new Cache(Key.ToCharArray(), _memoryCache, _db);
+            return new Cache(Key, _memoryCache, _db);
         }
 
-        public CacheFormDB<Data> GetCache<Data>()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="Data"></typeparam>
+        /// <returns></returns>
+        public IReadCacheFormDB<Data> GetCache<Data>() where Data : class
         {
             if (!_memoryCache.TryGetValue(Key, out Data data))
             {
@@ -39,22 +57,42 @@ namespace BangumiProject.Services.DBServices.DBC
             return new CacheFormDB<Data>(data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RemoveCache()
         {
             _memoryCache.Remove(Key);
         }
 
-        public Data SaveCache<Data>(Data model)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="Data"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public Data SaveCache<Data>(Data model) where Data : class
         {
+            Keys.Add(Key);
             return _memoryCache.Set(Key, model);
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="Data"></typeparam>
     public class CacheFormDB<Data> : IReadCacheFormDB<Data> where Data : class
     {
         private bool HasKey { get; set; }
         private Data Value { get; set; }
         private ICache cache { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="HasKey"></param>
+        /// <param name="data"></param>
+        /// <param name="cache"></param>
         public CacheFormDB(bool HasKey, Data data, ICache cache)
         {
             this.HasKey = HasKey;
@@ -62,12 +100,46 @@ namespace BangumiProject.Services.DBServices.DBC
             this.cache = cache;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
         public CacheFormDB(Data data)
         {
             this.Value = data;
         }
 
-        public Data GetCacheFormDB(Func<DbSet<Data>, IQueryable<Data>> func)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public List<Data> GetCacheFormDB(Func<DbSet<Data>, List<Data>> func)
+        {
+            if (Value != null)
+            {
+                return new List<Data> { Value };
+            }
+            else
+            {
+                if (HasKey)
+                {
+                    return null;
+                }
+                else
+                {
+                    var List = func.Invoke(cache._db.Set<Data>());
+                    return cache.SaveCache(List);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public Data GetCacheFormDB(Func<DbSet<Data>, Data> func)
         {
             if (Value != null)
             {
@@ -81,13 +153,11 @@ namespace BangumiProject.Services.DBServices.DBC
                 }
                 else
                 {
-                    
-                    Value = cache._db.Set<Data>()
-                    cache.SaveCache(Value);
+
+                    Value = func.Invoke(cache._db.Set<Data>());
+                    return cache.SaveCache(Value);
                 }
             }
-            return default(Data);
         }
-
     }
 }

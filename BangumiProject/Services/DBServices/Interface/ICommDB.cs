@@ -27,5 +27,8 @@ namespace BangumiProject.Services.DBServices.Interface
         Task RemoveFromDBAsync<T>(T t) where T : class;
 
         void RemoveFormDB<T>(T t) where T : class;
+
+        ICache GetCache(string Key);
+
     }
 }

@@ -22,6 +22,7 @@ using MoeUtilsBox.String;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Users = BangumiProject.Areas.Users.Models.Users;
 using BangumiProject.Services;
+using BangumiProject.Areas.Bangumi.Models;
 
 namespace BangumiProject.Controllers
 {
@@ -38,14 +39,23 @@ namespace BangumiProject.Controllers
         private readonly IMemoryCache _cache;
         private readonly MemoryCacheHelper memoryCacheHelper = new MemoryCacheHelper();
         private readonly ICommDB _commdb;
+        private readonly Services.DBServices.Interface.ICommDB cacheDB;
         /// <summary>
         /// 进行初始化
         /// </summary>
         /// <param name="_userManager"></param>
         /// <param name="DB"></param>
         /// <param name="_roleManager"></param>
-        public TestController(ICommDB _commdb, UserManager<Users> _userManager, BangumiProjectContext _DB, RoleManager<IdentityRole> _roleManager, IMemoryCache memoryCache)
+        public TestController(
+            ICommDB _commdb, 
+            UserManager<Users> _userManager, 
+            BangumiProjectContext _DB, 
+            RoleManager<IdentityRole> _roleManager, 
+            IMemoryCache memoryCache,
+            Services.DBServices.Interface.ICommDB cacheDB
+            )
         {
+            this.cacheDB = cacheDB;
             this._userManager = _userManager;
             this._DB = _DB;
             this._roleManager = _roleManager;
@@ -97,9 +107,8 @@ namespace BangumiProject.Controllers
         [Route("/session")]
         public IActionResult Cache()
         {
-            var aad = HttpContext.Session.Id;
-            HttpContext.Session.SetString("Test", "HelloWorld");
-            return Json($"{aad}   {HttpContext.Session.GetString("Test")}");
+            var a = cacheDB.GetCache("Test").GetCache<Anime>().GetCacheFormDB(db => db.FirstOrDefault());
+            return Json(a);
         }
     }
 

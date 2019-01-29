@@ -1,4 +1,6 @@
-﻿using BangumiProject.Models;
+﻿using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Models;
+using BangumiProject.Services.DBServices.DBC;
 using BangumiProject.Services.DBServices.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Services.DBServices
 {
-    public abstract class CommDBService : ICommDB, IDCache
+    public class CommDBService : Interface.ICommDB, IDCache
     {
         /// <summary>
         /// 
@@ -48,27 +50,46 @@ namespace BangumiProject.Services.DBServices
             }
         }
 
-        public Task<List<T>> GetDateToListAsync<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Key"></param>
+        /// <returns></returns>
+        public ICache GetCache(string Key)
         {
-            throw new NotImplementedException();
+            return new Cache(Key, _memoryCache, _db);
         }
 
-        public void SetCache<T>(KEY kEY, T Value)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        public void CacheID(int ID)
         {
-            throw new NotImplementedException();
+            CacheIDH.Add(ID);
         }
 
-        public bool GetDate<T>(KEY kEY, out T t)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public bool HasID(int ID)
         {
-            throw new NotImplementedException();
+            return CacheIDH.Contains(ID);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        public void RemoveID(int ID)
+        {
+            CacheIDH.Remove(ID);
         }
 
         public void DBUpdate<T>(IEnumerable<char[]> Keys) where T : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(KEY kEY)
         {
             throw new NotImplementedException();
         }
@@ -103,17 +124,12 @@ namespace BangumiProject.Services.DBServices
             throw new NotImplementedException();
         }
 
-        public bool HasAnimeID(int id)
+        public Task<T> GetLastAsync<T>() where T : class
         {
             throw new NotImplementedException();
         }
 
-        public void AddAnimeID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAnimeID(int id)
+        public Task<List<T>> GetDateToListAsync<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class
         {
             throw new NotImplementedException();
         }
@@ -128,11 +144,6 @@ namespace BangumiProject.Services.DBServices
             throw new NotImplementedException();
         }
 
-        public Task<T> GetLastAsync<T>() where T : class
-        {
-            throw new NotImplementedException();
-        }
-
         public Task RemoveFromDBAsync<T>(T t) where T : class
         {
             throw new NotImplementedException();
@@ -142,20 +153,6 @@ namespace BangumiProject.Services.DBServices
         {
             throw new NotImplementedException();
         }
-
-        public void CacheID(int ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasID(int ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveID(int ID)
-        {
-            throw new NotImplementedException();
-        }
     }
+
 }
