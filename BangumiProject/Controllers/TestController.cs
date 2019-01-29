@@ -107,6 +107,9 @@ namespace BangumiProject.Controllers
         [Route("/session")]
         public IActionResult Cache()
         {
+            //这段代码的作用：
+            //读取数据库中第一个数据
+            //保存到缓存“Test”
             var a = cacheDB.GetCache("Test").GetCache<Anime>().GetCacheFormDB(db => db.FirstOrDefault());
             return Json(a);
         }
