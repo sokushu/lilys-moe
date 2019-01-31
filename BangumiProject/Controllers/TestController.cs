@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Users = BangumiProject.Areas.Users.Models.Users;
 using BangumiProject.Services;
 using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Services.DBServices.Interface;
 
 namespace BangumiProject.Controllers
 {
@@ -37,9 +38,9 @@ namespace BangumiProject.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         //加入内存缓存
         private readonly IMemoryCache _cache;
+        private readonly IDBCore _DBCORE;
         private readonly MemoryCacheHelper memoryCacheHelper = new MemoryCacheHelper();
         private readonly ICommDB _commdb;
-        private readonly Services.DBServices.Interface.ICommDB cacheDB;
         /// <summary>
         /// 进行初始化
         /// </summary>
@@ -52,10 +53,10 @@ namespace BangumiProject.Controllers
             BangumiProjectContext _DB, 
             RoleManager<IdentityRole> _roleManager, 
             IMemoryCache memoryCache,
-            Services.DBServices.Interface.ICommDB cacheDB
+            IDBCore _DBCORE
             )
         {
-            this.cacheDB = cacheDB;
+            this._DBCORE = _DBCORE;
             this._userManager = _userManager;
             this._DB = _DB;
             this._roleManager = _roleManager;
@@ -110,8 +111,8 @@ namespace BangumiProject.Controllers
             //这段代码的作用：
             //读取数据库中第一个数据
             //保存到缓存“Test”
-            var a = cacheDB.GetCache("Test").GetCache<Anime>().GetCacheFormDB(db => db.FirstOrDefault());
-            return Json(a);
+            var Anime = _DBCORE.Save_ToFirst<Anime>("Test", anime => anime);
+            return Json(Anime);
         }
     }
 

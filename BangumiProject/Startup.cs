@@ -23,6 +23,7 @@ using BangumiProject.Areas.Users.Models;
 using BangumiProject.Services;
 using MoeUtilsBox.Utils;
 using BangumiProject.Services.DBServices;
+using BangumiProject.Services.DBServices.Interface;
 
 namespace BangumiProject
 {
@@ -148,7 +149,7 @@ namespace BangumiProject
             //ЗўЮёзЂВс
             //==============================================================
             services.AddScoped<ICommDB, CommDB>();
-            services.AddScoped<Services.DBServices.Interface.ICommDB, CommDBService>();
+            services.AddScoped<IDBCore, DBCore>();
 
             services.AddSingleton<IConfig, BangumiProject.Areas.Bangumi.Config>();
         }

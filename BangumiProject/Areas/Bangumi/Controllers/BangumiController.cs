@@ -20,6 +20,7 @@ using System.Net;
 using BangumiProject.Areas.Error.Models;
 using BangumiProject.Areas.Bangumi.Process.AnimeFilterC;
 using BangumiProject.Areas.Bangumi.Process.AnimeProcessC;
+using BangumiProject.Services.DBServices.Interface;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -46,18 +47,18 @@ namespace BangumiProject.Areas.Bangumi.Controllers
     [Area("Bangumi")]
     public class BangumiController : Controller
     {
-        private readonly ICommDB _DBServices;
+        private readonly IDBCore _DBCORE;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IAuthorizationService _authorizationService;
         public BangumiController(
-            ICommDB _DBServices,
+            IDBCore _DBCORE,
             UserManager<User> _userManager,
             SignInManager<User> _signInManager,
             IAuthorizationService _authorizationService
             )
         {
-            this._DBServices = _DBServices;
+            this._DBCORE = _DBCORE;
             this._userManager = _userManager;
             this._signInManager = _signInManager;
             this._authorizationService = _authorizationService;
@@ -95,18 +96,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             int animetype = -1, int dayofweek = -1
             )
         {
-            KEY key = new KEY { Key = CacheKey.Anime_All().ToCharArray() };
-            if (!_DBServices.GetDate(key, out List<Anime> ListAnime))
-            {
-                ListAnime = await _DBServices.GetDateToListAsync<Anime>(db => db.Select(a => a));
-                _DBServices.SetCache(key, ListAnime);
-            }
-            key = new KEY { Key = CacheKey.Anime_AllTags().ToCharArray() };
-            if (!_DBServices.GetDate(key, out List<AnimeTag> ListTag))
-            {
-                ListTag = await _DBServices.GetDateToListAsync<AnimeTag>(db => db.Include(a => a.Anime));
-                _DBServices.SetCache(key, ListTag);
-            }
+            /*
+             * 从缓存中读取数据，如果缓存中没有就从数据库中读取数据
+             */
+            var ListAnime =  _DBCORE.Save_ToList<Anime>(CacheKey.Anime_All(), db => db.Select(a => a));
+            var ListTag = _DBCORE.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(), db => db.Include(a => a.Anime));
+
             /*
              * 这里是一个变化高发区
              * 未来可能会加入不同的过滤条件
@@ -341,7 +336,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit)]
         public async Task<ActionResult> EditAsync(int id)
         {
-            if (_DBServices.HasAnimeID(id))
+            if (_DBCORE.HasAnimeID(id))
             {
                 var key = new KEY { Key = CacheKey.Anime_One(id).ToCharArray() };
                 if (!_DBServices.GetDate(key, out Anime Anime))
@@ -371,7 +366,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         {
             try
             {
-                if (_DBServices.HasAnimeID(id))
+                if (_DBCORE.HasAnimeID(id))
                 {
                     Anime Anime = bangumiEdit.Anime;
                     var NewTag = bangumiEdit.AddTag;
