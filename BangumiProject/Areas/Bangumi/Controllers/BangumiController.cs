@@ -91,7 +91,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         // GET: Bangumi
         [HttpGet]
         [Route("/Bangumi", Name = Final.Route_Bangumi_Index)]
-        public async Task<ActionResult> IndexAsync(
+        public ActionResult IndexAsync(
             int Page = 1, string tagname = "", int year = -1, int season = -1, int animestats = -1,
             int animetype = -1, int dayofweek = -1
             )
@@ -154,31 +154,17 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         public async Task<ActionResult> DetailsAsync(int id = -1)
         {
             //从数据库中读取数据
-            if (!_DBServices.HasAnimeID(id))
+            if (!_DBCORE.HasAnimeID(id))
                 return NotFound();
-            var key = new KEY { Key = CacheKey.Anime_One(id).ToCharArray() };
-            if (!_DBServices.GetDate(key, out Anime Anime))
-            {
-                /**
-                 * 我有话要说：
-                 * 下面这个就是要对
-                 * 
-                 * ...../(ㄒoㄒ)/~~
-                 * 我要说什么来着
-                 */
-                Anime = await _DBServices.GetDateOneAsync<Anime>(db =>
+            Anime Anime = _DBCORE.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db =>
                         db.Where(a => a.AnimeID == id)
                         .Include(a => a.Souce)
                         .Include(a => a.Tags)
                         .Include(a => a.AnimeComms));
-                _DBServices.SetCache(key, Anime);
-            }
-            key = new KEY { Key = CacheKey.Blog_One_ByAnimeID(id).ToCharArray() };
-            if (!_DBServices.GetDate(key, out ICollection<Blog> blogs))
-            {
-                blogs = await _DBServices.GetDateToListAsync<Blog>(db => db.Where(b => b.AnimeID == id).OrderByDescending(a => a.Time).Take(10));
-                _DBServices.SetCache(key, blogs);
-            }
+            ICollection<Blog> blogs = _DBCORE.Save_ToList<Blog>(CacheKey.Blog_One_ByAnimeID(id), db => 
+                        db.Where(b => b.AnimeID == id)
+                        .OrderByDescending(a => a.Time)
+                        .Take(10));
             /**
              * 这里是变化的数据
              * 未来可能会加入不同的页面展示模块
