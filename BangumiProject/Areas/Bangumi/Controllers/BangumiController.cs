@@ -219,13 +219,8 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             //如果没有登陆，返回Null
             var userID = _userManager.GetUserId(HttpContext.User);
             //尝试读取缓存
-            key = new KEY { Key = CacheKey.Anime_User_Info(userID, id).ToCharArray() };
-            if (!_DBServices.GetDate(key, out AnimeUserInfo Infos))
-            {
-                Infos = await _DBServices.GetDateOneAsync<AnimeUserInfo>(db => db.Where(info => info.Users.Id == userID && info.SubAnime.AnimeID == id)
-                .Include(info => info.Memos));
-                _DBServices.SetCache(key, Infos);
-            }
+            AnimeUserInfo Infos = _DBCORE.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(userID, id), db => db.Where(info => info.Users.Id == userID && info.SubAnime.AnimeID == id)
+                                        .Include(info => info.Memos));
             if (Infos != null)//没有订阅
             {
                 IsSub = true;
