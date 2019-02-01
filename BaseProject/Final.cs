@@ -124,7 +124,7 @@ namespace System
          * 以下是路由
          * ====================================================
          */
-
+        public const string Route_Index = "Index";
         public const string Route_Profile_UID = "Profile_Uid";
         public const string Route_Profile = "Profile";
         public const string Route_Test = "Test";

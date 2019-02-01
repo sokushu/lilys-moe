@@ -112,6 +112,14 @@ namespace BangumiProject.Controllers
             //读取数据库中第一个数据
             //保存到缓存“Test”
             var Anime = _DBCORE.Save_ToFirst<Anime>("Test", anime => anime);
+
+            _DBCORE.Save_Remove("Test");
+
+            Anime = _DBCORE.Save_ToFirst<Anime>("Test", anime => anime);
+            Anime.AnimeName = "Happy Sugar Life";
+            _DBCORE.Save_Updata("Test", Anime).Commit();
+            object obj = _DBCORE.ToFirst<Anime>(db => db);
+            object obj00 = _DBCORE.GetCache<object>("Test");
             return Json(Anime);
         }
     }

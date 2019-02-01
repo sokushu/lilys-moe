@@ -25,6 +25,14 @@ namespace BangumiProject.Services.DBServices.Interface
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
+        /// <returns></returns>
+        List<T> ToList<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
         /// <param name="Method"></param>
         /// <returns></returns>
         T Save_ToFirst<T>(string Key, Func<DbSet<T>, IQueryable<T>> func) where T : class;
@@ -32,9 +40,70 @@ namespace BangumiProject.Services.DBServices.Interface
         /// <summary>
         /// 
         /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        T ToFirst<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <param name="obj"></param>
+        IDBCore Save_Updata<T>(string Key, T obj) where T : class;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Key"></param>
+        void Save_Remove(string Key);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        IDBCore Add<T>(T obj) where T : class;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        IDBCore Remove<T>(T obj) where T : class;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void Commit();
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="Key"></param>
         /// <returns></returns>
         ICacheEntry GetCacheEntry(string Key);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        bool TryGet<T>(string Key, out T t);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <returns></returns>
+        T GetCache<T>(string Key);
 
         /// <summary>
         /// 

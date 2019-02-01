@@ -57,7 +57,7 @@ namespace BangumiProject.Services.DBServices
         {
             //先尝试直接从缓存中读取
             Keys.Add(Key);
-            var Cache = _memoryCache.GetOrCreate(Key, cache => cache.Value = (func.Invoke(_db.Set<T>()).FirstOrDefault()));
+            var Cache = _memoryCache.GetOrCreate(Key, cache => cache.Value = ToFirst(func));
             return (T)Cache;
         }
 
@@ -72,7 +72,7 @@ namespace BangumiProject.Services.DBServices
         {
             //先尝试直接从缓存中读取
             Keys.Add(Key);
-            var Cache = _memoryCache.GetOrCreate(Key, cache => cache.Value = (func.Invoke(_db.Set<T>()).ToList()));
+            var Cache = _memoryCache.GetOrCreate(Key, cache => cache.Value = ToList(func));
             return (List<T>)Cache;
         }
 
@@ -83,7 +83,7 @@ namespace BangumiProject.Services.DBServices
         /// <returns></returns>
         public ICacheEntry GetCacheEntry(string Key)
         {
-            return _memoryCache.GetOrCreate(Key, cache => cache);
+            return _memoryCache.CreateEntry(Key);
         }
 
         /// <summary>
@@ -103,6 +103,105 @@ namespace BangumiProject.Services.DBServices
         public void ADDAnimeID(int ID)
         {
             AnimeIDs.Add(ID);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <param name="obj"></param>
+        public IDBCore Save_Updata<T>(string Key, T obj) where T : class
+        {
+            GetCacheEntry(Key).Value = obj;
+            _db.Set<T>().Update(obj);
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Commit()
+        {
+            _db.SaveChanges();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public IDBCore Add<T>(T obj) where T : class
+        {
+            _db.Add(obj);
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Key"></param>
+        public void Save_Remove(string Key)
+        {
+            _memoryCache.Remove(Key);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public IDBCore Remove<T>(T obj) where T : class
+        {
+            _db.Remove(obj);
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public List<T> ToList<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class
+        {
+            return func.Invoke(_db.Set<T>()).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public T ToFirst<T>(Func<DbSet<T>, IQueryable<T>> func) where T : class
+        {
+            return func.Invoke(_db.Set<T>()).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <returns></returns>
+        public T GetCache<T>(string Key)
+        {
+            return _memoryCache.Get<T>(Key);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public bool TryGet<T>(string Key, out T t)
+        {
+            return _memoryCache.TryGetValue(Key, out t);
         }
     }
 }

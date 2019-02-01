@@ -50,7 +50,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("/", Name = "Index")]
+        [Route("/", Name = Final.Route_Index)]
         public async Task<IActionResult> GetIndex()
         {
             //得到最新的4部动画
@@ -76,8 +76,6 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             {
                 var UserYuri = await _userManager.GetRolesAsync(User);
                 var Role = UserYuri.FirstOrDefault();
-                
-
                 switch (Role)
                 {
                     case Final.Yuri_Admin:
