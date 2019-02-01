@@ -45,6 +45,22 @@ namespace System
         {
             return "AnimeAllTags";
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string Anime_New4()
+        {
+            return "AnimeNew4";
+        }
+        public static string Anime_NotEnd()
+        {
+            return "AnimeNotEnd";
+        }
+        public static string Anime_Comments(int AnimeID)
+        {
+            return $"AnimeComments{AnimeID}";
+        }
 
         /// <summary>
         /// 根据ID得到一篇博客

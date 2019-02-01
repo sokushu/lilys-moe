@@ -21,6 +21,7 @@ using BangumiProject.Areas.Bangumi.Process;
 using User = BangumiProject.Areas.Users.Models.Users;
 using BangumiProject.Areas.HomeBar.Views.Home.Model;
 using BangumiProject.Services;
+using BangumiProject.Services.DBServices.Interface;
 
 namespace BangumiProject.Areas.HomeBar.Controllers
 {
@@ -31,18 +32,18 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         /// 用户数据库，以及工具的初始化
         /// </summary>
         private readonly UserManager<User> _userManager;
-        private readonly ICommDB _DBServer;
+        private readonly IDBCore _DBCORE;
         private readonly BangumiProjectContext DB;
         private readonly MoeTools moeTools = new MoeTools();
         private readonly RoleManager<IdentityRole> _roleManager;
         public HomeController(
             UserManager<User> _userManager, BangumiProjectContext DB, 
-            RoleManager<IdentityRole> _roleManager, ICommDB _DBServer)
+            RoleManager<IdentityRole> _roleManager, IDBCore _DBCORE)
         {
             this._userManager = _userManager;
             this.DB = DB;
             this._roleManager = _roleManager;
-            this._DBServer = _DBServer;
+            this._DBCORE = _DBCORE;
         }
 
         /// <summary>
@@ -54,9 +55,9 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         public async Task<IActionResult> GetIndex()
         {
             //得到最新的4部动画
-            List<Anime> animes = await DB.Anime.OrderByDescending(anime => anime.Time).Take(4).ToListAsync();
+            List<Anime> animes = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
             //得到未完结的动画
-            List<Anime> SAnime = await DB.Anime.Where(anime => anime.IsEnd == false).ToListAsync();
+            List<Anime> SAnime = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_NotEnd(), db => db.Where(anime => anime.IsEnd == false));
             //对未完结动画分成星期一，星期二的形式
             WeekSwitch WeekSwitch = new WeekSwitch();
             var weeks = WeekSwitch.SwitchAnime(SAnime, WeekSwitch.SwitchType.Week);
@@ -70,7 +71,6 @@ namespace BangumiProject.Areas.HomeBar.Controllers
 
             //测试用功能
             var AllUsers = await _userManager.Users.ToListAsync();
-
             var User = await _userManager.GetUserAsync(HttpContext.User);
             if (User != null)
             {

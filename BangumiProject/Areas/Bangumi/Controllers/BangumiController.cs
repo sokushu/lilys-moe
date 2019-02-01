@@ -92,16 +92,22 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [HttpGet]
         [Route("/Bangumi", Name = Final.Route_Bangumi_Index)]
         public ActionResult IndexAsync(
-            int Page = 1, string tagname = "", int year = -1, int season = -1, int animestats = -1,
-            int animetype = -1, int dayofweek = -1
+            int Page = 1, 
+            string tagname = "", 
+            int year = -1, 
+            int season = -1, 
+            int animestats = -1,
+            int animetype = -1, 
+            int dayofweek = -1
             )
         {
             /*
              * 从缓存中读取数据，如果缓存中没有就从数据库中读取数据
              */
-            var ListAnime =  _DBCORE.Save_ToList<Anime>(CacheKey.Anime_All(), db => db.Select(a => a));
-            var ListTag = _DBCORE.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(), db => db.Include(a => a.Anime));
-
+            var ListAnime =  _DBCORE.Save_ToList<Anime>(CacheKey.Anime_All(), 
+                    db => db.Select(a => a));
+            var ListTag = _DBCORE.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(), 
+                    db => db.Include(a => a.Anime));
             /*
              * 这里是一个变化高发区
              * 未来可能会加入不同的过滤条件
@@ -301,7 +307,8 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 //将动画数据写入数据库
                 _DBCORE.Add(anime).Commit();
                 //最新发现，到这一步ID会有值o(*￣▽￣*)ブ
-
+                UpDataNew4(anime);//更新首页的最新4个动画的缓存
+                UpDataNotEnd(anime);
                 _DBCORE.ADDAnimeID(anime.AnimeID);//这里不要忘记添加动画ID
                 return RedirectToRoute(Final.Route_Bangumi_Index, anime.AnimeID);
             }
@@ -332,7 +339,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 viewName: "BangumiEdit",
                 model: new BangumiEdit
                 {
-                    //Anime = Anime
+                    Anime = Anime
                 }
                 );
             }
@@ -369,7 +376,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                             TagName = bangumiEdit.AddTag
                         });
                     }
-
+                    UpDataNotEnd(anime);
                     //把缓存数据，数据库数据更新
                     _DBCORE.Save_Updata(CacheKey.Anime_One(id), anime).Commit();
                     //回到动画详细页面
@@ -420,16 +427,40 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             }
         }
 
-        ///===========================================================================
-        ///===========================================================================
-        ///===========================================================================
+        //=====================================================================================
+        //=====================================================================================
+        //=====================================================================================
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="anime"></param>
+        private void UpDataNew4(Anime anime)
+        {
+            var List = _DBCORE.GetCache<List<Anime>>(CacheKey.Anime_New4());
+            List.RemoveAll(a => a.AnimeID == anime.AnimeID);
+            List.Add(anime);
+            _DBCORE.GetCacheEntry(CacheKey.Anime_New4()).Value = List.OrderByDescending(t => t.Time).ToList();
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        private void GetAnimeByID(int ID)
+        /// <param name="anime"></param>
+        private void UpDataNotEnd(Anime anime)
         {
-
+            int ID = anime.AnimeID;
+            var List = _DBCORE.GetCache<List<Anime>>(CacheKey.Anime_NotEnd());
+            Anime SearchAnime = null;
+            if ((SearchAnime = List.Where(a => a.AnimeID == ID).FirstOrDefault()) == null)
+            {
+                List.Add(anime);
+            }
+            else
+            {
+                List.Remove(SearchAnime);
+                List.Add(anime);
+            }
+            _DBCORE.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
         }
     }
 }
