@@ -91,13 +91,11 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         // GET: Bangumi
         [HttpGet]
         [Route("/Bangumi", Name = Final.Route_Bangumi_Index)]
-        public ActionResult IndexAsync(
-            int Page = 1, 
-            string tagname = "", 
-            int year = -1, 
-            int season = -1, 
-            int animestats = -1,
-            int animetype = -1, 
+        public ActionResult IndexAsync
+            (
+            int Page = 1,           string tagname = "", 
+            int year = -1,          int season = -1, 
+            int animestats = -1,    int animetype = -1, 
             int dayofweek = -1
             )
         {
@@ -114,6 +112,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
              */
             AnimeFilter animeFilter = new AnimeFilter();
 
+
             //动画是否完结
             animeFilter.SetAnimeFilter(new AnimeFilterByEnd(animestats));
             //动画的年份
@@ -126,6 +125,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             animeFilter.SetAnimeFilter(new AnimeFilterBySeason(season));
             //添加标签过滤
             animeFilter.SetAnimeFilter(new AnimeFilterByTagName(tagname, ListTag));
+
 
             //返回最终的过滤结果集
             var Animes = animeFilter.GetAnimeFilter(ListAnime);

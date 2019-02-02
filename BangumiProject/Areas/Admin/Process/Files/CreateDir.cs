@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace BangumiProject.Areas.Admin.Process.Files
 {
-    public interface IFileProcess
+    public class CreateDir : IFileProcess
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Path"></param>
-        void Process(string Path);
+        public void Process(string Path)
+        {
+            Directory.CreateDirectory(Path);
+        }
     }
 }

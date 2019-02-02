@@ -7,6 +7,7 @@ using BangumiProject.Areas.Users.Models;
 using BangumiProject.Controllers;
 using BangumiProject.Models;
 using BangumiProject.Process;
+using BangumiProject.Services.DBServices.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,17 +25,27 @@ namespace BangumiProject.Areas.Profile.Controllers
         private readonly UserManager<User> _userManager;
         private readonly BangumiProjectContext _DB;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IDBCore _DBCORE;
+        private readonly IAuthorizationService _authorizationService;
         /// <summary>
         /// 进行初始化
         /// </summary>
         /// <param name="_userManager"></param>
         /// <param name="DB"></param>
         /// <param name="_roleManager"></param>
-        public ProfileController(UserManager<User> _userManager, BangumiProjectContext _DB, RoleManager<IdentityRole> _roleManager)
+        public ProfileController(
+            UserManager<User> _userManager, 
+            BangumiProjectContext _DB, 
+            RoleManager<IdentityRole> _roleManager,
+            IDBCore _DBCORE,
+            IAuthorizationService _authorizationService
+            )
         {
             this._userManager = _userManager;
             this._DB = _DB;
             this._roleManager = _roleManager;
+            this._DBCORE = _DBCORE;
+            this._authorizationService = _authorizationService;
         }
 
         /// <summary>
