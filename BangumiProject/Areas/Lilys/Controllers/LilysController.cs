@@ -26,10 +26,13 @@ namespace BangumiProject.Areas.Lilys.Controllers
     public class LilysController : Controller
     {
         // GET: Lilys
-        [Route("/lilys", Name = "lilys")]
+        [Route("/lilys", Name = "Lilys")]
         public ActionResult Index()
         {
-            return View();
+            return View(
+                viewName:"LilyIndex",
+                model:""
+                );
         }
 
         // GET: Lilys/Details/5

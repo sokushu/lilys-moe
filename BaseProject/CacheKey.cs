@@ -84,5 +84,10 @@ namespace System
         {
             return $"AnimeUserInfo{UID}{AnimeID}";
         }
+
+        public static string User_UID(string UID)
+        {
+            return $"User_UID{UID}";
+        }
     }
 }

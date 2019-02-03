@@ -1,12 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using BangumiProject.Areas.Users.Models
+@using BangumiProject.Controllers
+@inject SignInManager<Users> SignInManager
+@inject UserManager<Users> UserManager
+@{
+    bool IsSignED = SignInManager.IsSignedIn(User);
+    string UserName = UserManager.GetUserName(User);
+    var Model = new Tuple<bool, string>(IsSignED, UserName);
+}
+
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>@ViewData["Title"] - Lilys.moe</title>
+    <link rel="stylesheet" href="@Final.StaticFiles_css" />
+    <script src="@Final.StaticFiles_JS"></script>
 </head>
-<body>
-    <div>
+<body class="">
+    <div class="mdui-container">
         @RenderBody()
     </div>
 </body>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BangumiProject.Areas.Bangumi.Process;
+using BangumiProject.Areas.Profile.Models;
 using BangumiProject.Areas.Users.Models;
 using BangumiProject.Controllers;
 using BangumiProject.Models;
@@ -99,6 +100,9 @@ namespace BangumiProject.Areas.Profile.Controllers
 
         /// <summary>
         /// 获取数据
+        /// 
+        /// 使用AJAX进行数据读取
+        /// 
         /// </summary>
         /// <returns></returns>
         [HttpPost]
