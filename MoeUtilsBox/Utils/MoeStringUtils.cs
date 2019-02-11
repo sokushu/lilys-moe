@@ -7,6 +7,11 @@ namespace MoeUtilsBox.Utils
 {
     public static class MoeStringUtils
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTimes"></param>
+        /// <returns></returns>
         public static string DateTimeToString(this ICollection<DateTime> dateTimes)
         {
             StringBuilder builder = new StringBuilder();
@@ -18,6 +23,11 @@ namespace MoeUtilsBox.Utils
             return builder.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DateTimes"></param>
+        /// <returns></returns>
         public static ICollection<DateTime> StringToDateTime(this string DateTimes)
         {
             string[] date = DateTimes.Split(',');
@@ -31,6 +41,16 @@ namespace MoeUtilsBox.Utils
                 ReturnList.Add(Convert.ToDateTime(item, dtFormat));
             }
             return ReturnList;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="S">显示的字数</param>
+        /// <returns></returns>
+        public static string Sub(this string Input, int S)
+        {
+            return $"{Input.Substring(0, S)}...";
         }
     }
 }
