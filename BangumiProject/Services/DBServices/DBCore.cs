@@ -113,7 +113,7 @@ namespace BangumiProject.Services.DBServices
         /// <param name="obj"></param>
         public IDBCore Save_Updata<T>(string Key, T obj) where T : class
         {
-            GetCacheEntry(Key).Value = obj;
+            _memoryCache.Set(Key, obj);
             _db.Set<T>().Update(obj);
             return this;
         }

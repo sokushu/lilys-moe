@@ -199,10 +199,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             AnimeProcess animeProcess = new AnimeProcess();
 
             //动画集数处理
-            //######################   BUG    #########################
-            //集数更新的不正确
-            //可能是缓存更新出的问题，重新启动整个程序便会正确显示
-            //######################   BUG    #########################
             bool IsChange = animeProcess.RunProcess(new AnimeProcessByNumber(new List<AnimeNumInfo> { }, ref Anime));
             if (IsChange)
             {
@@ -293,12 +289,13 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 {
                     dateTime = DateTime.Now;
                 }
-                //######################   BUG    #########################
-                //这里会出现BUG
-                //造成一开始不能选中完结动画
-                //解决办法就是产生新的Anime对象了
-                //把Anime当作参数
-                //######################   BUG    #########################
+                /*######################   BUG    #########################
+                 * 这里会出现BUG
+                 * 造成一开始不能选中完结动画
+                 * 解决办法就是产生新的Anime对象了
+                 * 把Anime当作参数
+                 *######################   BUG    #########################
+                 */
                 var End = collection["IsEnd"];
                 if (!bool.TryParse(End, out bool IsEnd))
                 {
