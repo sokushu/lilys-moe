@@ -35,7 +35,7 @@ namespace BaseProject.Common.Models
         /// <summary>
         /// 上传文件的用户
         /// </summary>
-        //public User UpLoadUsers { get; set; }
+        public User UpLoadUsers { get; set; }
         /// <summary>
         /// 图片在哪一个相册里
         /// </summary>

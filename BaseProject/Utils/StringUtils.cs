@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace MoeUtilsBox.Utils
+namespace System
 {
-    public static class MoeStringUtils
+    public static class StringUtils
     {
         /// <summary>
         /// 

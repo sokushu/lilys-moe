@@ -25,16 +25,16 @@ namespace BaseProject.Common.Models
         /// <summary>
         /// 动画的片头曲
         /// </summary>
-        public MusicInfo OP { get; set; }
+        public MusicAlbum OP { get; set; }
 
         /// <summary>
         /// 动画的片尾曲
         /// </summary>
-        public MusicInfo ED { get; set; }
+        public MusicAlbum ED { get; set; }
 
         /// <summary>
         /// 其他的音乐专辑信息
         /// </summary>
-        public ICollection<MusicInfo> Musics { get; set; }
+        public ICollection<MusicAlbum> MusicAlbums { get; set; }
     }
 }
