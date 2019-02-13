@@ -294,6 +294,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                  * 造成一开始不能选中完结动画
                  * 解决办法就是产生新的Anime对象了
                  * 把Anime当作参数
+                 * 过一段时间再解决这个问题吧
                  *######################   BUG    #########################
                  */
                 var End = collection["IsEnd"];

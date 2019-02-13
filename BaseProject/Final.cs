@@ -37,6 +37,11 @@ namespace System
         public const string FilePath_ImageProcess_Thumb = @"E:\TEST\TESTPIC\ProcessThumb\";
         public const string FilePath_DownLoad = @"E:\TEST\DownLoad\";
         public const string FilePath_DownLoad_Log = @"E:\TEST\DownLoad\Log\";
+
+        /// <summary>
+        /// 搜索引擎的索引库
+        /// </summary>
+        public const string Search_Index = @"E:\programme\test";
 #else
         
         /// <summary>

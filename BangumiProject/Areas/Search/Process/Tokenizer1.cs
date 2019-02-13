@@ -14,11 +14,11 @@ namespace BangumiProject.Areas.Search.Process
     /// </summary>
     public class Tokenizer1 : Tokenizer
     {
-        private static object _LockObj = new object();
-        private static bool _Inited = false;
-        private System.Collections.Generic.List<JiebaNet.Segmenter.Token> _WordList = new List<JiebaNet.Segmenter.Token>();
-        private string _InputText;
-        private bool _OriginalResult = false;
+        private static readonly object _LockObj = new object();
+        private static readonly bool _Inited = false;
+        private List<JiebaNet.Segmenter.Token> _WordList = new List<JiebaNet.Segmenter.Token>();
+        private string _InputText { get; set; }
+        private bool _OriginalResult { get; set; } = false;
 
         private ICharTermAttribute termAtt;
         private IOffsetAttribute offsetAtt;
@@ -26,13 +26,14 @@ namespace BangumiProject.Areas.Search.Process
         private ITypeAttribute typeAtt;
 
         private List<string> stopWords = new List<string>();
-        private string stopUrl = "./stopwords.txt";
+        private readonly string stopUrl = "./stopwords.txt";
         private JiebaSegmenter segmenter;
 
-        private System.Collections.Generic.IEnumerator<JiebaNet.Segmenter.Token> iter;
+        private IEnumerator<JiebaNet.Segmenter.Token> iter;
         private int start = 0;
 
-        private TokenizerMode mode;
+        private TokenizerMode mode { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,6 +53,9 @@ namespace BangumiProject.Areas.Search.Process
             Init();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void Init()
         {
             termAtt = AddAttribute<ICharTermAttribute>();
@@ -60,6 +64,11 @@ namespace BangumiProject.Areas.Search.Process
             typeAtt = AddAttribute<ITypeAttribute>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private string ReadToEnd(TextReader input)
         {
             return input.ReadToEnd();
@@ -86,6 +95,11 @@ namespace BangumiProject.Areas.Search.Process
             this.Dispose();
             return false;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Lucene.Net.Analysis.Token Next()
         {
 
@@ -104,9 +118,11 @@ namespace BangumiProject.Areas.Search.Process
             }
             else
                 return null;
-
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Reset()
         {
             base.Reset();
@@ -120,10 +136,13 @@ namespace BangumiProject.Areas.Search.Process
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="words"></param>
         public void RemoveStopWords(System.Collections.Generic.IEnumerable<JiebaNet.Segmenter.Token> words)
         {
             _WordList.Clear();
-
             foreach (var x in words)
             {
                 if (stopWords.IndexOf(x.Word) == -1)
@@ -131,7 +150,6 @@ namespace BangumiProject.Areas.Search.Process
                     _WordList.Add(x);
                 }
             }
-
         }
     }
 }

@@ -5,10 +5,14 @@ using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using NUnit.Framework;
-using static Lucene.Net.Documents.Field;
 using System;
 using Lucene.Net.Analysis.Miscellaneous;
-
+using static Lucene.Net.Documents.Field;
+using Lucene.Net;
+using Lucene;
+using Lucene.Net.Search.Payloads;
+using Lucene.Net.Search.Similarities;
+using Lucene.Net.Search.Spans;
 
 namespace Tests
 {
@@ -18,33 +22,56 @@ namespace Tests
         public void Setup()
         {
         }
-
+        //查询方式 	意义
+        //TermQuery 	精确查询
+        //TermRangeQuery 	查询一个范围
+        //PrefixQuery 	前缀匹配查询
+        //WildcardQuery 	通配符查询
+        //BooleanQuery 	多条件查询
+        //PhraseQuery 	短语查询
+        //FuzzyQuery 	模糊查询
+        //Queryparser 	万能查询（上面的都可以用这个来查询到）
+        //--------------------- 
+        //作者：狂飙的yellowcong 
+        //来源：CSDN 
+        //原文：https://blog.csdn.net/yelllowcong/article/details/78698506 
+        //版权声明：本文为博主原创文章，转载请附上博文链接！
         [Test]
         public void Test1()
         {
-            Directory directory = FSDirectory.Open(@"E:\programme\test");
-            Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.LuceneVersion.LUCENE_48);
-            IndexWriterConfig config = new IndexWriterConfig(Lucene.Net.Util.LuceneVersion.LUCENE_48, analyzer);
-            IndexWriter indexWriter = new IndexWriter(directory, config);
-            Document document = new Document();
-            Field fileNameField = new TextField("fileName", "TEST", Store.YES);
-            Field fileSizeField = new DoubleField("T", 33.65, Store.YES);
-            document.Add(fileNameField);
-            document.Add(fileSizeField);
-            indexWriter.AddDocument(document);
-            indexWriter.Commit();
+            //Directory directory = FSDirectory.Open(@"E:\programme\test");
+            //Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.LuceneVersion.LUCENE_48);
+            //IndexWriterConfig config = new IndexWriterConfig(Lucene.Net.Util.LuceneVersion.LUCENE_48, analyzer);
+            //IndexWriter indexWriter = new IndexWriter(directory, config);
+            //Document document = new Document();
+            //Field fileNameField = new TextField("fileName", "TEST", Store.YES);
+            //Field fileSizeField = new DoubleField("T", 33.65, Store.YES);
+            //document.Add(fileNameField);
+            //document.Add(fileSizeField);
+            //indexWriter.AddDocument(document);
+            //indexWriter.Commit();
 
-            IndexReader indexReader = DirectoryReader.Open(directory);
-            IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-            PerFieldAnalyzerWrapper wrapper = new PerFieldAnalyzerWrapper(analyzer);
-            //QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "Name", wrapper);
-            //Query query = new Queryparser();
-            TopDocs topDocs = indexSearcher.Search(query, 10);
-            Console.WriteLine(topDocs.TotalHits);
-            foreach (var item in topDocs.ScoreDocs)
-            {
-                Document fields = indexSearcher.Doc(item.Doc);
-            }
+            ////上方的代码是创建索引
+
+            //IndexReader indexReader = DirectoryReader.Open(directory);
+            //IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+            //PerFieldAnalyzerWrapper wrapper = new PerFieldAnalyzerWrapper(analyzer);
+            //Query query;
+            //query = new WildcardQuery(new Term(""));
+            //query = new PhraseQuery();
+            //query = new PrefixQuery(new Term(""));
+            //query = new MultiPhraseQuery();
+            //query = new FuzzyQuery(new Term(""));
+            //query = new RegexpQuery(new Term(""));
+            //query = new TermRangeQuery(null,null,null,true,true);
+            //query = new ConstantScoreQuery(query);
+            //query = new DisjunctionMaxQuery(3);
+            //TopDocs topDocs = indexSearcher.Search(query, 10);
+            //Console.WriteLine(topDocs.TotalHits);
+            //foreach (var item in topDocs.ScoreDocs)
+            //{
+            //    Document fields = indexSearcher.Doc(item.Doc);
+            //}
             
         }
     }

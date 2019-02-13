@@ -11,23 +11,23 @@ namespace BaseProject.Common.Models
     public class MusicAlbum
     {
         /// <summary>
-        /// 
+        /// 专辑的ID
         /// </summary>
         [Key]
         public int MIID { get; set; }
 
         /// <summary>
-        /// 
+        /// 专辑的名字
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// 
+        /// 专辑封面
         /// </summary>
         public string Pic { get; set; }
 
         /// <summary>
-        /// 
+        /// 专辑包含的歌曲
         /// </summary>
         public ICollection<Music> Musics { get; set; }
     }
