@@ -42,6 +42,7 @@ namespace System
         /// 搜索引擎的索引库
         /// </summary>
         public const string Search_Index = @"E:\programme\test";
+        public const string AdminSetting = @"E:\TEST\WebSetting.conf";
 #else
         
         /// <summary>

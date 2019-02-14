@@ -6,7 +6,8 @@
 @inject IAuthorizationService AuthorizationService
 @model Tuple<bool, string>
 
-<div class="mdui-toolbar mdui-color-pink-100 mdui-shadow-10">
+
+<div class="mdui-toolbar mdui-color-amber-a100 mdui-shadow-10" >
     <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
     <span class="mdui-typo-title">Lilys</span>
     <div class="mdui-toolbar-spacer"></div>
@@ -26,7 +27,7 @@
             </li>
             <li class="mdui-divider"></li>
             <li class="mdui-menu-item">
-                <a asp-area="Identity" asp-page="/Account/Manage/Index"  class="mdui-ripple">自定义设置</a>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="mdui-ripple">自定义设置</a>
             </li>
         </ul>
     }
@@ -96,4 +97,7 @@
             </li>
         </ul>
     }
+</div>
+<div class="mdui-container-fluid mdui-color-grey-50 mdui-row-gapless" style="height:300px;">
+    <img class="mdui-img-fluid mdui-center" style="height:300px;" src="~/images/18513240.jpg" />
 </div>

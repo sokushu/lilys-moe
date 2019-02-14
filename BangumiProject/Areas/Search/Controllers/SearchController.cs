@@ -46,7 +46,7 @@ namespace BangumiProject.Areas.Search.Controllers
             var Animes = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_All(), db => db);
             //BuildIndex buildIndex = new BuildIndex(Animes);
             //buildIndex.Init(ProcessType.Anime);
-
+            
             Process.Search search = new Process.Search();
             search.SearchAnime("Happy");
             return View();
