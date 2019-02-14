@@ -111,7 +111,7 @@ namespace BangumiProject.Areas.Admin.Process
             var obj = setting.GetType();
             foreach (var item in obj.GetProperties())
             {
-                file.Add($"{item.Name}:{item.GetValue(setting)},{item.PropertyType.FullName}");
+                file.Add($"{item.Name}:{item.GetValue(setting)?? "null"},{item.PropertyType.FullName}");
             }
             File.WriteAllLines(Final.AdminSetting, file);
         }
