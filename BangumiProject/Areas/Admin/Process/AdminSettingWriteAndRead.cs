@@ -25,11 +25,11 @@ namespace BangumiProject.Areas.Admin.Process
         /// <returns></returns>
         public AdminSetting Read()
         {
-            var lines = File.ReadAllLines(Final.AdminSetting);
             //构建对象
             //开始构建
             AdminSetting setting = new AdminSetting();
 
+            var lines = File.ReadAllLines(Final.AdminSetting);
             var obj = setting.GetType();
             List<PropertyInfo> proinfo = new List<PropertyInfo>();
             proinfo.AddRange(obj.GetProperties());
@@ -38,7 +38,7 @@ namespace BangumiProject.Areas.Admin.Process
             {
                 var one = data.Split(',');
                 var type = one[1];
-                var KV = one[0].Split(':');
+                var KV = one[0].Split(':', 2);
 
                 var key = KV[0];
                 var value = KV[1];
@@ -47,57 +47,48 @@ namespace BangumiProject.Areas.Admin.Process
                 {
                     if (item.Name == key)
                     {
-                        object dynamic = null;
+                        object valObj = null;
                         TypeCode typef = Type.GetTypeCode(Type.GetType(type));
-                        switch (typef)
+                        if (value != "null")
                         {
-                            case TypeCode.Boolean:
-                                bool valueBool = bool.Parse(value);
-                                dynamic = valueBool;
-                                break;
-                            case TypeCode.Byte:
-                                break;
-                            case TypeCode.Char:
-                                break;
-                            case TypeCode.DateTime:
-                                break;
-                            case TypeCode.DBNull:
-                                break;
-                            case TypeCode.Decimal:
-                                break;
-                            case TypeCode.Double:
-                                break;
-                            case TypeCode.Empty:
-                                break;
-                            case TypeCode.Int16:
-                                break;
-                            case TypeCode.Int32:
-                                break;
-                            case TypeCode.Int64:
-                                break;
-                            case TypeCode.Object:
-                                break;
-                            case TypeCode.SByte:
-                                break;
-                            case TypeCode.Single:
-                                break;
-                            case TypeCode.String:
-                                break;
-                            case TypeCode.UInt16:
-                                break;
-                            case TypeCode.UInt32:
-                                break;
-                            case TypeCode.UInt64:
-                                break;
-                            default:
-                                break;
+                            switch (typef)
+                            {
+                                case TypeCode.Boolean:
+                                    valObj = bool.Parse(value);
+                                    break;
+                                case TypeCode.Byte:
+                                    valObj = byte.Parse(value);
+                                    break;
+                                case TypeCode.Char:
+                                    valObj = char.Parse(value);
+                                    break;
+                                case TypeCode.DateTime:
+                                    valObj = DateTime.Parse(value);
+                                    break;
+                                case TypeCode.Double:
+                                    valObj = double.Parse(value);
+                                    break;
+                                case TypeCode.Int16:
+                                    valObj = short.Parse(value);
+                                    break;
+                                case TypeCode.Int32:
+                                    valObj = int.Parse(value);
+                                    break;
+                                case TypeCode.Int64:
+                                    valObj = long.Parse(value);
+                                    break;
+                                case TypeCode.String:
+                                    valObj = value;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
-                        item.SetValue(setting, dynamic);
+                        item.SetValue(setting, valObj);
                     }
                 }
                 proinfo.RemoveAll(info => info.Name == key);
             }
-            
             return setting;
         }
 
@@ -111,7 +102,7 @@ namespace BangumiProject.Areas.Admin.Process
             var obj = setting.GetType();
             foreach (var item in obj.GetProperties())
             {
-                file.Add($"{item.Name}:{item.GetValue(setting)?? "null"},{item.PropertyType.FullName}");
+                file.Add($"{item.Name}:{item.GetValue(setting) ?? "null"},{item.PropertyType.FullName}");
             }
             File.WriteAllLines(Final.AdminSetting, file);
         }

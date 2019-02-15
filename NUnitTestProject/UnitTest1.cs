@@ -1,4 +1,4 @@
-using Lucene.Net.Analysis;
+ï»¿using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -23,20 +23,20 @@ namespace Tests
         public void Setup()
         {
         }
-        //²éÑ¯·½Ê½ 	ÒâÒå
-        //TermQuery 	¾«È·²éÑ¯
-        //TermRangeQuery 	²éÑ¯Ò»¸ö·¶Î§
-        //PrefixQuery 	Ç°×ºÆ¥Åä²éÑ¯
-        //WildcardQuery 	Í¨Åä·û²éÑ¯
-        //BooleanQuery 	¶àÌõ¼ş²éÑ¯
-        //PhraseQuery 	¶ÌÓï²éÑ¯
-        //FuzzyQuery 	Ä£ºı²éÑ¯
-        //Queryparser 	ÍòÄÜ²éÑ¯£¨ÉÏÃæµÄ¶¼¿ÉÒÔÓÃÕâ¸öÀ´²éÑ¯µ½£©
+        //æŸ¥è¯¢æ–¹å¼ 	æ„è¥¾E
+        //TermQuery 	ç²¾ç¡®æŸ¥è¯¢
+        //TermRangeQuery 	æŸ¥è¯¢ä¸€ä¸ªèŒƒå›´
+        //PrefixQuery 	å‰ç¼€åŒ¹é…æŸ¥è¯¢
+        //WildcardQuery 	é€šé…ç¬¦æŸ¥è¯¢
+        //BooleanQuery 	å¤šæ¡ä»¶æŸ¥è¯¢
+        //PhraseQuery 	çŸ­è§¼Eæª ï¿½
+        //FuzzyQuery 	æ¨¡ç³ŠæŸ¥è¯¢
+        //Queryparser 	ä¸‡èƒ½æŸ¥è¯¢ï¼ˆä¸Šé¢çš„éƒ½å¯ä»¥ç”¨è¿™ä¸ªæ¥æŸ¥è¯¢åˆ°ï¼‰
         //--------------------- 
-        //×÷Õß£º¿ñì­µÄyellowcong 
-        //À´Ô´£ºCSDN 
-        //Ô­ÎÄ£ºhttps://blog.csdn.net/yelllowcong/article/details/78698506 
-        //°æÈ¨ÉùÃ÷£º±¾ÎÄÎª²©Ö÷Ô­´´ÎÄÕÂ£¬×ªÔØÇë¸½ÉÏ²©ÎÄÁ´½Ó£¡
+        //ä½œè€…ï¼šç‹‚é£™çš„yellowcong 
+        //æ¥æºï¼šCSDN 
+        //åŸæ–‡ï¼šhttps://blog.csdn.net/yelllowcong/article/details/78698506 
+        //ç‰ˆæƒå£°æ˜ï¼šæœ¬æ–‡ä¸ºåšä¸»åŸåˆ›æ–‡ç« ï¼Œè½¬è½½èµEç¼´å–œâ”ªç‰§å”‡æ¨±ï¿½
         [Test]
         public void Test1()
         {
@@ -52,7 +52,7 @@ namespace Tests
             //indexWriter.AddDocument(document);
             //indexWriter.Commit();
 
-            ////ÉÏ·½µÄ´úÂëÊÇ´´½¨Ë÷Òı
+            ////ä¸Šæ–¹çš„ä»£è›Eè°´å”‡ã„‹é¥•ï¿½
 
             //IndexReader indexReader = DirectoryReader.Open(directory);
             //IndexSearcher indexSearcher = new IndexSearcher(indexReader);

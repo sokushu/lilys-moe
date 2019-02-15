@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{846A33B2-42D9-47E2-900C-CB4A1880107D}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
+		Progress_Control.md = Progress_Control.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -17,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoeMushi", "MoeMushi\MoeMus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseProject", "BaseProject\BaseProject.csproj", "{0AB4B054-BD6E-47B5-84BF-3D643DF4EC94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestProject", "NUnitTestProject\NUnitTestProject.csproj", "{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestProject", "NUnitTestProject\NUnitTestProject.csproj", "{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

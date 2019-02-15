@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Setting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using BangumiProject.Areas.Admin.Models
+@model AdminSetting
+
+<h1>Setting</h1>
+
+<form method="post">
+    <div class="mdui-textfield mdui-textfield-floating-label">
+        <label asp-for="IsWebSiteOpen"></label>
+        <input asp-for="IsWebSiteOpen" />
+    </div>
+    <div class="mdui-textfield mdui-textfield-floating-label">
+        <label asp-for="IsOpenSignUp"></label>
+        <input asp-for="IsOpenSignUp" />
+    </div>
+    <div class="mdui-textfield mdui-textfield-floating-label">
+        <label asp-for="IsShowTopPic"></label>
+        <input asp-for="IsShowTopPic" />
+    </div>
+    <div class="mdui-textfield mdui-textfield-floating-label">
+        <label asp-for="PicPath"></label>
+        <input asp-for="PicPath" />
+    </div>
+    <input class="mdui-btn mdui-btn-raised" type="submit" value="Submit" />
+</form>

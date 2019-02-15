@@ -42,6 +42,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Admin\" />
     <Folder Include="Areas\Blogs\Process\" />
     <Folder Include="Areas\Blogs\Services\" />
     <Folder Include="Areas\Blogs\Views\" />

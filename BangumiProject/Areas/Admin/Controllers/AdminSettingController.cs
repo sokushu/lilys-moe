@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BangumiProject.Areas.Admin.Models;
+using BangumiProject.Areas.Admin.Process;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,26 +13,41 @@ namespace BangumiProject.Areas.Admin.Controllers
     [Authorize(Policy = Final.Yuri_Admin)]
     public class AdminSettingController : Controller
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private AdminSettingWriteAndRead AdminSettingWriteAndRead { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public AdminSettingController()
+        {
+            AdminSettingWriteAndRead = new AdminSettingWriteAndRead();
+        }
+
         [HttpPost]
         [Route("/WebSetting")]
         public IActionResult Setting(AdminSetting setting)
         {
-            return View();
+            WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
+            WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
+            WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
+            WebSiteSetting.PicPath = setting.PicPath;
+
+            AdminSettingWriteAndRead.Write(setting);
+
+            return Redirect("/WebSetting");
         }
 
         [HttpGet]
         [Route("/WebSetting")]
         public IActionResult ShowSettingPage()
         {
-            AdminSetting setting = new AdminSetting();
-
+            AdminSetting setting = AdminSettingWriteAndRead.Read();
             return View(
-                viewName:"",
+                viewName:"Setting",
                 model:setting
                 );
         }
-
-        
-
     }
 }

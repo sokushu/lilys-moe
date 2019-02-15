@@ -1,4 +1,4 @@
-using BangumiProject.Controllers;
+ï»¿using BangumiProject.Controllers;
 using BangumiProject.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -24,22 +24,23 @@ using BangumiProject.Services;
 using MoeUtilsBox.Utils;
 using BangumiProject.Services.DBServices;
 using BangumiProject.Services.DBServices.Interface;
+using BangumiProject.Areas.Admin.Process;
 
 namespace BangumiProject
 {
     /// <summary>
-    /// Ò»Ğ©³£ÓÃµÄÃüÁî£º
+    /// ä¸€äº›å¸¸ç”¨çš„å‘½ä»¤ï¼š
     /// 
     /// Add-Migration InitialCreate
     /// Update-Database
     /// 
-    /// ÒÔÉÏÊÇÖ»ÓĞµ¥¸öContextÊ±Ê¹ÓÃµÄÊı¾İ¿âÃüÁî
-    /// µ±ÓĞ¶àĞĞµÄÊ±ºò£¬¾ÍĞèÒª½øĞĞÑ¡ÔñÁË
+    /// ä»¥ä¸Šæ˜¯åªæœ‰å•ä¸ªContextæ—¶ä½¿ç”¨çš„æ•°æ®åº“å‘½ä»¤
+    /// å½“æœ‰å¤šè¡Œçš„æ—¶å€™ï¼Œå°±éœ€è¦è¿›è¡Œé€‰æ‹©äº†
     /// 
-    /// Add-Migration -Context BangumiProjectContext "´úÂëÎÄ¼şÃû×Ö"
-    /// Update-Database -Context BangumiProjectContext "´úÂëÎÄ¼şÃû×Ö"
+    /// Add-Migration -Context BangumiProjectContext "ä»£ç æ–‡ä»¶åå­—"
+    /// Update-Database -Context BangumiProjectContext "ä»£ç æ–‡ä»¶åå­—"
     /// 
-    /// ÒÔÉÏ¾ÍÊÇ¶àĞĞµÄÊ±ºò½øĞĞµÄ²Ù×÷
+    /// ä»¥ä¸Šå°±æ˜¯å¤šè¡Œçš„æ—¶å€™è¿›è¡Œçš„æ“ä½œ
     /// 
     /// dotnet ef migrations add --context BangumiProjectContext "Init"
     /// dotnet ef database update --context BangumiProjectContext "Init"
@@ -47,17 +48,17 @@ namespace BangumiProject
     /// ef migrations remove
     /// 
     /// 
-    /// Asp.Net Core µÄ°ïÖúÎÄµµ£º
+    /// Asp.Net Core çš„å¸®åŠ©æ–‡æ¡£ï¼š
     /// <see cref="https://docs.microsoft.com/zh-cn/aspnet/core/?view=aspnetcore-2.1"/>
     /// 
-    /// ¹ØÓÚÕâ¸ö¹¤³ÌµÄÒ»Ğ©ĞÅÏ¢
+    /// å…³äºè¿™ä¸ªå·¥ç¨‹çš„ä¸€äº›ä¿¡æ¯
     /// 
-    /// ÏÖÔÚÎÒÃÇµÄ¹¤³Ì²ÚÒ»µã²»Òª½ôµÄ£¬·ÃÎÊÈËÊı²¢²»¶à¡£µ«ÊÇ·ÃÎÊÈËÊı¶àÆğÀ´µÄÊ±ºò¾ÍÒª¶Ô´úÂë½øĞĞÖØ¹¹ÁË¡£
-    /// ¼ÓÈë»º´æ»úÖÆ£¬Ìá¸ß´¦ÀíĞÔÄÜ¡£
+    /// ç°åœ¨æˆ‘ä»¬çš„å·¥ç¨‹ç³™ä¸€ç‚¹ä¸è¦ç´§çš„ï¼Œè®¿é—®äººæ•°å¹¶ä¸å¤šã€‚ä½†æ˜¯è®¿é—®äººæ•°å¤šèµ·æ¥çš„æ—¶å€™å°±è¦å¯¹ä»£ç è¿›è¡Œé‡æ„äº†ã€‚
+    /// åŠ å…¥ç¼“å­˜æœºåˆ¶ï¼Œæé«˜å¤„ç†æ€§èƒ½ã€‚
     /// 
-    /// ÏÖÔÚÒª×¢ÒâÒ»¸öÎÊÌâ:
-    /// ÎÒÃÇÓĞ²¿·ÖÊı¾İÊÇ´ÓÊı¾İ¿âÈ«²¿¼ÓÔØµÄ£¬Èç¹ûÊı¾İ²»¶à£¬ÎÊÌâ²»´ó¡£
-    /// Èç¹ûÊı¾İ¶àµÄ»°£¬»áÓ°ÏìĞ§ÂÊ¡£Õâ²¿·ÖÊÇÎ´À´µÄÓÅ»¯·½Ïò
+    /// ç°åœ¨è¦æ³¨æ„ä¸€ä¸ªé—®é¢˜:
+    /// æˆ‘ä»¬æœ‰éƒ¨åˆ†æ•°æ®æ˜¯ä»æ•°æ®åº“å…¨éƒ¨åŠ è½½çš„ï¼Œå¦‚æœæ•°æ®ä¸å¤šï¼Œé—®é¢˜ä¸å¤§ã€‚
+    /// å¦‚æœæ•°æ®å¤šçš„è¯ï¼Œä¼šå½±å“æ•ˆç‡ã€‚è¿™éƒ¨åˆ†æ˜¯æœªæ¥çš„ä¼˜åŒ–æ–¹å‘
     /// 
     /// </summary>
     public class Startup
@@ -66,7 +67,7 @@ namespace BangumiProject
         {
             Configuration = configuration;
             ServiceProvider = serviceProvider;
-            Mkdir();
+            Init();
         }
 
         public IConfiguration Configuration { get; }
@@ -74,18 +75,18 @@ namespace BangumiProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //¼ÓÔØÅÀ³æÊı¾İ¿â
+            //åŠ è½½çˆ¬è™«æ•°æ®åº“
             services.AddDbContext<MoeMushiContext>(option =>
                 option.UseSqlite(Final.DBStr_MoeMushi)
             );
-            //¼ÓÔØÊı¾İ¿â
+            //åŠ è½½æ•°æ®åº“
             services.AddDbContextPool<BangumiProjectContext>(option =>
                 option.UseSqlite(Final.DBStr), poolSize: 128);
 
-            //Ê¹ÓÃÎ¢ÈíÌá¹©µÄÄÚ´æ»º´æ
+            //ä½¿ç”¨å¾®è½¯æä¾›çš„å†…å­˜ç¼“å­˜
             services.AddMemoryCache(cache =>
             {
-                //cache.SizeLimit = 2048; //»º´æ×î´ó´óĞ¡
+                //cache.SizeLimit = 2048; //ç¼“å­˜æœ€å¤§å¤§å°
             });
 
             services.AddIdentity<Users, IdentityRole>(ConfigurationBinder =>
@@ -100,7 +101,7 @@ namespace BangumiProject
 
             services.ConfigureApplicationCookie(options =>
             {
-                // CookieÉèÖÃ
+                // Cookieè®¾ç½®
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromHours(1);
                 options.Cookie.Name = "_lily_cookie";
@@ -111,7 +112,7 @@ namespace BangumiProject
                 options.SlidingExpiration = true;
             });
 
-            //Ìí¼Ó¿çÕ¾·ÃÎÊÏŞÖÆ
+            //æ·»åŠ è·¨ç«™è®¿é—®é™åˆ¶
 #if DEBUG
             services.AddCors(option =>
             {
@@ -143,10 +144,10 @@ namespace BangumiProject
                 option.AddPolicy(Final.Yuri_Yuri1, policy => policy.RequireRole(Yuris.Take(7).ToArray()));
                 option.AddPolicy(Final.Yuri_Boy, policy => policy.RequireRole(Yuris.ToArray()));
             });
-            //Õâ¸öÆäÊµÃ»Ê²Ã´ÓÃµÄ
+            //è¿™ä¸ªå…¶å®æ²¡ä»€ä¹ˆç”¨çš„
             services.AddTransient<IEmailSender, Services.EmailSender>();
             //==============================================================
-            //·şÎñ×¢²á
+            //æœåŠ¡æ³¨å†Œ
             //==============================================================
             services.AddScoped<ICommDB, CommDB>();
             services.AddScoped<IDBCore, DBCore>();
@@ -157,29 +158,29 @@ namespace BangumiProject
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // ¿ªÆô´íÎóÒ³Ãæ
+            // å¼€å¯é”™è¯¯é¡µé¢
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                // ·¢Éú·şÎñÆ÷´íÎó
+                // å‘ç”ŸæœåŠ¡å™¨é”™è¯¯
                 app.UseExceptionHandler("/Error");
             }
 
             app.UseCors("Test");
             
-            // ÆôÓÃHTTPS
+            // å¯ç”¨HTTPS
             app.UseHttpsRedirection();
-            // ¿ªÆô404Ïà¹ØÒ³Ãæ
+            // å¼€å¯404ç›¸å…³é¡µé¢
             app.UseStatusCodePagesWithReExecute("/Error");
-            //Ìí¼ÓÒ»¸öĞÂµÄÄ¿Â¼
+            //æ·»åŠ ä¸€ä¸ªæ–°çš„ç›®å½•
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(Final.FilePath_Image_Thumb),
                 RequestPath = new PathString("/Image/Thumb"),
-                //ÉèÖÃ¾²Ì¬ÎÄ¼şµÄ304»º´æ
+                //è®¾ç½®é™æ€æ–‡ä»¶çš„304ç¼“å­˜
                 OnPrepareResponse  = ctx =>
                 {
                     const int durationInSeconds = 60 * 60 * 24;
@@ -187,10 +188,10 @@ namespace BangumiProject
                         "public,max-age=" + durationInSeconds;
                 }
             });
-            //Õâ¸öÒª¼ÓÉÏ£¬²»È»wwwrootµÄÎÄ¼ş»á404
+            //è¿™ä¸ªè¦åŠ ä¸Šï¼Œä¸ç„¶wwwrootçš„æ–‡ä»¶ä¼š404
             app.UseStaticFiles(new StaticFileOptions()
             {
-                //ÉèÖÃ¾²Ì¬ÎÄ¼şµÄ304»º´æ
+                //è®¾ç½®é™æ€æ–‡ä»¶çš„304ç¼“å­˜
                 OnPrepareResponse = ctx =>
                 {
                     const int durationInSeconds = 60 * 60 * 24;
@@ -207,11 +208,25 @@ namespace BangumiProject
         }
 
         /// <summary>
-        /// ´´½¨ÏîÄ¿±ØÒªµÄÎÄ¼ş¼Ğ
+        /// åˆ›å»ºé¡¹ç›®å¿…è¦çš„æ–‡ä»¶å¤¹
         /// </summary>
+        private void Init()
+        {
+            Mkdir();
+            InitSetting();
+        }
+        private void InitSetting()
+        {
+            AdminSettingWriteAndRead adminSettingWriteAndRead = new AdminSettingWriteAndRead();
+            var setting = adminSettingWriteAndRead.Read();
+
+            WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
+            WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
+            WebSiteSetting.PicPath = setting.PicPath;
+            WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
+        }
         private void Mkdir()
         {
-            
             if (!Directory.Exists(Final.FilePath))
                 Directory.CreateDirectory(Final.FilePath);
             if (!Directory.Exists(Final.FilePath_Image))
