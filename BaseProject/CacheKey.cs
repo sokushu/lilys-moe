@@ -46,22 +46,30 @@ namespace System
             return "AnimeAllTags";
         }
         /// <summary>
-        /// 
+        /// 得到首页的4个最新动画
         /// </summary>
         /// <returns></returns>
         public static string Anime_New4()
         {
             return "AnimeNew4";
         }
+        /// <summary>
+        /// 得到没有完结的全部动画
+        /// </summary>
+        /// <returns></returns>
         public static string Anime_NotEnd()
         {
             return "AnimeNotEnd";
         }
+        /// <summary>
+        /// 得到某一部动画全部的评论
+        /// </summary>
+        /// <param name="AnimeID"></param>
+        /// <returns></returns>
         public static string Anime_Comments(int AnimeID)
         {
             return $"AnimeComments{AnimeID}";
         }
-
         /// <summary>
         /// 根据ID得到一篇博客
         /// </summary>
@@ -79,12 +87,21 @@ namespace System
         {
             return "Blog_All";
         }
-
+        /// <summary>
+        /// 得到动画用户的对应关系
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <param name="AnimeID"></param>
+        /// <returns></returns>
         public static string Anime_User_Info(string UID, int AnimeID)
         {
             return $"AnimeUserInfo{UID}{AnimeID}";
         }
-
+        /// <summary>
+        /// 得到某个用户的信息
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <returns></returns>
         public static string User_UID(string UID)
         {
             return $"User_UID{UID}";
