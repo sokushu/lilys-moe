@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\Interface\" />
     <Folder Include="Models\" />
     <Folder Include="Params\" />
   </ItemGroup>

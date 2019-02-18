@@ -1,4 +1,5 @@
-﻿using BangumiProject.Areas.Admin.Process;
+﻿using BangumiProject.Areas.Admin.Models;
+using BangumiProject.Areas.Admin.Process;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,9 @@ namespace NUnitTestProject
         [Test]
         public void Test01()
         {
-            AdminSettingWriteAndRead adminSettingWriteAndRead = new AdminSettingWriteAndRead();
-            adminSettingWriteAndRead.Write(
-                new BangumiProject.Areas.Admin.Models.AdminSetting
-                {
-                    IsShowTopPic = true,
-                    PicPath = "http://www.google.com/"
-                }
-                );
-            var aa = adminSettingWriteAndRead.Read();
+
+
+            var a = System.AppDomain.CurrentDomain.BaseDirectory;
         }
     }
 }
