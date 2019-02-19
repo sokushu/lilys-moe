@@ -11,6 +11,14 @@ namespace System
         public const int StatusCode404 = 404;
         public const int StatusCodeBangumiNotFound = 10001;
         public const string Image_JPEG = "image/jpeg";
+        /*
+         * ====================================================
+         * 以下是Session的Key
+         * ====================================================
+         */
+        public const string YuriMode = "yuriMode";
+
+
 
         /*
          * ====================================================

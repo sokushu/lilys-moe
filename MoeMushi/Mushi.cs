@@ -16,7 +16,7 @@ namespace MoeMushi
         public static void Run()
         {
             Type type = typeof(T);
-            //type.Assembly.
+            
         }
 
         public static void Run<Setting>()

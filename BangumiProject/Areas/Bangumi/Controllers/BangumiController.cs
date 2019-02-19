@@ -62,7 +62,24 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             this._userManager = _userManager;
             this._signInManager = _signInManager;
             this._authorizationService = _authorizationService;
+
+            //获取百合模式
+            int? mode = HttpContext.Session.GetInt32(Final.YuriMode);
+            if (mode != null)
+            {
+                YuriMode = mode == 1 ? true : false;
+            }
         }
+
+        /// <summary>
+        /// 是否开启百合模式
+        /// </summary>
+        private bool YuriMode { get; set; } = false;
+
+        /// <summary>
+        /// 全局的百合标签的名称
+        /// </summary>
+        private string YuriName { get; set; }
 
         /// <summary>
         /// 
@@ -124,7 +141,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             //这是哪一季度的动画
             animeFilter.SetAnimeFilter(new AnimeFilterBySeason(season));
             //添加标签过滤
-            animeFilter.SetAnimeFilter(new AnimeFilterByTagName(tagname, ListTag));
+            animeFilter.SetAnimeFilter(new AnimeFilterByTagNameYuriMode(tagname, ListTag, YuriMode, string.Empty));
 
 
             //返回最终的过滤结果集
@@ -204,6 +221,23 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 //需要更新动画信息
                 _DBCORE.Save_Updata(AnimeCacheKey, Anime).Commit();
+            }
+
+            if (YuriMode)
+            {
+                var YuriTag = animeTags.Where(tag => tag.TagName == YuriName).FirstOrDefault();
+                if (YuriTag == null)
+                {
+                    //返回一个不是百合影视的警告
+                    return View(
+                        viewName: "NotYuriWarning",
+                        model: animeProcess.BuildModel<Bangumi_OneAnime>(model => 
+                        {
+                            model.Anime = Anime;
+                            model.IsSignIn = IsSignIn;
+                        })
+                        );
+                }
             }
 
             if (!(IsSignIn = _signInManager.IsSignedIn(HttpContext.User))) //如果没登陆，后面的就不需要处理了

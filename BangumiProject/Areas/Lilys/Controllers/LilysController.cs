@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProject.Areas.Lilys.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,7 @@ namespace BangumiProject.Areas.Lilys.Controllers
     public class LilysController : Controller
     {
         // GET: Lilys
+        [HttpGet]
         [Route("/lilys", Name = "Lilys")]
         public ActionResult Index()
         {
@@ -33,6 +35,17 @@ namespace BangumiProject.Areas.Lilys.Controllers
                 viewName:"LilyIndex",
                 model:""
                 );
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("/lilys", Name = "Lilys_POST")]
+        public IActionResult IndexPost(OpenYuriMode openYuriMode)
+        {
+            bool mode = openYuriMode?.YuriMode??false;
+            HttpContext.Session.SetInt32(Final.YuriMode, mode ? 1 : 0);
+
+            return Json("OK");
         }
 
         // GET: Lilys/Details/5
