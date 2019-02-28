@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
 {
-    public class AnimeFilterByTagName : IBangumiCase
+    public class AnimeFilterByTagName : IAnimeFilter
     {
         private string TagName { get; set; }
         private ICollection<AnimeTag> animeTags { get; set; }

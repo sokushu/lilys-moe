@@ -12,7 +12,7 @@ namespace BangumiProject.Process.Interface
     /// 请确保AnimeFilter方法不会返回Null
     /// 
     /// </summary>
-    public interface IBangumiCase
+    public interface IAnimeFilter
     {
         /// <summary>
         /// 对动画进行过滤

@@ -62,13 +62,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             this._userManager = _userManager;
             this._signInManager = _signInManager;
             this._authorizationService = _authorizationService;
-
-            //获取百合模式
-            int? mode = HttpContext.Session.GetInt32(Final.YuriMode);
-            if (mode != null)
-            {
-                YuriMode = mode == 1 ? true : false;
-            }
         }
 
         /// <summary>
@@ -189,6 +182,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                         db.Where(b => b.AnimeID == id)
                         .OrderByDescending(a => a.Time)
                         .Take(10));
+            YURIModeCheck();
             /**
              * 这里是变化的数据
              * 未来可能会加入不同的页面展示模块
@@ -503,6 +497,16 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 List.Add(anime);
             }
             _DBCORE.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
+        }
+
+        private void YURIModeCheck()
+        {
+            //获取百合模式
+            int? mode = HttpContext.Session.GetInt32(Final.YuriMode);
+            if (mode != null)
+            {
+                YuriMode = mode == 1 ? true : false;
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
     /// 使用的第二种的过滤方式，
     /// 前提是动画的标签信息要提前加载
     /// </summary>
-    public class AnimeFilterByTagName_2 : IBangumiCase
+    public class AnimeFilterByTagName_2 : IAnimeFilter
     {
         /// <summary>
         /// 

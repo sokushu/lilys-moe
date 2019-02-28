@@ -18,7 +18,6 @@ using System.IO;
 using System.Linq;
 using MoeUtilsBox;
 using MoeUtilsBox.String;
-using BangumiProject.Component.Interface;
 using BangumiProject.Areas.Users.Models;
 using BangumiProject.Services;
 using MoeUtilsBox.Utils;

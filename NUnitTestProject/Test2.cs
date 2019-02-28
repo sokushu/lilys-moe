@@ -17,9 +17,7 @@ namespace NUnitTestProject
         [Test]
         public void Test01()
         {
-
-
-            var a = System.AppDomain.CurrentDomain.BaseDirectory;
+            
         }
     }
 }

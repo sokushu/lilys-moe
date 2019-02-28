@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BangumiProject.Component
+namespace BangumiProject.Process.PageModels
 {
-    public class ComponentInfo
+    public class AnimeEdit
     {
     }
 }

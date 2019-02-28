@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
 {
-    public class AnimeFilterByWeek : IBangumiCase
+    public class AnimeFilterByWeek : IAnimeFilter
     {
         private int WeekDay { get; set; }
         public AnimeFilterByWeek(int weekDay)

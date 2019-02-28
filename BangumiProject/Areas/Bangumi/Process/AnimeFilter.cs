@@ -17,19 +17,19 @@ namespace BangumiProject.Areas.Bangumi.Process
         /// <summary>
         /// 要执行的所有过滤类
         /// </summary>
-        private ICollection<IBangumiCase> BangumiCase { get; set; }
+        private ICollection<IAnimeFilter> BangumiCase { get; set; }
         /// <summary>
         /// 初始化
         /// </summary>
         public AnimeFilter()
         {
-            BangumiCase = new List<IBangumiCase>();
+            BangumiCase = new List<IAnimeFilter>();
         }
         /// <summary>
         /// 添加过滤处理
         /// </summary>
         /// <param name="bangumiCase">自定义的过滤处理</param>
-        public void SetAnimeFilter(IBangumiCase bangumiCase)
+        public void SetAnimeFilter(IAnimeFilter bangumiCase)
         {
             BangumiCase.Add(bangumiCase);
         }
@@ -43,7 +43,7 @@ namespace BangumiProject.Areas.Bangumi.Process
             if (InputAnime == null)
                 return new List<Anime>();
             List<Anime> animes = InputAnime;
-            foreach (IBangumiCase item in BangumiCase)
+            foreach (IAnimeFilter item in BangumiCase)
             {
                 animes = item.AnimeFilter(animes);
                 //都已经没了，不需要继续筛选了

@@ -59,6 +59,9 @@
     <Folder Include="Areas\Search\Views\" />
     <Folder Include="Areas\Video\Services\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Process\ParamsModels\" />
+    <Folder Include="Process\Services\" />
+    <Folder Include="Process\DBSrtvice\" />
   </ItemGroup>
 
   <ItemGroup>

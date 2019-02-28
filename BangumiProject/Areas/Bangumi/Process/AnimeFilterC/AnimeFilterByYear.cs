@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
 {
-    public class AnimeFilterByYear : IBangumiCase
+    public class AnimeFilterByYear : IAnimeFilter
     {
         public int Year { get; set; }
         public AnimeFilterByYear(int Year)

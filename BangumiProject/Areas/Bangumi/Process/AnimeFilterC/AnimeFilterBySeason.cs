@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process.AnimeFilterC
 {
-    public class AnimeFilterBySeason : IBangumiCase
+    public class AnimeFilterBySeason : IAnimeFilter
     {
         private HashSet<int> Season = new HashSet<int>();
         public AnimeFilterBySeason(int Season)
