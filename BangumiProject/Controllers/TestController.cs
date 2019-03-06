@@ -96,6 +96,7 @@ namespace BangumiProject.Controllers
 
         public Task Test()
         {
+            new Tuple<string>("");
             return Task.Run(() => 
             {
                 Console.WriteLine("TEST HELLO WORLD");

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BangumiProject.Areas.Video.Params
+namespace BangumiProject.Process.Interface
 {
-    public class VideoDown
+    public interface IProcessDoSome
     {
-        public string URL { get; set; }
+        void Process();
     }
 }

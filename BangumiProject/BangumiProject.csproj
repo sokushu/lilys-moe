@@ -57,11 +57,12 @@
     <Folder Include="Areas\Search\Models\" />
     <Folder Include="Areas\Search\Services\" />
     <Folder Include="Areas\Search\Views\" />
-    <Folder Include="Areas\Video\Services\" />
     <Folder Include="Migrations\" />
     <Folder Include="Process\ParamsModels\" />
     <Folder Include="Process\Services\" />
-    <Folder Include="Process\DBSrtvice\" />
+    <Folder Include="Process\DBService\" />
+    <Folder Include="Process\File\" />
+    <Folder Include="Process\Exception\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -22,10 +22,5 @@ namespace BangumiProject.Areas.Bangumi.Process
             return obj;
         }
 
-        public R RunProcess<R>(IAnimeProcess<R> process)
-        {
-            return process.Process();
-        } 
-
     }
 }

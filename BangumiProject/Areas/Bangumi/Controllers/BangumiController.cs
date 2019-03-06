@@ -210,7 +210,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             AnimeProcess animeProcess = new AnimeProcess();
 
             //动画集数处理
-            bool IsChange = animeProcess.RunProcess(new AnimeProcessByNumber(new List<AnimeNumInfo> { }, ref Anime));
+            bool IsChange = new AnimeProcessByNumber(new List<AnimeNumInfo> { }, ref Anime).Process();
             if (IsChange)
             {
                 //需要更新动画信息

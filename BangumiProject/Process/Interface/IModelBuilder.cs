@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Process.Interface
 {
-    public interface IPage
+    public interface IModelBuilder
     {
+        T Build<T>(T t);
     }
 }

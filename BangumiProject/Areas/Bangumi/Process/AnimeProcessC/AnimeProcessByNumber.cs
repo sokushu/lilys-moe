@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Process.AnimeProcessC
 {
-    public class AnimeProcessByNumber : IAnimeProcess<bool>
+    public class AnimeProcessByNumber
     {
         private readonly List<AnimeNumInfo> AnimeNumInfo;
         private readonly Anime ProcessAnime;

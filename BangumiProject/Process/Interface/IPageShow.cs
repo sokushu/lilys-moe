@@ -7,6 +7,6 @@ namespace BangumiProject.Process.Interface
 {
     public interface IPageShow
     {
-        void Show(IPage page);
+        void Show();
     }
 }
