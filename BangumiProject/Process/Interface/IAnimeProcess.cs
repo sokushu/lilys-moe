@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BangumiProject.Areas.Bangumi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BangumiProject.Process.Interface
 {
-    public interface IModelBuilder
+    public interface IAnimeProcess : IProcess<Anime>
     {
-        T Build<T>(T t);
     }
 }

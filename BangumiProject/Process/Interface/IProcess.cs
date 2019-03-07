@@ -10,8 +10,8 @@ namespace BangumiProject.Process.Interface
     /// 
     /// </summary>
     /// <typeparam name="T">处理数据返回类型</typeparam>
-    public interface IProcess
+    public interface IProcess<T>
     {
-        void Process<T>(ref T Model) where T : class;
+        T Process(T t);
     }
 }
