@@ -14,18 +14,22 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Remove="Process\DBModels\**" />
     <Compile Remove="wwwroot\lib\bootstrap\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Compile Remove="wwwroot\lib\jquery-validation\**" />
     <Compile Remove="wwwroot\lib\jquery\**" />
+    <Content Remove="Process\DBModels\**" />
     <Content Remove="wwwroot\lib\bootstrap\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Content Remove="wwwroot\lib\jquery-validation\**" />
     <Content Remove="wwwroot\lib\jquery\**" />
+    <EmbeddedResource Remove="Process\DBModels\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
+    <None Remove="Process\DBModels\**" />
     <None Remove="wwwroot\lib\bootstrap\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <None Remove="wwwroot\lib\jquery-validation\**" />
@@ -62,7 +66,7 @@
     <Folder Include="Process\Services\" />
     <Folder Include="Process\DBService\" />
     <Folder Include="Process\File\" />
-    <Folder Include="Process\DBModels\" />
+    <Folder Include="DBModels\" />
   </ItemGroup>
 
   <ItemGroup>

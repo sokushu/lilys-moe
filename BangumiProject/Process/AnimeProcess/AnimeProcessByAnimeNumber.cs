@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Process.AnimeProcess
 {
-    public class AnimeProcessByAnimeNumber : IProcess
+    public class AnimeProcessByAnimeNumber : IProcess<Anime>
     {
         public AnimeProcessByAnimeNumber()
         {

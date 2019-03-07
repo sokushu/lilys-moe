@@ -14,32 +14,7 @@ namespace BangumiProject.Areas.Bangumi.Process
         /// <param name="animes"></param>
         public WeekSwitch()
         {
-            switch (DateTime.Now.Month)
-            {
-                case 1:
-                case 2:
-                case 3:
-                    SeasonNow = 1;
-                    break;
-                case 4:
-                case 5:
-                case 6:
-                    SeasonNow = 2;
-                    break;
-                case 7:
-                case 8:
-                case 9:
-                    SeasonNow = 3;
-                    break;
-                case 10:
-                case 11:
-                case 12:
-                    SeasonNow = 4;
-                    break;
-                default:
-                    SeasonNow = 0;
-                    break;
-            }
+            
         }
 
         public int SeasonNow { get; }
