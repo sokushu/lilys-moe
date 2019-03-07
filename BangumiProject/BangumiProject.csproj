@@ -62,7 +62,6 @@
     <Folder Include="Process\Services\" />
     <Folder Include="Process\DBService\" />
     <Folder Include="Process\File\" />
-    <Folder Include="Process\Exception\" />
     <Folder Include="Process\DBModels\" />
   </ItemGroup>
 
