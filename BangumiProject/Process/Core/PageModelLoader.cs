@@ -18,47 +18,64 @@ namespace BangumiProject.Process.Core
         /// <summary>
         /// 
         /// </summary>
-        public void SetModelLoader<Model>(IModelLoader<Model> modelLoader)
+        /// <typeparam name="Model"></typeparam>
+        /// <param name="model"></param>
+        public void SetModel<Model>(Model model)
         {
-            Model model = modelLoader.BuildModel();
             Models.Add(model);
         }
 
         /// <summary>
-        /// 加载Model处理程序，返回处理后的Model
         /// 
         /// </summary>
-        /// <param name="models"></param>
-        /// <returns></returns>
-        public object BuildPageData()
+        /// <typeparam name="Model"></typeparam>
+        /// <param name="modelStream"></param>
+        public void SetModelStream<Model>(ModelStream<Model> modelStream)
         {
-            var objs = Models.ToArray();
-            switch (objs.Length)
-            {
-                case 0:
-                    return null;
-                case 1:
-                    return Tuple.Create(objs[0]);
-                case 2:
-                    return Tuple.Create(objs[0], objs[1]);
-                case 3:
-                    return Tuple.Create(objs[0], objs[1], objs[2]);
-                case 4:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3]);
-                case 5:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4]);
-                case 6:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4], objs[5]);
-                case 7:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4], objs[5], objs[6]);
-                default:
-                    return null;
-            }
+            Model model = modelStream.Build();
+            Models.Add(model);
         }
 
-        public void SetModel<Model>(Model model)
+        public Tuple<T, T1> BuildPageData<T, T1>()
         {
-            Models.Add(model);
+            var arr = Models.ToArray();
+            return Tuple.Create((T)arr[0], (T1)arr[1]);
+        }
+
+        public Tuple<T, T1, T2> BuildPageData<T, T1, T2>()
+        {
+            var arr = Models.ToArray();
+            return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2]);
+        }
+
+        public Tuple<T, T1, T2, T3> BuildPageData<T, T1, T2, T3>()
+        {
+            var arr = Models.ToArray();
+            return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3]);
+        }
+
+        public Tuple<T, T1, T2, T3, T4> BuildPageData<T, T1, T2, T3, T4>()
+        {
+            var arr = Models.ToArray();
+            return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3], (T4)arr[4]);
+        }
+
+        public Tuple<T, T1, T2, T3, T4, T5> BuildPageData<T, T1, T2, T3, T4, T5>()
+        {
+            var arr = Models.ToArray();
+            return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3], (T4)arr[4], (T5)arr[5]);
+        }
+
+        public Tuple<T, T1, T2, T3, T4, T5, T6> BuildPageData<T, T1, T2, T3, T4, T5, T6>()
+        {
+            var arr = Models.ToArray();
+            return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3], (T4)arr[4], (T5)arr[5], (T6)arr[6]);
+        }
+
+        public Tuple<T> BuildPageData<T>()
+        {
+            var arr = Models.ToArray();
+            return Tuple.Create((T)arr[0]);
         }
     }
 }

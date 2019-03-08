@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.HomeBar.Process
 {
-    public class IndexShowAnimeNew : IPage
+    public class IndexShowAnimeNew
     {
 
     }

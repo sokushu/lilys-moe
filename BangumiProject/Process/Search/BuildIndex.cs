@@ -68,7 +68,7 @@ namespace BangumiProject.Process.Search
                         }
                         break;
                     default:
-                        throw new Exception($"enum 类型范围外 ProcessType 传入值：{(int)Process}");
+                        throw new System.Exception($"enum 类型范围外 ProcessType 传入值：{(int)Process}");
                 }
             }
 

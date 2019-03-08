@@ -18,15 +18,44 @@ namespace BangumiProject.Process.Core
     {
         private PageModel PageModels { get; set; }
 
-        protected List<object> values = new List<object>(); 
+        /// <summary>
+        /// 存储SetModelLoader方法加载过的数据
+        /// </summary>
+        protected List<object> values = new List<object>();
         public ModelStream() { }
 
+        /// <summary>
+        /// 加载数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="modelLoader"></param>
         public virtual void SetModelLoader<T>(IModelLoader<T> modelLoader)
         {
             object value = modelLoader.BuildModel();
             values.Add(value);
         }
 
+        /// <summary>
+        /// 用于定义构建方式
+        /// </summary>
+        /// <returns></returns>
         public abstract PageModel Build();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="piont"></param>
+        /// <returns></returns>
+        protected object Get(int piont)
+        {
+            if (piont < 0)
+                return null;
+            int len = values.Count - 1;
+            if (piont <= len)
+            {
+                return values[piont];
+            }
+            return null;
+        }
     }
 }

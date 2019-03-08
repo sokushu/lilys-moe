@@ -1,5 +1,5 @@
-﻿using BangumiProject.Models;
-using BaseProject.Common.Models;
+﻿using BangumiProject.DBModels;
+using BangumiProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

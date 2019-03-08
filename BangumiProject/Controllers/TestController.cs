@@ -25,8 +25,11 @@ using BangumiProject.Services;
 using BangumiProject.Areas.Bangumi.Models;
 using BangumiProject.Services.DBServices.Interface;
 using BangumiProject.Process.Core;
-using BangumiProject.Process.Loader;
 using BangumiProject.Process.AnimeProcess;
+using BangumiProject.Process.DBService;
+using BangumiProject.Process.PageModels;
+using BangumiProject.Process.ModelStream;
+using BangumiProject.Process.ModelLoader;
 
 namespace BangumiProject.Controllers
 {
@@ -83,23 +86,19 @@ namespace BangumiProject.Controllers
             return View("AAA");
         }
 
-        public IActionResult Anime(int ID)
+        [HttpGet]
+        [Route("/Test222")]
+        public IActionResult Anime(int ID = 1)
         {
             IPageModelLoader pageModelLoader = new PageModelLoader();
-            CoreProcess<object> coreProcess = new CoreProcess<object>();
-            IModelLoader<Anime> animeLoader = new AnimeLoader(null, ID);
 
-            var animeModel = animeLoader.BuildModel();
-            coreProcess.SetItem(animeModel);
-            var AnimeNumberInfo = coreProcess.SetProcess2(new AnimeProcessByAnimeNumberInfo());
+            AnimeInfoModelStream animeInfoStream = new AnimeInfoModelStream();
 
-            pageModelLoader.SetModel(animeModel);
-            pageModelLoader.SetModel(AnimeNumberInfo);
+            animeInfoStream.SetModelLoader(new AnimeLoader(new CoreServices(null,null,null,_cache, _DB), ID));
 
-            return View(
-                "Index",
-                //Tuple<Anime, AnimeNumInfo>
-                pageModelLoader.BuildPageData());
+            pageModelLoader.SetModelStream(animeInfoStream);
+
+            return View("AAA", pageModelLoader.BuildPageData<AnimeInfoModel>());
         }
 
         [HttpGet]

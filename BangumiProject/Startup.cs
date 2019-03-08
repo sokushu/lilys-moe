@@ -151,7 +151,7 @@ namespace BangumiProject
             services.AddScoped<ICommDB, CommDB>();
             services.AddScoped<IDBCore, DBCore>();
 
-            services.AddSingleton<IConfig, BangumiProject.Areas.Bangumi.Config>();
+            //services.AddSingleton<IConfig, BangumiProject.Areas.Bangumi.Config>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,7 +11,7 @@ namespace MoeMushi.Test.Core
     {
         public void aa()
         {
-            Assembly.LoadFile
+            //Assembly.LoadFile
         }
     }
 }

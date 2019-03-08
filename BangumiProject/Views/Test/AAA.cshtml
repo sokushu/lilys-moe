@@ -1,4 +1,5 @@
-﻿
+﻿@using BangumiProject.Process.PageModels
+@model Tuple<AnimeInfoModel>
 @{
     ViewData["Title"] = "AAA";
     var title = ViewData["Title"];
@@ -6,4 +7,7 @@
 }
 
 <h1>AAA</h1>
-<partial name="View" model="title" />
+<div>
+    @Model.Item1.Anime.AnimeName<br/>
+    @Model.Item1.Email
+</div>

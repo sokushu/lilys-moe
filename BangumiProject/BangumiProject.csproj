@@ -65,7 +65,6 @@
     <Folder Include="Process\ParamsModels\" />
     <Folder Include="Process\Services\" />
     <Folder Include="Process\File\" />
-    <Folder Include="DBModels\" />
   </ItemGroup>
 
   <ItemGroup>
