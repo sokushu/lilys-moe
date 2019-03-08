@@ -6,29 +6,38 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Process.Core
 {
-    public class CoreProcess<T>
+    public class CoreProcess<T> where T : class
     {
-        private object obj = null;
-
+        private T obj = null;
+        private object item = null;
         /// <summary>
         /// 初始化
         /// </summary>
-        public CoreProcess(object obj)
-        {
-            this.obj = obj;
-        }
-
-        public CoreProcess() { }
-
-        private List<IProcess<T>> Processes = new List<IProcess<T>>();
+        public CoreProcess()
+        {}
 
         /// <summary>
         /// 设置处理类
         /// </summary>
         /// <param name="process"></param>
-        public void SetProcess(IProcess<T> process)
+        public T SetProcess(IProcess<T> process)
         {
-            Processes.Add(process);
+            T value = obj as T;
+            var returnvalue = process.Process(value);
+            return returnvalue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <param name="process2"></param>
+        /// <returns></returns>
+        public T1 SetProcess<T1>(IProcess2Parm<T1, T> process2)
+        {
+            T value = obj as T;
+            var returnvalue = process2.Process(value);
+            return returnvalue;
         }
 
         /// <summary>
@@ -37,28 +46,25 @@ namespace BangumiProject.Process.Core
         /// <typeparam name="T1"></typeparam>
         /// <typeparam name="T2"></typeparam>
         /// <param name="process2"></param>
-        /// <param name="t2"></param>
         /// <returns></returns>
-        public T1 SetProcess<T1, T2>(IProcess2Parm<T1, T2> process2) where T2 : class
+        public T1 SetProcess2<T1, T2>(IProcess2Parm<T1, T2> process2) where T2 : class
         {
-            T2 t2 = obj as T2;
-            return process2.Process(t2);
+            T2 value = item as T2;
+            return process2.Process(value);
         }
 
         /// <summary>
-        /// 进行处理
+        /// 
         /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public T Process(T t)
+        /// <param name="obj"></param>
+        public void SetData(T obj)
         {
-            T a = t;
-            foreach (var item in Processes)
-            {
-                a = item.Process(a);
-            }
-            return a;
+            this.obj = obj;
         }
 
+        public void SetItem(object obj)
+        {
+            item = obj;
+        }
     }
 }

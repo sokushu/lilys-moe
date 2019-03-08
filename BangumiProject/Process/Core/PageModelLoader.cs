@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProject.Process.Interface;
 
 namespace BangumiProject.Process.Core
 {
@@ -29,30 +30,35 @@ namespace BangumiProject.Process.Core
         /// </summary>
         /// <param name="models"></param>
         /// <returns></returns>
-        public A BuildPageData<A>() where A : class
+        public object BuildPageData()
         {
             var objs = Models.ToArray();
             switch (objs.Length)
             {
                 case 0:
-                    return default(A);
+                    return null;
                 case 1:
-                    return Tuple.Create(objs[0]) as A;
+                    return Tuple.Create(objs[0]);
                 case 2:
-                    return Tuple.Create(objs[0], objs[1]) as A;
+                    return Tuple.Create(objs[0], objs[1]);
                 case 3:
-                    return Tuple.Create(objs[0], objs[1], objs[2]) as A;
+                    return Tuple.Create(objs[0], objs[1], objs[2]);
                 case 4:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3]) as A;
+                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3]);
                 case 5:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4]) as A;
+                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4]);
                 case 6:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4], objs[5]) as A;
+                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4], objs[5]);
                 case 7:
-                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4], objs[5], objs[6]) as A;
+                    return Tuple.Create(objs[0], objs[1], objs[2], objs[3], objs[4], objs[5], objs[6]);
                 default:
-                    return default(A);
+                    return null;
             }
+        }
+
+        public void SetModel<Model>(Model model)
+        {
+            Models.Add(model);
         }
     }
 }

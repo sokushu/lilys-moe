@@ -14,7 +14,7 @@ namespace BangumiProject.Process.AnimeProcess
 
         }
 
-        public void Process(ref Anime anime)
+        public Anime Process(Anime anime)
         {
             if (anime.IsEnd == false)
             {
@@ -48,6 +48,7 @@ namespace BangumiProject.Process.AnimeProcess
                     anime.AnimeNum = num;
                 }
             }
+            return anime;
         }
     }
 }

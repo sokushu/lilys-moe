@@ -1,4 +1,5 @@
-﻿using BangumiProject.Process.Interface;
+﻿using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.Process.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,16 @@ namespace BangumiProject.Process.Core
         {
             CoreProcess<string> coreProcess = new CoreProcess<string>();
 
+            coreProcess.SetData(model);
             coreProcess.SetProcess(new AddWorld());
             coreProcess.SetProcess(new AddWWW());
+            var value = coreProcess.SetProcess(new AddBGBG());
 
-            return coreProcess.Process(model);
+            coreProcess.SetItem(value);
+
+            var returnvalue = coreProcess.SetProcess2(new ADDCHAR());
+
+            return returnvalue;
         }
 
         public override string LoadModel()
@@ -50,6 +57,35 @@ namespace BangumiProject.Process.Core
         public string Process(string t)
         {
             return $"WWW {t}";
+        }
+    }
+
+    public class AddBGBG : IProcess2Parm<List<char>, string>
+    {
+        public List<char> Process(string t)
+        {
+            return new List<char>(t.ToCharArray());
+        }
+    }
+
+    public class ADDCHAR : IProcess2Parm<string, List<char>>
+    {
+        public string Process(List<char> t)
+        {
+            return t.ToString();
+        }
+    }
+
+    public class AAA : ModelStream<Anime>
+    {
+        public override Anime Build()
+        {
+            Anime anime = new Anime
+            {
+                AnimeComms = values[0] as List<AnimeComm>
+            };
+
+            return anime;
         }
     }
 }

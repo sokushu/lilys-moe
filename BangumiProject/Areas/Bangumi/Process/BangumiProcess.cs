@@ -108,7 +108,7 @@ namespace BangumiProject.Areas.Bangumi.Process
             {
                 AllPage = AllPage,
                 PageName = PageName.ToArray()
-        };
+            };
         }
     }
 

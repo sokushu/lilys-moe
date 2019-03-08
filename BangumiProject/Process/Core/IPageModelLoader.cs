@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BangumiProject.Process.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace BangumiProject.Process.Core
     {
         void SetModelLoader<Model>(IModelLoader<Model> modelLoader);
 
-        A BuildPageData<A>() where A : class;
+        void SetModel<Model>(Model model);
+
+        object BuildPageData();
     }
 }

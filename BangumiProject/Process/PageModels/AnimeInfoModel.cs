@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Process.PageModels
 {
-    public class AnimeInfoModel
+    public class AnimeInfoModel : ModelBase
     {
         public Anime Anime { get; set; } = null;
 
@@ -19,8 +19,6 @@ namespace BangumiProject.Process.PageModels
         public string AnimeTime => Anime.AnimePlayTime.ToString("yyyy年MM月dd日");
 
         public bool IsSub { get; set; } = false;
-
-        public bool IsSignIn { get; set; } = false;
 
         public ICollection<AnimeMemo> Memos { get; set; } = new List<AnimeMemo>();
 
