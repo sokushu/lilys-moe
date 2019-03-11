@@ -27,8 +27,18 @@ namespace BangumiProject.DBModels
         public string Pic { get; set; }
 
         /// <summary>
+        /// 发行年
+        /// </summary>
+        public DateTime Time { get; set; }
+
+        /// <summary>
         /// 专辑包含的歌曲
         /// </summary>
         public ICollection<Music> Musics { get; set; }
+
+        /// <summary>
+        /// 这条数据的创建日期
+        /// </summary>
+        public DateTime DateTime { get; set; }
     }
 }

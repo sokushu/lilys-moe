@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Process.AnimeProcess.AnimeProcessC
 {
-    public class AnimeProcessByAnimeNumber : IProcess<Anime>
+    public class AnimeProcessByAnimeNumber : IProcess2Parm<bool, Anime>
     {
         public AnimeProcessByAnimeNumber()
         {
 
         }
 
-        public Anime Process(Anime anime)
+        public bool Process(Anime anime)
         {
             if (anime.IsEnd == false)
             {
@@ -47,8 +47,9 @@ namespace BangumiProject.Process.AnimeProcess.AnimeProcessC
 
                     anime.AnimeNum = num;
                 }
+                return true;
             }
-            return anime;
+            return false;
         }
     }
 }

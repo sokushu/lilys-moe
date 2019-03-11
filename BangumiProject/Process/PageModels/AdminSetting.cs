@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BangumiProject.Areas.Admin.Models
+namespace BangumiProject.Process.PageModels
 {
     public class AdminSetting
     {

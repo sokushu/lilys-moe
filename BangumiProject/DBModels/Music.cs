@@ -27,5 +27,10 @@ namespace BangumiProject.DBModels
         /// 时长
         /// </summary>
         public int Time { get; set; }
+
+        /// <summary>
+        /// 这条数据的创建日期
+        /// </summary>
+        public DateTime DateTime { get; set; }
     }
 }

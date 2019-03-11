@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using User = BangumiProject.Areas.Users.Models.Users;
-using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
 using MoeUtilsBox;
 using BangumiProject.Areas.Bangumi.Process;
 using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
@@ -21,6 +20,12 @@ using BangumiProject.Areas.Error.Models;
 using BangumiProject.Areas.Bangumi.Process.AnimeFilterC;
 using BangumiProject.Areas.Bangumi.Process.AnimeProcessC;
 using BangumiProject.Services.DBServices.Interface;
+using BangumiProject.Process.Core;
+using BangumiProject.Process.PageModels;
+using BangumiProject.Process.ModelStream;
+using BangumiProject.Process.ModelLoader;
+using BangumiProject.Process.DBService;
+using BangumiProject.Process.Exception;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -47,21 +52,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
     [Area("Bangumi")]
     public class BangumiController : Controller
     {
-        private readonly IDBCore _DBCORE;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly IAuthorizationService _authorizationService;
+        private readonly IServices _Services;
         public BangumiController(
-            IDBCore _DBCORE,
-            UserManager<User> _userManager,
-            SignInManager<User> _signInManager,
-            IAuthorizationService _authorizationService
+            IServices _Services
             )
         {
-            this._DBCORE = _DBCORE;
-            this._userManager = _userManager;
-            this._signInManager = _signInManager;
-            this._authorizationService = _authorizationService;
+            this._Services = _Services;
         }
 
         /// <summary>
@@ -112,9 +108,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             /*
              * 从缓存中读取数据，如果缓存中没有就从数据库中读取数据
              */
-            var ListAnime =  _DBCORE.Save_ToList<Anime>(CacheKey.Anime_All(), 
+            var ListAnime =  _Services.Save_ToList<Anime>(CacheKey.Anime_All(), 
                     db => db.Select(a => a));
-            var ListTag = _DBCORE.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(), 
+            var ListTag = _Services.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(), 
                     db => db.Include(a => a.Anime));
             /*
              * 这里是一个变化高发区
@@ -169,19 +165,40 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/{id:int}", Name = Final.Route_Bangumi_Details)]
         public async Task<ActionResult> DetailsAsync(int id = -1)
         {
+
+            try
+            {
+                IPageModelLoader pageModelLoader = new PageModelLoader();
+
+                AnimeInfoModelStream animeInfoModelStream = new AnimeInfoModelStream();
+
+                animeInfoModelStream.SetModelLoader(new AnimeLoader(_Services, id));
+
+                pageModelLoader.SetModelStream(animeInfoModelStream);
+
+                // 返回构建的数据到页面中
+                var Model = pageModelLoader.Build<AnimeInfoModel>();
+                return View("", Model);
+            }
+            catch (NotFoundAnimeInfoException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+
             //从数据库中读取数据
-            if (!_DBCORE.HasAnimeID(id))
+            if (!_Services.HasAnimeID(id))
                 return NotFound();
             var AnimeCacheKey = CacheKey.Anime_One(id);
-            Anime Anime = _DBCORE.Save_ToFirst<Anime>(AnimeCacheKey, db =>
+            Anime Anime = _Services.Save_ToFirst<Anime>(AnimeCacheKey, db =>
                         db.Where(a => a.AnimeID == id)
                         .Include(a => a.Souce)
                         .Include(a => a.Tags)
                         .Include(a => a.AnimeComms));
-            ICollection<Blog> blogs = _DBCORE.Save_ToList<Blog>(CacheKey.Blog_One_ByAnimeID(id), db => 
-                        db.Where(b => b.AnimeID == id)
-                        .OrderByDescending(a => a.Time)
-                        .Take(10));
             YURIModeCheck();
             /**
              * 这里是变化的数据
@@ -214,7 +231,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             if (IsChange)
             {
                 //需要更新动画信息
-                _DBCORE.Save_Updata(AnimeCacheKey, Anime).Commit();
+                _Services.Save_Updata(AnimeCacheKey, Anime).Commit();
             }
 
             if (YuriMode)
@@ -253,7 +270,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             //如果没有登陆，返回Null
             var userID = _userManager.GetUserId(HttpContext.User);
             //尝试读取缓存
-            AnimeUserInfo Infos = _DBCORE.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(userID, id), db => db.Where(info => info.Users.Id == userID && info.SubAnime.AnimeID == id)
+            AnimeUserInfo Infos = _Services.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(userID, id), db => db.Where(info => info.Users.Id == userID && info.SubAnime.AnimeID == id)
                                         .Include(info => info.Memos));
             if (Infos != null)//没有订阅
             {
@@ -341,11 +358,11 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     IsEnd = IsEnd
                 };
                 //将动画数据写入数据库
-                _DBCORE.Add(anime).Commit();
+                _Services.Add(anime).Commit();
                 //最新发现，到这一步ID会有值o(*￣▽￣*)ブ
                 UpDataNew4(anime);//更新首页的最新4个动画的缓存
                 UpDataNotEnd(anime);
-                _DBCORE.ADDAnimeID(anime.AnimeID);//这里不要忘记添加动画ID
+                _Services.ADDAnimeID(anime.AnimeID);//这里不要忘记添加动画ID
                 return RedirectToRoute(Final.Route_Bangumi_Index, anime.AnimeID);
             }
             catch
@@ -360,13 +377,13 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit)]
         public ActionResult EditAsync(int id)
         {
-            if (_DBCORE.HasAnimeID(id))
+            if (_Services.HasAnimeID(id))
             {
                 var key = new KEY { Key = CacheKey.Anime_One(id).ToCharArray() };
-                if (!_DBCORE.TryGet(CacheKey.Anime_One(id), out Anime Anime))
+                if (!_Services.TryGet(CacheKey.Anime_One(id), out Anime Anime))
                 {
                     //如果缓存中没有就临时读取一下，因为提交后会删除缓存，所以不保存了
-                    Anime = _DBCORE.ToFirst<Anime>(db =>
+                    Anime = _Services.ToFirst<Anime>(db =>
                             db.Where(a => a.AnimeID == id)
                             .Include(a => a.Tags));
                 }
@@ -391,12 +408,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         {
             try
             {
-                if (_DBCORE.HasAnimeID(id))
+                if (_Services.HasAnimeID(id))
                 {
                     Anime Anime = bangumiEdit.Anime;
                     var NewTag = bangumiEdit.AddTag;
 
-                    Anime anime = _DBCORE.ToFirst<Anime>(db => db.Where(a => a.AnimeID == id).Include(a => a.Tags));
+                    Anime anime = _Services.ToFirst<Anime>(db => db.Where(a => a.AnimeID == id).Include(a => a.Tags));
 
                     anime.AnimeInfo = Anime.AnimeInfo;
                     anime.AnimeName = Anime.AnimeName;
@@ -414,7 +431,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     }
                     UpDataNotEnd(anime);
                     //把缓存数据，数据库数据更新
-                    _DBCORE.Save_Updata(CacheKey.Anime_One(id), anime).Commit();
+                    _Services.Save_Updata(CacheKey.Anime_One(id), anime).Commit();
                     //回到动画详细页面
                     return RedirectToRoute(Final.Route_Bangumi_Details, id);
                 }
@@ -472,10 +489,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// <param name="anime"></param>
         private void UpDataNew4(Anime anime)
         {
-            var List = _DBCORE.GetCache<List<Anime>>(CacheKey.Anime_New4());
+            var List = _Services.GetCache<List<Anime>>(CacheKey.Anime_New4());
             List.RemoveAll(a => a.AnimeID == anime.AnimeID);
             List.Add(anime);
-            _DBCORE.GetCacheEntry(CacheKey.Anime_New4()).Value = List.OrderByDescending(t => t.Time).ToList();
+            _Services.GetCacheEntry(CacheKey.Anime_New4()).Value = List.OrderByDescending(t => t.Time).ToList();
         }
 
         /// <summary>
@@ -485,7 +502,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         private void UpDataNotEnd(Anime anime)
         {
             int ID = anime.AnimeID;
-            var List = _DBCORE.GetCache<List<Anime>>(CacheKey.Anime_NotEnd());
+            var List = _Services.GetCache<List<Anime>>(CacheKey.Anime_NotEnd());
             Anime SearchAnime = null;
             if ((SearchAnime = List.Where(a => a.AnimeID == ID).FirstOrDefault()) == null)
             {
@@ -496,7 +513,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 List.Remove(SearchAnime);
                 List.Add(anime);
             }
-            _DBCORE.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
+            _Services.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
         }
 
         private void YURIModeCheck()

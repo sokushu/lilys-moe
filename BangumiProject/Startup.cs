@@ -1,6 +1,4 @@
-﻿using BangumiProject.Controllers;
-using BangumiProject.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using BangumiProject.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,14 +14,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MoeUtilsBox;
-using MoeUtilsBox.String;
 using BangumiProject.Areas.Users.Models;
-using BangumiProject.Services;
-using MoeUtilsBox.Utils;
-using BangumiProject.Services.DBServices;
-using BangumiProject.Services.DBServices.Interface;
-using BangumiProject.Areas.Admin.Process;
+using BangumiProject.Process.Utils;
+using BangumiProject.Process.DBService;
 
 namespace BangumiProject
 {
@@ -148,8 +141,7 @@ namespace BangumiProject
             //==============================================================
             //服务注册
             //==============================================================
-            services.AddScoped<ICommDB, CommDB>();
-            services.AddScoped<IDBCore, DBCore>();
+            services.AddScoped<IServices, CoreServices>();
 
             //services.AddSingleton<IConfig, BangumiProject.Areas.Bangumi.Config>();
         }
@@ -216,7 +208,7 @@ namespace BangumiProject
         }
         private void InitSetting()
         {
-            AdminSettingWriteAndRead adminSettingWriteAndRead = new AdminSettingWriteAndRead();
+            AdminSettingWriteAndReadUtils adminSettingWriteAndRead = new AdminSettingWriteAndReadUtils();
             var setting = adminSettingWriteAndRead.Read();
 
             WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;

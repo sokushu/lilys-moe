@@ -36,43 +36,43 @@ namespace BangumiProject.Process.Core
             Models.Add(model);
         }
 
-        public Tuple<T, T1> BuildPageData<T, T1>()
+        public Tuple<T, T1> Build<T, T1>()
         {
             var arr = Models.ToArray();
             return Tuple.Create((T)arr[0], (T1)arr[1]);
         }
 
-        public Tuple<T, T1, T2> BuildPageData<T, T1, T2>()
+        public Tuple<T, T1, T2> Build<T, T1, T2>()
         {
             var arr = Models.ToArray();
             return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2]);
         }
 
-        public Tuple<T, T1, T2, T3> BuildPageData<T, T1, T2, T3>()
+        public Tuple<T, T1, T2, T3> Build<T, T1, T2, T3>()
         {
             var arr = Models.ToArray();
             return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3]);
         }
 
-        public Tuple<T, T1, T2, T3, T4> BuildPageData<T, T1, T2, T3, T4>()
+        public Tuple<T, T1, T2, T3, T4> Build<T, T1, T2, T3, T4>()
         {
             var arr = Models.ToArray();
             return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3], (T4)arr[4]);
         }
 
-        public Tuple<T, T1, T2, T3, T4, T5> BuildPageData<T, T1, T2, T3, T4, T5>()
+        public Tuple<T, T1, T2, T3, T4, T5> Build<T, T1, T2, T3, T4, T5>()
         {
             var arr = Models.ToArray();
             return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3], (T4)arr[4], (T5)arr[5]);
         }
 
-        public Tuple<T, T1, T2, T3, T4, T5, T6> BuildPageData<T, T1, T2, T3, T4, T5, T6>()
+        public Tuple<T, T1, T2, T3, T4, T5, T6> Build<T, T1, T2, T3, T4, T5, T6>()
         {
             var arr = Models.ToArray();
             return Tuple.Create((T)arr[0], (T1)arr[1], (T2)arr[2], (T3)arr[3], (T4)arr[4], (T5)arr[5], (T6)arr[6]);
         }
 
-        public Tuple<T> BuildPageData<T>()
+        public Tuple<T> Build<T>()
         {
             var arr = Models.ToArray();
             return Tuple.Create((T)arr[0]);

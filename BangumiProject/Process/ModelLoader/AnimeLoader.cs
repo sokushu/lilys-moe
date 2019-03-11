@@ -1,15 +1,12 @@
 ﻿using BangumiProject.Areas.Bangumi.Models;
-using BangumiProject.Process.AnimeProcess;
 using BangumiProject.Process.AnimeProcess.AnimeProcessC;
 using BangumiProject.Process.Core;
 using BangumiProject.Process.DBService;
 using BangumiProject.Process.Exception;
-using BangumiProject.Process.PageModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BangumiProject.Process.ModelLoader
 {
@@ -46,9 +43,15 @@ namespace BangumiProject.Process.ModelLoader
                 //AnimeNumber Updata
                 CoreProcess<Anime> coreProcess = new CoreProcess<Anime>();
                 coreProcess.SetData(model);
-                var ReturnValue = coreProcess.SetProcess(new AnimeProcessByAnimeNumber());
-
-                return ReturnValue;
+                var ReturnValue = coreProcess.SetProcess2(new AnimeProcessByAnimeNumber());
+                var ProcessEDAnime = coreProcess.GetData<Anime>();
+                if (ReturnValue)
+                {
+                    //需要更新动画信息
+                    var AnimeCacheKey = CacheKey.Anime_One(AnimeID);
+                    Services.Save_Updata(AnimeCacheKey, ProcessEDAnime).Commit();
+                }
+                return ProcessEDAnime;
             }
         }
 
@@ -58,7 +61,7 @@ namespace BangumiProject.Process.ModelLoader
             {
                 var AnimeCacheKey = CacheKey.Anime_One(AnimeID);
                 Anime Anime = Services.Save_ToFirst<Anime>(AnimeCacheKey, db =>
-                            db.Where(a => a.AnimeID == this.AnimeID)
+                            db.Where(a => a.AnimeID == AnimeID)
                             .Include(a => a.Souce)
                             .Include(a => a.Tags)
                             .Include(a => a.AnimeComms));

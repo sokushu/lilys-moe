@@ -45,11 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Admin\" />
-    <Folder Include="Areas\Blogs\Process\" />
-    <Folder Include="Areas\Blogs\Services\" />
-    <Folder Include="Areas\Blogs\Views\" />
     <Folder Include="Areas\Files\Services\" />
     <Folder Include="Areas\HomeBar\Models\" />
     <Folder Include="Areas\HomeBar\Services\" />

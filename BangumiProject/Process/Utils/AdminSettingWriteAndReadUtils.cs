@@ -1,17 +1,19 @@
-﻿using BangumiProject.Areas.Admin.Models;
+﻿using BangumiProject.Process.PageModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Collections;
 using System.Reflection;
+using System.Threading.Tasks;
 
-namespace BangumiProject.Areas.Admin.Process
+namespace BangumiProject.Process.Utils
 {
-    public class AdminSettingWriteAndRead
+    public class AdminSettingWriteAndReadUtils
     {
-        public AdminSettingWriteAndRead()
+        /// <summary>
+        /// 
+        /// </summary>
+        public AdminSettingWriteAndReadUtils()
         {
             if (!File.Exists(Final.AdminSetting))
             {

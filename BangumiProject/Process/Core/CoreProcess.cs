@@ -50,7 +50,19 @@ namespace BangumiProject.Process.Core
         public T1 SetProcess2<T1, T2>(IProcess2Parm<T1, T2> process2) where T2 : class
         {
             T2 value = item as T2;
-            return process2.Process(value);
+            var returnValue = process2.Process(value);
+            item = value;
+            return returnValue;
+        }
+
+        public B GetData<B>()
+        {
+            return (B)item;
+        }
+
+        public T GetData()
+        {
+            return obj;
         }
 
         /// <summary>
