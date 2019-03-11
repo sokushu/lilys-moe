@@ -170,7 +170,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 IPageModelLoader pageModelLoader = new PageModelLoader();
 
-                AnimeInfoModelStream animeInfoModelStream = new AnimeInfoModelStream();
+                AnimeInfoModelStream animeInfoModelStream = new AnimeInfoModelStream(YuriMode);
 
                 animeInfoModelStream.SetModelLoader(new AnimeLoader(_Services, id));
 

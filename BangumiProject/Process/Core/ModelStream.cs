@@ -46,16 +46,16 @@ namespace BangumiProject.Process.Core
         /// </summary>
         /// <param name="piont"></param>
         /// <returns></returns>
-        protected object Get(int piont)
+        protected T Get<T>(int piont)
         {
             if (piont < 0)
-                return null;
+                return default(T);
             int len = values.Count - 1;
             if (piont <= len)
             {
-                return values[piont];
+                return (T)values[piont];
             }
-            return null;
+            return default(T);
         }
     }
 }

@@ -12,32 +12,30 @@ namespace BangumiProject.Process.ModelStream
     {
         private bool YuriMode { get; set; } = false;
         private bool IsSignIn { get; set; } = false;
-        public AnimeInfoModelStream(bool YuriMode, bool IsSignIn)
+        public AnimeInfoModelStream(bool YuriMode)
         {
             this.YuriMode = YuriMode;
-            this.IsSignIn = IsSignIn;
         }
 
         public override AnimeInfoModel Build()
         {
             AnimeInfoModel animeInfoModel = new AnimeInfoModel
             {
-                Anime = (Anime)Get(0),
-                IsSignIn = (bool)Get(1)
+                Anime = Get<Anime>(0),
+                IsSignIn = Get<bool>(1)
             };
-            if (YuriMode)
+            if (YuriMode)//如果是百合模式
+            {
+                //
+                return animeInfoModel;
+            }
+
+            if (IsSignIn)//如果已经登陆
             {
                 return animeInfoModel;
             }
-            animeInfoModel.HasKenGen = false;
-            
-            
 
-            return new AnimeInfoModel
-            {
-                Anime = (Anime)     Get(0),
-                IsSub = (bool)      Get(1)
-            };
+            return animeInfoModel;
         }
 
         public override void SetModelLoader<T>(IModelLoader<T> modelLoader)
