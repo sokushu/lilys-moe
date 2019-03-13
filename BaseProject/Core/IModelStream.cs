@@ -27,6 +27,10 @@ namespace BaseProject.Core
 
         protected HashSet<string> StopString { get; } = new HashSet<string>();
 
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="ModelClassName">想要构建的实体类类名，方便读取</param>
         public IModelStream(string ModelClassName)
         {
             this.ModelClassName = ModelClassName;
@@ -41,6 +45,9 @@ namespace BaseProject.Core
                 InitPropertyInfo();
             }
         }
+        /// <summary>
+        /// 初始化加载PageModel的信息
+        /// </summary>
         private void InitPropertyInfo()
         {
             foreach (var item in CoreSettingAndData.PropertyInfos[ModelClassName])
@@ -61,14 +68,22 @@ namespace BaseProject.Core
         }
 
         /// <summary>
-        /// 
+        /// 实体类的构建规则
         /// </summary>
         public abstract void BuildRulu();
 
+        /// <summary>
+        /// 不构建哪些属性
+        /// </summary>
+        /// <param name="StopProperties"></param>
         protected void Stop(string StopProperties)
         {
             StopString.Add(StopProperties);
         }
+
+        /// <summary>
+        /// 停止构建全部属性
+        /// </summary>
         protected void Stop()
         {
             foreach (var item in PropertyInfos.Keys)
@@ -76,6 +91,11 @@ namespace BaseProject.Core
                 StopString.Add(item);
             }
         }
+
+        /// <summary>
+        /// 构建哪些属性
+        /// </summary>
+        /// <param name="OpenProperties"></param>
         protected void Open(string OpenProperties)
         {
             bool HasKey = StopString.Contains(OpenProperties);
@@ -84,6 +104,10 @@ namespace BaseProject.Core
                 StopString.Remove(OpenProperties);
             }
         }
+
+        /// <summary>
+        /// 构建全部的属性
+        /// </summary>
         protected void Open()
         {
             StopString.Clear();

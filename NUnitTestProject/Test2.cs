@@ -27,8 +27,6 @@ namespace NUnitTestProject
         }
     }
 
-    public PageSwitch
-
     public class AnimeInfoModelStream : IModelStream<Model>
     {
         private bool IsSignIn { get; set; }
@@ -43,6 +41,7 @@ namespace NUnitTestProject
             if (IsSignIn)
             {
                 Open("IsSignIn");
+                Open("AAA");
             }
         }
     }

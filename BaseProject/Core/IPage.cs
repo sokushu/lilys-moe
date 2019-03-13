@@ -11,5 +11,15 @@ namespace BaseProject.Core
         protected string[] Pages { get; set; }
 
         public abstract void PageSwitch();
+
+        public string Build()
+        {
+            PageSwitch();
+            if (Page == null)
+            {
+                throw new NullReferenceException();
+            }
+            return Page;
+        }
     }
 }

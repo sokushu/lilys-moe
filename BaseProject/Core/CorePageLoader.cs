@@ -10,6 +10,8 @@ namespace BaseProject.Core
     {
         protected ICollection<object> Models { get; set; }
 
+        protected string Page { get; set; }
+
         public CorePageLoader()
         {
             Models = new List<object>();
@@ -17,12 +19,12 @@ namespace BaseProject.Core
 
         public void SetSwitchPage(IPage page)
         {
-
+            Page = page.Build();
         }
 
-        public void GetPage()
+        public string GetPage()
         {
-
+            return Page;
         }
 
         /// <summary>
