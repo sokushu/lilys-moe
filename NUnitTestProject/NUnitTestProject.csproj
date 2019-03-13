@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BangumiProject\BangumiProject.csproj" />
     <ProjectReference Include="..\BaseProject\BaseProject.csproj" />
   </ItemGroup>
 

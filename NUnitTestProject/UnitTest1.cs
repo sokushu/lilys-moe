@@ -13,7 +13,6 @@ using Lucene;
 using Lucene.Net.Search.Payloads;
 using Lucene.Net.Search.Similarities;
 using Lucene.Net.Search.Spans;
-using BangumiProject.Areas.Admin.Process;
 
 namespace Tests
 {
@@ -79,10 +78,10 @@ namespace Tests
         [Test]
         public void Test2()
         {
-            AdminSettingWriteAndRead adminSettingWriteAndRead = new AdminSettingWriteAndRead();
-            adminSettingWriteAndRead.Write(new BangumiProject.Areas.Admin.Models.AdminSetting { IsShowTopPic = true });
+            //AdminSettingWriteAndRead adminSettingWriteAndRead = new AdminSettingWriteAndRead();
+            //adminSettingWriteAndRead.Write(new BangumiProject.Areas.Admin.Models.AdminSetting { IsShowTopPic = true });
 
-            adminSettingWriteAndRead.Read();
+            //adminSettingWriteAndRead.Read();
         }
     }
 }
