@@ -64,7 +64,10 @@ namespace BaseProject.Core
         public virtual void SetModelLoader<T>(IModelLoader<T> modelLoader)
         {
             T value = modelLoader.BuildModel();
-            values.Add(modelLoader.PropertiesName, value);
+            foreach (var item in modelLoader.PropertiesName)
+            {
+                values[item] = value;
+            }
         }
 
         /// <summary>

@@ -15,8 +15,8 @@ namespace BaseProject.Core
     /// <typeparam name="Model">返回的类型</typeparam>
     public abstract class IModelLoader<Model>
     {
-        public string PropertiesName { get; }
-        public IModelLoader(string PropertiesName)
+        public string[] PropertiesName { get; }
+        public IModelLoader(params string[] PropertiesName)
         {
             this.PropertiesName = PropertiesName;
         }
