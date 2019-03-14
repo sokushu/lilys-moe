@@ -120,7 +120,7 @@ namespace BaseProject.Core
         /// 用于定义构建方式
         /// </summary>
         /// <returns></returns>
-        public PageModel Build()
+        public virtual PageModel Build()
         {
             BuildRulu();
             PageModel model = new PageModel();

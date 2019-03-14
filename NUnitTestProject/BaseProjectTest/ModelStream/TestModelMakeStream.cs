@@ -13,5 +13,14 @@ namespace NUnitTestProject.BaseProjectTest.ModelStream
         {
             Open();
         }
+
+        public override TestModel Build()
+        {
+            TestModel testModel = new TestModel
+            {
+                Name = (string)values["Name"]
+            };
+            return testModel;
+        }
     }
 }
