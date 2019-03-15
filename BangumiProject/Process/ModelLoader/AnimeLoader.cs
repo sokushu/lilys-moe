@@ -3,6 +3,7 @@ using BangumiProject.Process.AnimeProcess.AnimeProcessC;
 using BangumiProject.Process.Core;
 using BangumiProject.Process.DBService;
 using BangumiProject.Process.Exception;
+using BaseProject.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace BangumiProject.Process.ModelLoader
         public AnimeLoader(
             IServices services,
             int AnimeID
-            )
+            ) : base("Anime")
         {
             Services = services;
             this.AnimeID = AnimeID;

@@ -6,6 +6,10 @@ namespace BaseProject.Core
 {
     public abstract class IPage
     {
+        public IPage(params string[] Pages)
+        {
+            this.Pages = Pages;
+        }
         protected string Page { get; set; }
 
         protected string[] Pages { get; set; }

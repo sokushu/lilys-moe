@@ -4,6 +4,7 @@ using NUnit.Framework;
 using NUnitTestProject.BaseProjectTest.Model;
 using NUnitTestProject.BaseProjectTest.ModelLoader;
 using NUnitTestProject.BaseProjectTest.ModelStream;
+using NUnitTestProject.BaseProjectTest.PageSwitch;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +28,9 @@ namespace NUnitTestProject
             IntLoader intLoader = new IntLoader();
             TimeLoader timeLoader = new TimeLoader();
             var now1 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
+
             CorePageLoader corePageLoader = new CorePageLoader();
+            corePageLoader.SetSwitchPage(new Page(true));
 
             TestModelMakeStream modelMakeStream = new TestModelMakeStream();
             modelMakeStream.SetModelLoader(stringLoader);

@@ -13,7 +13,7 @@ namespace BangumiProject.Controllers
 
         public BaseController()
         {
-
+            
         }
         
         protected virtual bool IsChange(object Obj)

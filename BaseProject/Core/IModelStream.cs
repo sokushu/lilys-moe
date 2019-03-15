@@ -1,4 +1,5 @@
-﻿using BaseProject.Process;
+﻿using BaseProject.Interfaces;
+using BaseProject.Process;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -19,7 +20,7 @@ namespace BaseProject.Core
     {
         protected Dictionary<string, PropertyInfo> PropertyInfos { get; } = new Dictionary<string, PropertyInfo>();
 
-        private string ModelClassName { get; }
+        private string ModelClassName { get; set; }
         /// <summary>
         /// 存储SetModelLoader方法加载过的数据
         /// </summary>
@@ -33,6 +34,28 @@ namespace BaseProject.Core
         /// <param name="ModelClassName">想要构建的实体类类名，方便读取</param>
         public IModelStream(string ModelClassName)
         {
+            Init(ModelClassName);
+        }
+
+        private ISender Sender { get; set; }
+
+        public IModelStream(ISender sender, string ModelClassName)
+        {
+            Sender = sender;
+            Init(ModelClassName);
+        }
+        /// <summary>
+        /// 初始化加载PageModel的信息
+        /// </summary>
+        private void InitPropertyInfo()
+        {
+            foreach (var item in CoreSettingAndData.PropertyInfos[ModelClassName])
+            {
+                PropertyInfos.Add(item.Name, item);
+            }
+        }
+        private void Init(string ModelClassName)
+        {
             this.ModelClassName = ModelClassName;
             bool HasKey = CoreSettingAndData.PropertyInfos.ContainsKey(ModelClassName);
             if (HasKey)
@@ -45,16 +68,6 @@ namespace BaseProject.Core
                 InitPropertyInfo();
             }
         }
-        /// <summary>
-        /// 初始化加载PageModel的信息
-        /// </summary>
-        private void InitPropertyInfo()
-        {
-            foreach (var item in CoreSettingAndData.PropertyInfos[ModelClassName])
-            {
-                PropertyInfos.Add(item.Name, item);
-            }
-        }
 
         /// <summary>
         /// 加载数据
@@ -64,6 +77,10 @@ namespace BaseProject.Core
         public virtual void SetModelLoader<T>(IModelLoader<T> modelLoader)
         {
             T value = modelLoader.BuildModel();
+            if (Sender != null)
+            {
+                Sender.Send(value);
+            }
             foreach (var item in modelLoader.PropertiesName)
             {
                 values[item] = value;
