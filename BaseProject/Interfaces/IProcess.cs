@@ -8,4 +8,9 @@ namespace BaseProject.Interfaces
     {
         Return Process(Input input);
     }
+
+    public interface IProcess<Input>
+    {
+        Input Process(Input input);
+    }
 }

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProjectDBServices.Models;
 using Microsoft.AspNetCore.Authorization;
-using BangumiProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using User = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Areas.Identity.Pages.Account
 {

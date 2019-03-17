@@ -14,26 +14,18 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Compile Remove="Process\DBModels\**" />
-    <Compile Remove="Process\Services\**" />
     <Compile Remove="wwwroot\lib\bootstrap\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Compile Remove="wwwroot\lib\jquery-validation\**" />
     <Compile Remove="wwwroot\lib\jquery\**" />
-    <Content Remove="Process\DBModels\**" />
-    <Content Remove="Process\Services\**" />
     <Content Remove="wwwroot\lib\bootstrap\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Content Remove="wwwroot\lib\jquery-validation\**" />
     <Content Remove="wwwroot\lib\jquery\**" />
-    <EmbeddedResource Remove="Process\DBModels\**" />
-    <EmbeddedResource Remove="Process\Services\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
-    <None Remove="Process\DBModels\**" />
-    <None Remove="Process\Services\**" />
     <None Remove="wwwroot\lib\bootstrap\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <None Remove="wwwroot\lib\jquery-validation\**" />
@@ -50,20 +42,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Admin\" />
-    <Folder Include="Areas\Files\Services\" />
-    <Folder Include="Areas\HomeBar\Models\" />
-    <Folder Include="Areas\HomeBar\Services\" />
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Areas\Lilys\Process\" />
     <Folder Include="Areas\Lilys\Views\Lilys\Model\" />
-    <Folder Include="Areas\Profile\Process\" />
-    <Folder Include="Areas\Profile\Services\" />
-    <Folder Include="Areas\Search\Models\" />
-    <Folder Include="Areas\Search\Services\" />
     <Folder Include="Areas\Search\Views\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Migrations\" />
-    <Folder Include="Process\ParamsModels\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,7 +83,7 @@
     <Content Update="Areas\Bangumi\Views\BangumiMemo\Memo.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Areas\HomeBar\Views\Home\BagnumiList.cshtml">
+    <Content Update="Areas\Home\Views\Home\BagnumiList.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_CookieConsentPartial.cshtml">
@@ -133,6 +115,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BangumiProjectProcessComponents\BangumiProjectProcessComponents.csproj" />
+    <ProjectReference Include="..\BangumiProjectProcess\BangumiProjectProcess.csproj" />
+    <ProjectReference Include="..\System\MoeUtils.csproj" />
   </ItemGroup>
 
 </Project>

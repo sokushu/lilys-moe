@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BangumiProjectDBServices.Models;
 using Microsoft.AspNetCore.Authorization;
-using BangumiProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using BangumiProject.Controllers;
-using User = BangumiProject.Areas.Users.Models.Users;
-using BangumiProject.Services;
 
 namespace BangumiProject.Areas.Identity.Pages.Account
 {
@@ -114,6 +111,22 @@ namespace BangumiProject.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+    }
+
+    public class IsHasAdmin
+    {
+        public IsHasAdmin(UserManager<User> userManager)
+        {
+            var user = userManager.GetUsersInRoleAsync(Final.Yuri_Admin).Result;
+            if (user.Count > 0)
+            {
+                Common.HasAdmin = true;
+            }
+            else
+            {
+                Common.HasAdmin = false;
+            }
         }
     }
 }

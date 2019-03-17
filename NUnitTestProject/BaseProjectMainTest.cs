@@ -21,28 +21,28 @@ namespace NUnitTestProject
         [Test]
         public void Test01()
         {
-            var now0 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
-            BuildMap.Build<TestModel>();
-            StringLoader stringLoader = new StringLoader();
-            BoolLoader boolLoader = new BoolLoader();
-            IntLoader intLoader = new IntLoader();
-            TimeLoader timeLoader = new TimeLoader();
-            var now1 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
+            //var now0 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
+            //BuildMap.Build<TestModel>();
+            //StringLoader stringLoader = new StringLoader();
+            //BoolLoader boolLoader = new BoolLoader();
+            //IntLoader intLoader = new IntLoader();
+            //TimeLoader timeLoader = new TimeLoader();
+            //var now1 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
 
-            CorePageLoader corePageLoader = new CorePageLoader();
-            corePageLoader.SetSwitchPage(new Page(true));
+            //CorePageLoader corePageLoader = new CorePageLoader();
+            //corePageLoader.SetSwitchPage(new Page(true));
 
-            TestModelMakeStream modelMakeStream = new TestModelMakeStream();
-            modelMakeStream.SetModelLoader(stringLoader);
-            modelMakeStream.SetModelLoader(boolLoader);
-            modelMakeStream.SetModelLoader(intLoader);
-            modelMakeStream.SetModelLoader(timeLoader);
+            //TestModelMakeStream modelMakeStream = new TestModelMakeStream();
+            //modelMakeStream.SetModelLoader(stringLoader);
+            //modelMakeStream.SetModelLoader(boolLoader);
+            //modelMakeStream.SetModelLoader(intLoader);
+            //modelMakeStream.SetModelLoader(timeLoader);
 
-            corePageLoader.SetModelStream(modelMakeStream);
+            //corePageLoader.SetModelStream(modelMakeStream);
 
-            var Test = corePageLoader.Build<TestModel>();
-            var now2 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
-            var now3 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
+            //var Test = corePageLoader.Build<TestModel>();
+            //var now2 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
+            //var now3 = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss fff");
         }
     }
     

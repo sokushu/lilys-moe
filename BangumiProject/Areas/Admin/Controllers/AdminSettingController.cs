@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Areas.Admin.Models;
-using BangumiProject.Areas.Admin.Process;
+using BangumiProject.Utils;
+using BangumiProjectDBServices.PageModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,13 +16,13 @@ namespace BangumiProject.Areas.Admin.Controllers
         /// <summary>
         /// 
         /// </summary>
-        private AdminSettingWriteAndRead AdminSettingWriteAndRead { get; set; }
+        private AdminSettingReadAndWrite AdminSettingWriteAndRead { get; set; }
         /// <summary>
         /// 
         /// </summary>
         public AdminSettingController()
         {
-            AdminSettingWriteAndRead = new AdminSettingWriteAndRead();
+            AdminSettingWriteAndRead = new AdminSettingReadAndWrite();
         }
 
         [HttpPost]

@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Services.DBServices.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using User = BangumiProject.Areas.Users.Models.Users;
-using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
 using System.IO;
-using BangumiProject.Areas.Admin.Process.Files;
-using BangumiProject.Areas.Admin.Process;
 
 namespace BangumiProject.Areas.Admin.Controllers
 {
@@ -18,9 +13,6 @@ namespace BangumiProject.Areas.Admin.Controllers
     [Authorize(Policy = Final.Yuri_Admin)]
     public class FilesManageController : Controller
     {
-        private readonly IDBCore _DBCORE;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly IAuthorizationService _authorizationService;
         /// <summary>
         /// 
@@ -30,15 +22,9 @@ namespace BangumiProject.Areas.Admin.Controllers
         /// <param name="_signInManager"></param>
         /// <param name="_authorizationService"></param>
         public FilesManageController(
-            IDBCore _DBCORE,
-            UserManager<User> _userManager,
-            SignInManager<User> _signInManager,
             IAuthorizationService _authorizationService
             )
         {
-            this._DBCORE = _DBCORE;
-            this._userManager = _userManager;
-            this._signInManager = _signInManager;
             this._authorizationService = _authorizationService;
         }
 
@@ -52,84 +38,6 @@ namespace BangumiProject.Areas.Admin.Controllers
         {
             Directory.GetFiles("/");
             return View();
-        }
-
-        /// <summary>
-        /// 返回文件管理的那一部分视图
-        /// 使用AJAX获取
-        /// 
-        /// 注意：Path是要操作的目录，
-        /// 最终遍历的是Path目录的上级目录。
-        /// 
-        /// </summary>
-        /// <param name="Path">要操作的目录</param>
-        /// <param name="ProcessType">要进行处理的编号</param>
-        /// <param name="Rename">想要重命名的新名字</param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("/Admin/Files/option")]
-        public IActionResult FileProcess
-            (
-            string Path,
-            string Rename,
-            int ProcessType = -1
-            )
-        {
-            if (string.IsNullOrEmpty(Path) || string.IsNullOrWhiteSpace(Path))
-            {
-                return Json("Error");
-            }
-            FileProcessType fileProcessType = (FileProcessType)ProcessType;
-            IFileProcess fileProcess = null;
-            switch (fileProcessType)
-            {
-                case FileProcessType.CreateFile:
-                    fileProcess = new CrateFiles();
-                    break;
-                case FileProcessType.DeleteFile:
-                    fileProcess = new DeleteFiles();
-                    break;
-                case FileProcessType.CreateDir:
-                    fileProcess = new CreateDir();
-                    break;
-                case FileProcessType.DeleteDir:
-                    fileProcess = new DeleteDir();
-                    break;
-                case FileProcessType.Rename:
-                    fileProcess = new Rename(Rename);
-                    break;
-                default:
-                    return Json("Error");
-            }
-            //进行相应的处理
-            Process(Path, fileProcess);
-            //重新对目录中的文件进行读取
-            var FileList = ListAllFile(Path);
-            return PartialView(
-                viewName: "vvv",
-                model: FileList
-                );
-        }
-        
-        /// <summary>
-        /// 对文件的增删改查操作
-        /// </summary>
-        /// <param name="Path"></param>
-        /// <param name="process"></param>
-        private void Process(string Path, IFileProcess process)
-        {
-            try
-            {
-                process.Process(Path);
-            }
-            catch (FileNotFoundException)
-            {
-                
-            }
-            catch (Exception)
-            {
-
-            }
         }
 
         /// <summary>

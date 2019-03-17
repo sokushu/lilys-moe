@@ -6,12 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BangumiProjectDBServices\BangumiProjectDBServices.csproj" />
     <ProjectReference Include="..\BaseProject\BaseProject.csproj" />
     <ProjectReference Include="..\System\MoeUtils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ParamsModels\" />
+    <Folder Include="File\" />
   </ItemGroup>
 
 </Project>

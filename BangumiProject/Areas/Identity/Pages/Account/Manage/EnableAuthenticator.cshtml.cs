@@ -6,12 +6,11 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using User = BangumiProject.Areas.Users.Models.Users;
+using BangumiProjectDBServices.Models;
 
 namespace BangumiProject.Areas.Identity.Pages.Account.Manage
 {
