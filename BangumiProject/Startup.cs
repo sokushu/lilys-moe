@@ -1,5 +1,4 @@
-﻿using BangumiProject.Models;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,10 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using BangumiProject.Areas.Users.Models;
-using BangumiProject.Process.Utils;
-using BangumiProject.Process.DBService;
 using BangumiProjectDBServices;
+using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.Services;
+using BangumiProject.Utils;
 
 namespace BangumiProject
 {
@@ -82,7 +81,7 @@ namespace BangumiProject
                 //cache.SizeLimit = 2048; //缓存最大大小
             });
 
-            services.AddIdentity<Users, IdentityRole>(ConfigurationBinder =>
+            services.AddIdentity<User, IdentityRole>(ConfigurationBinder =>
             {
                 ConfigurationBinder.User.RequireUniqueEmail = false;
                 ConfigurationBinder.Password.RequiredLength = 6;
@@ -138,7 +137,7 @@ namespace BangumiProject
                 option.AddPolicy(Final.Yuri_Boy, policy => policy.RequireRole(Yuris.ToArray()));
             });
             //这个其实没什么用的
-            services.AddTransient<IEmailSender, Services.EmailSender>();
+            services.AddTransient<IEmailSender, Class>();
             //==============================================================
             //服务注册
             //==============================================================
@@ -209,13 +208,13 @@ namespace BangumiProject
         }
         private void InitSetting()
         {
-            AdminSettingWriteAndReadUtils adminSettingWriteAndRead = new AdminSettingWriteAndReadUtils();
-            var setting = adminSettingWriteAndRead.Read();
+            //AdminSettingWriteAndReadUtils adminSettingWriteAndRead = new AdminSettingWriteAndReadUtils();
+            //var setting = adminSettingWriteAndRead.Read();
 
-            WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
-            WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
-            WebSiteSetting.PicPath = setting.PicPath;
-            WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
+            //WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
+            //WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
+            //WebSiteSetting.PicPath = setting.PicPath;
+            //WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
         }
         private void Mkdir()
         {

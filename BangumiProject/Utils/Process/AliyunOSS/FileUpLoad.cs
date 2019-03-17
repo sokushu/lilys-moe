@@ -1,5 +1,4 @@
 ﻿using Aliyun.OSS;
-using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp.Formats;
 using System;

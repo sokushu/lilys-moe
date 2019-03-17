@@ -4,8 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BangumiProject.Areas.Error.Models;
-using BangumiProject.Controllers;
-using BangumiProject.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 

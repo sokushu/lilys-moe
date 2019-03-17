@@ -1,11 +1,9 @@
-﻿using BangumiProject.DBModels;
-using BangumiProject.Controllers;
-using MoeUtilsBox.String;
+﻿using BangumiProjectDBServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using User = BangumiProject.Areas.Users.Models.Users;
+
 
 namespace BangumiProject.Areas.HomeBar.Views.Home.Model
 {

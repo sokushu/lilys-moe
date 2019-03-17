@@ -47,17 +47,12 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             //读取博客
             //读取新闻
 
-            //这个临时日记只是临时的=======================================
-            //从硬盘读取更新日记
-            List<List<string>> log = await moeTools.GetVersionLog(Final.FilePath_VersionLog);
-            //上面的临时日记只是临时的=====================================
-
             //测试用功能
-            var AllUsers = await _userManager.Users.ToListAsync();
-            var User = await _userManager.GetUserAsync(HttpContext.User);
+            var AllUsers = await _DBCORE.UserManager.Users.ToListAsync();
+            var User = await _DBCORE.UserManager.GetUserAsync(HttpContext.User);
             if (User != null)
             {
-                var UserYuri = await _userManager.GetRolesAsync(User);
+                var UserYuri = await _DBCORE.UserManager.GetRolesAsync(User);
                 var Role = UserYuri.FirstOrDefault();
                 switch (Role)
                 {
@@ -87,8 +82,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             {
                 Animes = animes,
                 WeekAnimes = weeks,
-                AllUsers = AllUsers,
-                Log = log
+                AllUsers = AllUsers
             });
             //return View("Index", new Index
             //{
@@ -117,18 +111,18 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         [Route("/About.jsp", Name = "About")]
         public IActionResult GetAbout()
         {
-            ReadConfig readConfig = new ReadConfig();
-            ViewData["About"] = readConfig;
+            //ReadConfig readConfig = new ReadConfig();
+            //ViewData["About"] = readConfig;
             return View("About");
         }
 
-        [HttpPost]
-        [Route("/About.jsp")]
-        public IActionResult PostAbout(string wenti)
-        {
-            ReadConfig readConfig = new ReadConfig();
-            readConfig.Add($"问题：{readConfig.Count}号", $"{wenti} || Time:{DateTime.Now}");
-            return Json("谢谢你的问题，我已经记下了，现在你可以关闭页面了");
-        }
+        //[HttpPost]
+        //[Route("/About.jsp")]
+        //public IActionResult PostAbout(string wenti)
+        //{
+        //    ReadConfig readConfig = new ReadConfig();
+        //    readConfig.Add($"问题：{readConfig.Count}号", $"{wenti} || Time:{DateTime.Now}");
+        //    return Json("谢谢你的问题，我已经记下了，现在你可以关闭页面了");
+        //}
     }
 }

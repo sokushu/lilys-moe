@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using BangumiProject.Services;
 using System.Timers;
 using Microsoft.AspNetCore.StaticFiles;
+using BangumiProjectDBServices.Services;
 
 namespace BangumiProject.Areas.Video.Controllers
 {
@@ -60,7 +59,7 @@ namespace BangumiProject.Areas.Video.Controllers
     [Area("Video")]
     public class VideoController : Controller
     {
-        private readonly ICommDB _DBService;
+        private readonly IServices _DBService;
         /// <summary>
         /// 用于视频的一个集合
         /// </summary>
@@ -71,7 +70,7 @@ namespace BangumiProject.Areas.Video.Controllers
         /// 依赖注入
         /// </summary>
         /// <param name="_DBService"></param>
-        public VideoController(ICommDB _DBService)
+        public VideoController(IServices _DBService)
         {
             this._DBService = _DBService;
         }

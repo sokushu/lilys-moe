@@ -1,5 +1,4 @@
-﻿@using BangumiProject.Controllers
-@model Index
+﻿@model Index
 @{
     ViewData["Title"] = "Home page";
     var Home = Final.Route_Profile_UID;
@@ -251,21 +250,6 @@
         <td>
             新功能稍后赶来，不要太期待
         </td>
-    </tr>
-    <tr>
-        <th colspan="2" style="background-color:hotpink;">更新日记</th>
-    </tr>
-    <tr>
-        <th colspan="2">
-            @foreach (var item in Model.Log)
-            {
-                <h2>@item[0]</h2>
-                for (int i = 1; i < item.Count; i++)
-                {
-                    <p>@item[i]</p>
-                }
-            }
-        </th>
     </tr>
     <tr>
         <th colspan="2" style="background-color:hotpink;">用户列表</th>

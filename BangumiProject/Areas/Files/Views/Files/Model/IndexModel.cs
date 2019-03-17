@@ -1,9 +1,9 @@
-﻿using BangumiProject.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Images = BangumiProject.Areas.Files.Models.FileImages;
+
 
 namespace BangumiProject.Areas.Files.Views.Files.Model
 {
@@ -17,7 +17,7 @@ namespace BangumiProject.Areas.Files.Views.Files.Model
         /// <summary>
         /// 图片列表
         /// </summary>
-        public List<Images> Pic { get; set; }
+        //public List<Images> Pic { get; set; }
 
     }
 }

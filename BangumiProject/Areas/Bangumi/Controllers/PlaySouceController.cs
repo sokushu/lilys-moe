@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.DBModels;
 using BangumiProject.Areas.Bangumi.Views.PlaySouce.Model;
-using BangumiProject.Services;
+using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using User = BangumiProject.Areas.Users.Models.Users;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -19,12 +18,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
     [Area("Bangumi")]
     public class PlaySouceController : Controller
     {
-        private readonly ICommDB _DBServices;
+        private readonly IServices _DBServices;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IAuthorizationService _authorizationService;
         public PlaySouceController(
-            ICommDB _DBServices,
+            IServices _DBServices,
             UserManager<User> _userManager,
             SignInManager<User> _signInManager,
             IAuthorizationService _authorizationService
@@ -83,7 +82,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 };
 
                 //将数据保存
-                _DBServices.AddAsync(souce);
+                //_DBServices.AddAsync(souce);
 
                 return RedirectToRoute(Final.Route_PlaySouce_Details, souce.ID);
             }

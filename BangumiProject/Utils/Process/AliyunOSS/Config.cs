@@ -1,7 +1,5 @@
 ﻿using Aliyun.OSS;
 using Aliyun.OSS.Common;
-using BangumiProject.Controllers;
-using BangumiProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

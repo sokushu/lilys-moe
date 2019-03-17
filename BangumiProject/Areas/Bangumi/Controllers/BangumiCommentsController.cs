@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Services.DBServices.Interface;
+using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using User = BangumiProject.Areas.Users.Models.Users;
-using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
-using BangumiProject.DBModels;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -18,12 +16,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
     [Area("Bangumi")]
     public class BangumiCommentsController : Controller
     {
-        private readonly IDBCore _DBCORE;
+        private readonly IServices _DBCORE;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IAuthorizationService _authorizationService;
         public BangumiCommentsController(
-            IDBCore _DBCORE,
+            IServices _DBCORE,
             UserManager<User> _userManager,
             SignInManager<User> _signInManager,
             IAuthorizationService _authorizationService

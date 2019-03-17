@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BangumiProject.Areas.Search.Process;
-using BangumiProject.Services.DBServices.Interface;
+using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using User = BangumiProject.Areas.Users.Models.Users;
-using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
-using BangumiProject.DBModels;
-using static BangumiProject.Areas.Search.Process.BuildIndex;
 
 namespace BangumiProject.Areas.Search.Controllers
 {
     [Area("Search")]
     public class SearchController : Controller
     {
-        private readonly IDBCore _DBCORE;
+        private readonly IServices _DBCORE;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IAuthorizationService _authorizationService;
         public SearchController(
-            IDBCore _DBCORE,
+            IServices _DBCORE,
             UserManager<User> _userManager,
             SignInManager<User> _signInManager,
             IAuthorizationService _authorizationService
@@ -47,8 +40,8 @@ namespace BangumiProject.Areas.Search.Controllers
             //BuildIndex buildIndex = new BuildIndex(Animes);
             //buildIndex.Init(ProcessType.Anime);
             
-            Process.Search search = new Process.Search();
-            search.SearchAnime("Happy");
+            //Search search = new Search();
+            //search.SearchAnime("Happy");
             return View();
         }
     }

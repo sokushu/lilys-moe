@@ -1,12 +1,9 @@
-﻿using BangumiProject.DBModels;
-using MoeUtilsBox.String;
-using MoeUtilsBox;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Controllers;
 using BangumiProject.Areas.Bangumi.Process;
+using BangumiProjectDBServices.Models;
 
 namespace BangumiProject.Areas.Bangumi.Views.Bangumi.Model
 {
@@ -30,6 +27,6 @@ namespace BangumiProject.Areas.Bangumi.Views.Bangumi.Model
         /// 动画显示多少页
         /// 1 - 10集， 11 - 20集等
         /// </summary>
-        public AnimeNumberInfo Page { get; set; }
+        //public AnimeNumberInfo Page { get; set; }
     }
 }
