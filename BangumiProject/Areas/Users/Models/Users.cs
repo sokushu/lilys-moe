@@ -1,4 +1,4 @@
-﻿using BangumiProject.Areas.Bangumi.Models;
+﻿using BangumiProject.DBModels;
 using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
 using BangumiProject.Areas.Files.Models;
 using Microsoft.AspNetCore.Identity;

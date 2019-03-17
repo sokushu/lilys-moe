@@ -17,6 +17,7 @@ using System.Linq;
 using BangumiProject.Areas.Users.Models;
 using BangumiProject.Process.Utils;
 using BangumiProject.Process.DBService;
+using BangumiProjectDBServices;
 
 namespace BangumiProject
 {
@@ -72,7 +73,7 @@ namespace BangumiProject
                 option.UseSqlite(Final.DBStr_MoeMushi)
             );
             //加载数据库
-            services.AddDbContextPool<BangumiProjectContext>(option =>
+            services.AddDbContextPool<CoreContext>(option =>
                 option.UseSqlite(Final.DBStr), poolSize: 128);
 
             //使用微软提供的内存缓存
@@ -86,7 +87,7 @@ namespace BangumiProject
                 ConfigurationBinder.User.RequireUniqueEmail = false;
                 ConfigurationBinder.Password.RequiredLength = 6;
                 ConfigurationBinder.Lockout.AllowedForNewUsers = true;
-            }).AddEntityFrameworkStores<BangumiProjectContext>().AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<CoreContext>().AddDefaultTokenProviders();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -254,7 +255,7 @@ namespace BangumiProject
         }
     }
 
-    public interface IConfig
+    public static class Config
     {
         
     }

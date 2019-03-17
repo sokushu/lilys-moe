@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using User = BangumiProject.Areas.Users.Models.Users;
 using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
-using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.DBModels;
 using static BangumiProject.Areas.Search.Process.BuildIndex;
 
 namespace BangumiProject.Areas.Search.Controllers

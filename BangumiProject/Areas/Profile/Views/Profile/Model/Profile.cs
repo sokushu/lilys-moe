@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.DBModels;
 using User = BangumiProject.Areas.Users.Models.Users;
 using MoeUtilsBox.String;
 

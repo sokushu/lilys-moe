@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.DBModels;
 using Microsoft.AspNetCore.Cors;
 
 namespace BangumiProject.Areas.Bangumi.Controllers

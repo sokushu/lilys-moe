@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.DBModels;
 using BangumiProject.Areas.Bangumi.Views.PlaySouce.Model;
 using BangumiProject.Services;
 using Microsoft.AspNetCore.Authorization;

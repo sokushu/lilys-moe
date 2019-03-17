@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using BangumiProject.Areas.Users.Models;
-using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.DBModels;
 using BangumiProject.Controllers;
 using BangumiProject.Areas.Bangumi.Process;
 using User = BangumiProject.Areas.Users.Models.Users;

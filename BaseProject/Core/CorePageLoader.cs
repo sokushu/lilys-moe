@@ -17,13 +17,9 @@ namespace BaseProject.Core
             Models = new List<object>();
         }
 
-        public void SetSwitchPage(IPage page)
+        public string GetPage(IPage page)
         {
             Page = page.Build();
-        }
-
-        public string GetPage()
-        {
             return Page;
         }
 

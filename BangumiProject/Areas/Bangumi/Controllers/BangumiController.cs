@@ -12,7 +12,7 @@ using User = BangumiProject.Areas.Users.Models.Users;
 using MoeUtilsBox;
 using BangumiProject.Areas.Bangumi.Process;
 using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
-using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.DBModels;
 using Microsoft.EntityFrameworkCore;
 using MoeUtilsBox.Utils;
 using System.Net;
@@ -168,13 +168,16 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/{id:int}", Name = Final.Route_Bangumi_Details)]
         public IActionResult DetailsAsync(int id = -1)
         {
+            // 检查百合模式
             YURIModeCheck();
-
+            // 返回的页面
+            string[] Pages = new string[] { "NotYuriWarning", "Bangumi_OneAnime" };
             try
             {
-                string[] Pages = new string[]{ "NotYuriWarning", "Bangumi_OneAnime" };
+                // 获取用户ID
                 string UserID = _Services.UserManager.GetUserId(HttpContext.User);
 
+                // 开始构建页面数据类
                 CorePageLoader corePageLoader = new CorePageLoader();
 
                 ISender sender = new Sender();
@@ -185,7 +188,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
 
                 var anime = sender.GetInfo<Anime>();
                 bool YuriPageOpen = YuriMode ? anime.Tags.FirstOrDefault(tag => tag.TagName == "百合") == null : YuriMode;
-                corePageLoader.SetSwitchPage(new AnimeOne(YuriMode, YuriPageOpen, Pages));
 
                 animeInfoModelStream.SetModelLoader(new AnimeUserInfoLoader(_Services, id, UserID));
                 animeInfoModelStream.SetModelLoader(new AuthorizationLoader(_Services, HttpContext.User, Final.Yuri_Yuri4));
@@ -195,7 +197,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 // 返回构建的数据到页面中
                 var Model = corePageLoader.Build<AnimeInfoModel>();
 
-                return View(corePageLoader.GetPage(), Model);
+                return View(
+                    corePageLoader.GetPage(new AnimeOne(YuriMode, YuriPageOpen, Pages)), 
+                    Model
+                    );
             }
             catch (NotFoundAnimeInfoException)
             {

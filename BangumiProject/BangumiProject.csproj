@@ -15,21 +15,25 @@
   
   <ItemGroup>
     <Compile Remove="Process\DBModels\**" />
+    <Compile Remove="Process\Services\**" />
     <Compile Remove="wwwroot\lib\bootstrap\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Compile Remove="wwwroot\lib\jquery-validation\**" />
     <Compile Remove="wwwroot\lib\jquery\**" />
     <Content Remove="Process\DBModels\**" />
+    <Content Remove="Process\Services\**" />
     <Content Remove="wwwroot\lib\bootstrap\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Content Remove="wwwroot\lib\jquery-validation\**" />
     <Content Remove="wwwroot\lib\jquery\**" />
     <EmbeddedResource Remove="Process\DBModels\**" />
+    <EmbeddedResource Remove="Process\Services\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
     <None Remove="Process\DBModels\**" />
+    <None Remove="Process\Services\**" />
     <None Remove="wwwroot\lib\bootstrap\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <None Remove="wwwroot\lib\jquery-validation\**" />
@@ -57,10 +61,9 @@
     <Folder Include="Areas\Search\Models\" />
     <Folder Include="Areas\Search\Services\" />
     <Folder Include="Areas\Search\Views\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Migrations\" />
     <Folder Include="Process\ParamsModels\" />
-    <Folder Include="Process\Services\" />
-    <Folder Include="Process\File\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,11 +85,6 @@
     <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.js" />
     <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.min.js" />
     <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.min.js.map" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BaseProject\BaseProject.csproj" />
-    <ProjectReference Include="..\MoeUtilsBox\MoeUtilsBox.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -131,6 +129,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Areas\Bangumi\Views\Bangumi\BangumiEdit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BangumiProjectProcessComponents\BangumiProjectProcessComponents.csproj" />
   </ItemGroup>
 
 </Project>

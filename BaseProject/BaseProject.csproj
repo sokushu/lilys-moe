@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DBServices\**" />
+    <EmbeddedResource Remove="DBServices\**" />
+    <None Remove="DBServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.9.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.8.14" />
     <PackageReference Include="HttpCode.Core" Version="4.2.0" />
@@ -24,10 +30,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0005" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DBServices\" />
   </ItemGroup>
 
 </Project>

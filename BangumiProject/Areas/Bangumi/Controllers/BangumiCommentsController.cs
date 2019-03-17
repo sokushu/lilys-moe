@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using User = BangumiProject.Areas.Users.Models.Users;
 using Blog = BangumiProject.Areas.Blogs.Models.Blogs;
-using BangumiProject.Areas.Bangumi.Models;
+using BangumiProject.DBModels;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {

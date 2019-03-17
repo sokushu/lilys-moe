@@ -1,4 +1,4 @@
-﻿using BangumiProject.Areas.Bangumi.Models;
+﻿using BangumiProject.DBModels;
 using BangumiProject.Process.Interface;
 using BangumiProject.Services;
 using System;

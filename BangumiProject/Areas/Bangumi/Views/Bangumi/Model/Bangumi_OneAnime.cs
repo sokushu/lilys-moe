@@ -1,4 +1,4 @@
-﻿using BangumiProject.Areas.Bangumi.Models;
+﻿using BangumiProject.DBModels;
 using MoeUtilsBox.String;
 using MoeUtilsBox;
 using System;

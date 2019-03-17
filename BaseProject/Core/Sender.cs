@@ -7,15 +7,15 @@ namespace BaseProject.Core
 {
     public class Sender : ISender
     {
-        private object obj { get; set; }
+        private object Obj { get; set; }
         public T GetInfo<T>()
         {
-            return (T)obj;
+            return (T)Obj;
         }
 
         public void Send(object obj)
         {
-            this.obj = obj;
+            this.Obj = obj;
         }
     }
 }

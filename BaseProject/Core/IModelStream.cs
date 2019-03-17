@@ -36,14 +36,6 @@ namespace BaseProject.Core
         {
             Init(ModelClassName);
         }
-
-        private ISender Sender { get; set; }
-
-        public IModelStream(ISender sender, string ModelClassName)
-        {
-            Sender = sender;
-            Init(ModelClassName);
-        }
         /// <summary>
         /// 初始化加载PageModel的信息
         /// </summary>
@@ -77,14 +69,30 @@ namespace BaseProject.Core
         public virtual void SetModelLoader<T>(IModelLoader<T> modelLoader)
         {
             T value = modelLoader.BuildModel();
-            if (Sender != null)
-            {
-                Sender.Send(value);
-            }
             foreach (var item in modelLoader.PropertiesName)
             {
                 values[item] = value;
             }
+        }
+
+        /// <summary>
+        /// 加载数据后，
+        /// 进行一定的处理
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="Return">要返回的类型</typeparam>
+        /// <param name="modelLoader"></param>
+        /// <param name="process"></param>
+        /// <returns></returns>
+        public virtual Return SetModelLoader<T, Return>(IModelLoader<T> modelLoader, IProcess<Return, T> process)
+        {
+            T value = modelLoader.BuildModel();
+            Return ReturnValue = process.Process(value);
+            foreach (var item in modelLoader.PropertiesName)
+            {
+                values[item] = value;
+            }
+            return ReturnValue;
         }
 
         /// <summary>

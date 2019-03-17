@@ -1,4 +1,4 @@
-﻿using BangumiProject.Areas.Bangumi.Models;
+﻿using BangumiProject.DBModels;
 using BangumiProject.Areas.Bangumi.Process;
 using MoeUtilsBox.String;
 using System;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Process.PageModels
 {
-    public class AnimeInfoModel : ModelBase
+    public class AnimeInfoModel
     {
         public Anime Anime { get; set; } = null;
 
