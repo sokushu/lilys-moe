@@ -10,10 +10,4 @@
     <ProjectReference Include="..\System\MoeUtils.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ModelLoader\" />
-    <Folder Include="ModelStream\" />
-    <Folder Include="PageSwitch\" />
-  </ItemGroup>
-
 </Project>

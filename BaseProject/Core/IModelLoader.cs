@@ -24,7 +24,7 @@ namespace BaseProject.Core
         /// 从数据库或文件系统中加载数据
         /// </summary>
         /// <returns></returns>
-        public abstract Model LoadModel();
+        public abstract Model LoadModel(params object[] Input);
 
         /// <summary>
         /// 加载数据之后进行处理
