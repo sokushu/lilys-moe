@@ -10,6 +10,7 @@ using BangumiProjectProcessComponents.ModelLoader;
 using BangumiProjectProcessComponents.Process;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -154,7 +155,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             bool isOK = Result.Succeeded;
             try
             {
-                string a = nameof(CorePageLoader);
                 CorePageLoader corePageLoader = new CorePageLoader();
 
                 Bangumi_OneAnimeModelStream bangumi_OneAnimeModelStream = new Bangumi_OneAnimeModelStream();
@@ -167,16 +167,16 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     (new BoolLoader(nameof(Bangumi_OneAnime.IsShowEdit)).SetParams(isOK));
 
                 corePageLoader.SetModelStream(bangumi_OneAnimeModelStream);
-
+                
                 IPage PageW = new Bangumi_OneAnimePageSwitch(YuriMode, ShowYuriPage);
                 return View(
                     viewName: corePageLoader.GetPage(PageW),
                     model: corePageLoader.Build<Bangumi_OneAnime>()
                     );
             }
-            catch (AnimeNotFoundException)
+            catch (AnimeNotFoundException NotFoundAnime)
             {
-                return NotFound();
+                return NotFound(NotFoundAnime);
             }
             catch (Exception info)
             {
@@ -510,14 +510,14 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         //    _Services.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
         //}
 
-        //private void YURIModeCheck()
-        //{
-        //    //获取百合模式
-        //    int? mode = HttpContext.Session.GetInt32(Final.YuriMode);
-        //    if (mode != null)
-        //    {
-        //        YuriMode = mode == 1 ? true : false;
-        //    }
-        //}
+        private void YURIModeCheck()
+        {
+            //获取百合模式
+            int? mode = HttpContext.Session.GetInt32(Final.YuriMode);
+            if (mode != null)
+            {
+                YuriMode = mode == 1 ? true : false;
+            }
+        }
     }
 }
