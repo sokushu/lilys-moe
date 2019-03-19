@@ -68,9 +68,9 @@ namespace BangumiProject
         public void ConfigureServices(IServiceCollection services)
         {
             //加载爬虫数据库
-            services.AddDbContext<MoeMushiContext>(option =>
-                option.UseSqlite(Final.DBStr_MoeMushi)
-            );
+            //services.AddDbContext<MoeMushiContext>(option =>
+            //    option.UseSqlite(Final.DBStr_MoeMushi)
+            //);
             //加载数据库
             services.AddDbContextPool<CoreContext>(option =>
                 option.UseSqlite(Final.DBStr), poolSize: 128);

@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using BangumiProject.Areas.Users.Models
-@using BangumiProject.Controllers
-@inject SignInManager<Users> SignInManager
-@inject UserManager<Users> UserManager
+@using BangumiProjectDBServices.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{ 
     var Route_Profile = Final.Route_Profile;

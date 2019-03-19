@@ -76,7 +76,7 @@ namespace BangumiProjectDBServices.Models
         /// <summary>
         /// 
         /// </summary>
-        public AnimeMoreInfo AnimeMoreInfo { get; set; }
+        //public AnimeMoreInfo AnimeMoreInfo { get; set; }
     }
 
     public enum AnimeType

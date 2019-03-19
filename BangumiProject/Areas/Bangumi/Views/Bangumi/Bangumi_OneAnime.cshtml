@@ -1,5 +1,4 @@
-﻿@using BangumiProject.Controllers
-@model Bangumi_OneAnime
+﻿@model Bangumi_OneAnime
 @{
     ViewData["Title"] = Model.Anime.AnimeName;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -81,7 +80,7 @@
 
 @* 功能面板 *@
 @* 集数计算 *@
-<div class="mdui-row">
+@*<div class="mdui-row">
 
     @{
         int k = 0;
@@ -131,10 +130,10 @@
         a = a + 10;
         b = b + 10;
     }
-</div>
+</div>*@
 
 @* 功能面板 *@
-<div class="mdui-row mdui-m-t-2">
+@*<div class="mdui-row mdui-m-t-2">
     <div class="mdui-col-md-8">
         <div class="mdui-row">
             @if (Model.IsSignIn && Model.IsSub)
@@ -161,7 +160,7 @@
     <div class="mdui-col-md-4">
         推荐
     </div>
-</div>
+</div>*@
 <partial name="Bangumi_OneAJAX"/>
 
 

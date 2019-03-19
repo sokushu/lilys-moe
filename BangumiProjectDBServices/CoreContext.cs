@@ -70,10 +70,10 @@ namespace BangumiProjectDBServices
             builder.Entity<Anime>().Property(e => e.AnimeType).HasConversion(converter);
 
             // 停播理由的关系映射
-            var StopCause = new ValueConverter<StopCause, string>(
-                v => v.ToString(),
-                v => (StopCause)Enum.Parse(typeof(StopCause), v));
-            builder.Entity<AnimeNumInfo>().Property(e => e.StopCause).HasConversion(converter);
+            //var StopCause = new ValueConverter<StopCause, string>(
+            //    v => v.ToString(),
+            //    v => (StopCause)Enum.Parse(typeof(StopCause), v));
+            //builder.Entity<AnimeNumInfo>().Property(e => e.StopCause).HasConversion(converter);
 
             // 外键约束
             builder.Entity<FileImages>().HasOne(img => img.UpLoadUsers).WithMany(user => user.Images).HasConstraintName("Images_User_PK");

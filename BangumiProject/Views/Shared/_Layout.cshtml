@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using BangumiProject.Areas.Users.Models
-@using BangumiProject.Controllers
-@inject SignInManager<Users> SignInManager
-@inject UserManager<Users> UserManager
+@using BangumiProjectDBServices.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 @{
     bool IsSignED = SignInManager.IsSignedIn(User);
     string UserName = UserManager.GetUserName(User);
