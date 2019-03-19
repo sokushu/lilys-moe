@@ -53,6 +53,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// 是否开启百合模式
         /// </summary>
         private bool YuriMode { get; set; } = false;
+        /// <summary>
+        /// 是否显示非百合动画警告页面
+        /// </summary>
         private bool ShowYuriPage { get; set; } = false;
         /// <summary>
         /// 全局的百合标签的名称
@@ -157,13 +160,15 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             var Result = await _Services.AuthorizationService.AuthorizeAsync(HttpContext.User, Final.Yuri_Yuri4);
             var UID = _Services.UserManager.GetUserId(HttpContext.User);
             bool isOK = Result.Succeeded;
+            // 百合模式检查
             YURIModeCheck();
             try
             {
+                // 初始化
                 CorePageLoader corePageLoader = new CorePageLoader();
 
                 Bangumi_OneAnimeModelStream bangumi_OneAnimeModelStream = new Bangumi_OneAnimeModelStream();
-
+                // 加载数据
                 ShowYuriPage = bangumi_OneAnimeModelStream.SetModelLoader
                     (new AnimeModelLoader(_Services).SetParams(id), new IsShowYuriPage(YuriName));
                 bangumi_OneAnimeModelStream.SetModelLoader
@@ -172,7 +177,8 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     (new BoolLoader(nameof(Bangumi_OneAnime.IsShowEdit)).SetParams(isOK));
 
                 corePageLoader.SetModelStream(bangumi_OneAnimeModelStream);
-                
+               
+                //构建数据
                 IPage PageW = new Bangumi_OneAnimePageSwitch(YuriMode, ShowYuriPage);
                 return View(
                     viewName: corePageLoader.GetPage(PageW),
