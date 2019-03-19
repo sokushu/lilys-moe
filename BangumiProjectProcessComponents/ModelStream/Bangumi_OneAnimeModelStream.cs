@@ -7,9 +7,9 @@ using System.Text;
 
 namespace BangumiProjectProcessComponents.ModelStream
 {
-    public class Bangumi_OneAnimeModel : IModelStream<Bangumi_OneAnime>
+    public class Bangumi_OneAnimeModelStream : IModelStream<Bangumi_OneAnime>
     {
-        public Bangumi_OneAnimeModel() : base("Bangumi_OneAnime")
+        public Bangumi_OneAnimeModelStream() : base(nameof(Bangumi_OneAnime))
         {
 
         }
@@ -38,6 +38,7 @@ namespace BangumiProjectProcessComponents.ModelStream
             ReturnBangumi_OneAnime.Anime = Anime;
             ReturnBangumi_OneAnime.UserAnimeNumber = IsNull ? 0 : animeUserInfo.NowAnimeNum;
             ReturnBangumi_OneAnime.IsSub = !IsNull;
+            ReturnBangumi_OneAnime.IsShowEdit = (bool)values["IsShowEdit"];
 
             return ReturnBangumi_OneAnime;
         }

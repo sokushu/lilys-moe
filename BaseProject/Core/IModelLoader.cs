@@ -16,6 +16,8 @@ namespace BaseProject.Core
     public abstract class IModelLoader<Model>
     {
         public string[] PropertiesName { get; }
+
+        private object[] Input { get; set; } = null;
         public IModelLoader(params string[] PropertiesName)
         {
             this.PropertiesName = PropertiesName;
@@ -33,13 +35,26 @@ namespace BaseProject.Core
         /// <returns></returns>
         public abstract Model AfterProcess(Model model);
 
+        public IModelLoader<Model> SetParams(params object[] Input)
+        {
+            this.Input = Input;
+            return this;
+        }
         /// <summary>
         /// 构建
         /// </summary>
         /// <returns></returns>
         public Model BuildModel()
         {
-            return AfterProcess(LoadModel());
+            if (Input == null)
+            {
+                return AfterProcess(LoadModel());
+            }
+            else
+            {
+                return AfterProcess(LoadModel(Input));
+            }
+            
         }
     }
 }

@@ -4,6 +4,7 @@ using BaseProject.Core;
 using BaseProject.Exceptionss;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 
@@ -17,7 +18,7 @@ namespace BangumiProjectProcessComponents.ModelLoader
         /// 
         /// </summary>
         /// <param name="services"></param>
-        public AnimeModelLoader(IServices services) : base("Anime")
+        public AnimeModelLoader(IServices services) : base(nameof(Anime))
         {
             Services = services;
         }
@@ -52,7 +53,8 @@ namespace BangumiProjectProcessComponents.ModelLoader
                 {
                     string cacheKey = CacheKey.Anime_One(AnimeID);
                     Anime anime = Services.Save_ToFirst<Anime>(cacheKey,
-                        db => db.Where(ani => ani.AnimeID == AnimeID));
+                        db => db.Where(ani => ani.AnimeID == AnimeID)
+                        .Include(ani => ani.Tags));
                     return anime;
                 }
                 else
@@ -62,7 +64,7 @@ namespace BangumiProjectProcessComponents.ModelLoader
             }
             else
             {
-                throw NotFound("Input Is Null");
+                throw NotFound($"{nameof(Input)} Is Null");
             }
         }
 
