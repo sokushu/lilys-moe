@@ -11,6 +11,10 @@ using BangumiProjectProcessComponents.Process;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using BangumiProjectDBServices.Models;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -153,6 +157,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             var Result = await _Services.AuthorizationService.AuthorizeAsync(HttpContext.User, Final.Yuri_Yuri4);
             var UID = _Services.UserManager.GetUserId(HttpContext.User);
             bool isOK = Result.Succeeded;
+            YURIModeCheck();
             try
             {
                 CorePageLoader corePageLoader = new CorePageLoader();
@@ -291,79 +296,79 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             //    );
         }
 
-        //// GET: Bangumi/Create
-        //[HttpGet]
-        //[Authorize(Policy = Final.Yuri_Yuri4)]
-        //[Route("/Bangumi/Create", Name = Final.Route_Bangumi_Create)]
-        //public ActionResult Create()
-        //{
-        //    //返回视图
-        //    return View(
-        //        viewName:"AddBangumi"
-        //        );
-        //}
+        // GET: Bangumi/Create
+        [HttpGet]
+        [Authorize(Policy = Final.Yuri_Yuri4)]
+        [Route("/Bangumi/Create", Name = Final.Route_Bangumi_Create)]
+        public ActionResult Create()
+        {
+            //返回视图
+            return View(
+                viewName: "AddBangumi"
+                );
+        }
 
-        //// POST: Bangumi/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Policy = Final.Yuri_Yuri4)]
-        //[Route("/Bangumi/Create", Name = Final.Route_Bangumi_Create_POST)]
-        //public IActionResult CreateAsync(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        //上传的文件
-        //        var files = collection.Files;
-        //        if (files != null)
-        //        {
-        //            //上传文件的操作
-        //        }
-        //        var AnimeNum = collection["AnimeNum"];
-        //        if (!int.TryParse(AnimeNum, out int Num))
-        //        {
-        //            Num = 1;
-        //        }
-        //        var AnimeTime = collection["AnimePlayTime"];
-        //        if (!DateTime.TryParse(AnimeTime, out DateTime dateTime))
-        //        {
-        //            dateTime = DateTime.Now;
-        //        }
-        //        /*######################   BUG    #########################
-        //         * 这里会出现BUG
-        //         * 造成一开始不能选中完结动画
-        //         * 解决办法就是产生新的Anime对象了
-        //         * 把Anime当作参数
-        //         * 过一段时间再解决这个问题吧
-        //         *######################   BUG    #########################
-        //         */
-        //        var End = collection["IsEnd"];
-        //        if (!bool.TryParse(End, out bool IsEnd))
-        //        {
-        //            IsEnd = false;
-        //        }
-        //        //的到最后的动画ID
-        //        Anime anime = new Anime
-        //        {
-        //            AnimeName = collection["AnimeName"],
-        //            AnimeNum = Num,
-        //            AnimePic = collection["AnimePic"],
-        //            AnimeInfo = collection["AnimeInfo"],
-        //            AnimePlayTime = dateTime,
-        //            IsEnd = IsEnd
-        //        };
-        //        //将动画数据写入数据库
-        //        _Services.Add(anime).Commit();
-        //        //最新发现，到这一步ID会有值o(*￣▽￣*)ブ
-        //        UpDataNew4(anime);//更新首页的最新4个动画的缓存
-        //        UpDataNotEnd(anime);
-        //        _Services.ADDAnimeID(anime.AnimeID);//这里不要忘记添加动画ID
-        //        return RedirectToRoute(Final.Route_Bangumi_Index, anime.AnimeID);
-        //    }
-        //    catch
-        //    {
-        //        throw;//显示错误页面
-        //    }
-        //}
+        // POST: Bangumi/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = Final.Yuri_Yuri4)]
+        [Route("/Bangumi/Create", Name = Final.Route_Bangumi_Create_POST)]
+        public IActionResult CreateAsync(IFormCollection collection)
+        {
+            try
+            {
+                //上传的文件
+                var files = collection.Files;
+                if (files != null)
+                {
+                    //上传文件的操作
+                }
+                var AnimeNum = collection["AnimeNum"];
+                if (!int.TryParse(AnimeNum, out int Num))
+                {
+                    Num = 1;
+                }
+                var AnimeTime = collection["AnimePlayTime"];
+                if (!DateTime.TryParse(AnimeTime, out DateTime dateTime))
+                {
+                    dateTime = DateTime.Now;
+                }
+                /*######################   BUG    #########################
+                 * 这里会出现BUG
+                 * 造成一开始不能选中完结动画
+                 * 解决办法就是产生新的Anime对象了
+                 * 把Anime当作参数
+                 * 过一段时间再解决这个问题吧
+                 *######################   BUG    #########################
+                 */
+                var End = collection["IsEnd"];
+                if (!bool.TryParse(End, out bool IsEnd))
+                {
+                    IsEnd = false;
+                }
+                //的到最后的动画ID
+                Anime anime = new Anime
+                {
+                    AnimeName = collection["AnimeName"],
+                    AnimeNum = Num,
+                    AnimePic = collection["AnimePic"],
+                    AnimeInfo = collection["AnimeInfo"],
+                    AnimePlayTime = dateTime,
+                    IsEnd = IsEnd
+                };
+                //将动画数据写入数据库
+                _Services.Add(anime).Commit();
+                //最新发现，到这一步ID会有值o(*￣▽￣*)ブ
+                UpDataNew4(anime);//更新首页的最新4个动画的缓存
+                UpDataNotEnd(anime);
+                _Services.ADDAnimeID(anime.AnimeID);//这里不要忘记添加动画ID
+                return RedirectToRoute(Final.Route_Bangumi_Index, anime.AnimeID);
+            }
+            catch
+            {
+                throw;//显示错误页面
+            }
+        }
 
         //// GET: Bangumi/Edit/5
         //[HttpGet]
@@ -477,38 +482,38 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         ////=====================================================================================
         ////=====================================================================================
         ////=====================================================================================
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="anime"></param>
-        //private void UpDataNew4(Anime anime)
-        //{
-        //    var List = _Services.GetCache<List<Anime>>(CacheKey.Anime_New4());
-        //    List.RemoveAll(a => a.AnimeID == anime.AnimeID);
-        //    List.Add(anime);
-        //    _Services.GetCacheEntry(CacheKey.Anime_New4()).Value = List.OrderByDescending(t => t.Time).ToList();
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="anime"></param>
+        private void UpDataNew4(Anime anime)
+        {
+            var List = _Services.GetCache<List<Anime>>(CacheKey.Anime_New4());
+            List.RemoveAll(a => a.AnimeID == anime.AnimeID);
+            List.Add(anime);
+            _Services.GetCacheEntry(CacheKey.Anime_New4()).Value = List.OrderByDescending(t => t.Time).ToList();
+        }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="anime"></param>
-        //private void UpDataNotEnd(Anime anime)
-        //{
-        //    int ID = anime.AnimeID;
-        //    var List = _Services.GetCache<List<Anime>>(CacheKey.Anime_NotEnd());
-        //    Anime SearchAnime = null;
-        //    if ((SearchAnime = List.Where(a => a.AnimeID == ID).FirstOrDefault()) == null)
-        //    {
-        //        List.Add(anime);
-        //    }
-        //    else
-        //    {
-        //        List.Remove(SearchAnime);
-        //        List.Add(anime);
-        //    }
-        //    _Services.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="anime"></param>
+        private void UpDataNotEnd(Anime anime)
+        {
+            int ID = anime.AnimeID;
+            var List = _Services.GetCache<List<Anime>>(CacheKey.Anime_NotEnd());
+            Anime SearchAnime = null;
+            if ((SearchAnime = List.Where(a => a.AnimeID == ID).FirstOrDefault()) == null)
+            {
+                List.Add(anime);
+            }
+            else
+            {
+                List.Remove(SearchAnime);
+                List.Add(anime);
+            }
+            _Services.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
+        }
 
         private void YURIModeCheck()
         {
