@@ -62,85 +62,86 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// </summary>
         private string YuriName { get; set; }
 
-        ///// <summary>
-        ///// 
-        ///// 查询所有的动画数据，
-        ///// 动画索引页面
-        ///// 
-        ///// 可以分类查询动画，
-        ///// 按年份查询
-        ///// 按动画的类型标签查询
-        ///// 
-        ///// 搜索动画
-        ///// 
-        ///// 具体可以参考Bilibili的动画分类页面
-        ///// 
-        ///// 参数是过滤选项。
-        ///// 
-        ///// </summary>
-        ///// <param name="Page">页数，第几页</param>
-        ///// <param name="tagname">动画标签名</param>
-        ///// <param name="year">动画播出年份</param>
-        ///// <param name="season">动画播出季度</param>
-        ///// <param name="animestats">动画状态，完结了吗</param>
-        ///// <param name="animetype">动画类型，TV动画吗</param>
-        ///// <param name="dayofweek">动画是星期几播放的</param>
-        ///// <returns></returns>
-        //// GET: Bangumi
-        //[HttpGet]
-        //[Route("/Bangumi", Name = Final.Route_Bangumi_Index)]
-        //public ActionResult IndexAsync
-        //    (
-        //    int Page = 1,           string tagname = "", 
-        //    int year = -1,          int season = -1, 
-        //    int animestats = -1,    int animetype = -1, 
-        //    int dayofweek = -1
-        //    )
-        //{
-        //    /*
-        //     * 从缓存中读取数据，如果缓存中没有就从数据库中读取数据
-        //     */
-        //    var ListAnime =  _Services.Save_ToList<Anime>(CacheKey.Anime_All(), 
-        //            db => db.Select(a => a));
-        //    var ListTag = _Services.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(), 
-        //            db => db.Include(a => a.Anime));
-        //    /*
-        //     * 这里是一个变化高发区
-        //     * 未来可能会加入不同的过滤条件
-        //     */
-        //    AnimeFilters animeFilter = new AnimeFilters();
+        /// <summary>
+        /// 
+        /// 查询所有的动画数据，
+        /// 动画索引页面
+        /// 
+        /// 可以分类查询动画，
+        /// 按年份查询
+        /// 按动画的类型标签查询
+        /// 
+        /// 搜索动画
+        /// 
+        /// 具体可以参考Bilibili的动画分类页面
+        /// 
+        /// 参数是过滤选项。
+        /// 
+        /// </summary>
+        /// <param name="Page">页数，第几页</param>
+        /// <param name="tagname">动画标签名</param>
+        /// <param name="year">动画播出年份</param>
+        /// <param name="season">动画播出季度</param>
+        /// <param name="animestats">动画状态，完结了吗</param>
+        /// <param name="animetype">动画类型，TV动画吗</param>
+        /// <param name="dayofweek">动画是星期几播放的</param>
+        /// <returns></returns>
+        // GET: Bangumi
+        [HttpGet]
+        [Route("/Bangumi", Name = Final.Route_Bangumi_Index)]
+        public ActionResult IndexAsync
+            (
+            int Page = 1, string tagname = "",
+            int year = -1, int season = -1,
+            int animestats = -1, int animetype = -1,
+            int dayofweek = -1
+            )
+        {
+            /*
+             * 从缓存中读取数据，如果缓存中没有就从数据库中读取数据
+             */
+            var ListAnime = _Services.Save_ToList<Anime>(CacheKey.Anime_All(),
+                    db => db.Select(a => a));
+            var ListTag = _Services.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(),
+                    db => db.Include(a => a.Anime));
+            /*
+             * 这里是一个变化高发区
+             * 未来可能会加入不同的过滤条件
+             */
+            //AnimeFilters animeFilter = new AnimeFilters();
 
 
-        //    //动画是否完结
-        //    animeFilter.SetAnimeFilter(new AnimeFilterByEnd(animestats));
-        //    //动画的年份
-        //    animeFilter.SetAnimeFilter(new AnimeFilterByYear(year));
-        //    //动画的类型
-        //    animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(animetype));
-        //    //动画播出日是星期几
-        //    animeFilter.SetAnimeFilter(new AnimeFilterByWeek(dayofweek));
-        //    //这是哪一季度的动画
-        //    animeFilter.SetAnimeFilter(new AnimeFilterBySeason(season));
-        //    //添加标签过滤
-        //    animeFilter.SetAnimeFilter(new AnimeFilterByTagNameYuriMode(tagname, ListTag, YuriMode, string.Empty));
+            ////动画是否完结
+            //animeFilter.SetAnimeFilter(new AnimeFilterByEnd(animestats));
+            ////动画的年份
+            //animeFilter.SetAnimeFilter(new AnimeFilterByYear(year));
+            ////动画的类型
+            //animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(animetype));
+            ////动画播出日是星期几
+            //animeFilter.SetAnimeFilter(new AnimeFilterByWeek(dayofweek));
+            ////这是哪一季度的动画
+            //animeFilter.SetAnimeFilter(new AnimeFilterBySeason(season));
+            ////添加标签过滤
+            //animeFilter.SetAnimeFilter(new AnimeFilterByTagNameYuriMode(tagname, ListTag, YuriMode, string.Empty));
 
 
-        //    //返回最终的过滤结果集
-        //    var Animes = animeFilter.GetAnimeFilter(ListAnime);
-        //    PageHelper pageHelper = new PageHelper(20);
-        //    return View(
-        //        viewName:"Bangumi",
-        //        model: new Views.Bangumi.Model.Bangumi
-        //        {
-        //            AllPage = pageHelper.GetAllPage(),      //处理后动画的全部页数
-        //            NowPage = pageHelper.GetNowPage(),      //现在看到的页数
-        //            Animes = pageHelper.GetListPage(Page, Animes),        //处理后的动画集合
-        //            AnimeSeason = new List<int> { 1, 2, 3, 4 },//动画的季度（总共就4个季度，而且是常量的）
-        //            //AnimeTags = filter.AnimeTagName,  //动画的标签合集
-        //            //AnimeYear = filter.AnimeYear   //动画的年份合集
-        //        }
-        //        );
-        //}
+            ////返回最终的过滤结果集
+            //var Animes = animeFilter.GetAnimeFilter(ListAnime);
+            //PageHelper pageHelper = new PageHelper(20);
+            //return View(
+            //    viewName: "Bangumi",
+            //    model: new Views.Bangumi.Model.Bangumi
+            //    {
+            //        AllPage = pageHelper.GetAllPage(),      //处理后动画的全部页数
+            //        NowPage = pageHelper.GetNowPage(),      //现在看到的页数
+            //        Animes = pageHelper.GetListPage(Page, Animes),        //处理后的动画集合
+            //        AnimeSeason = new List<int> { 1, 2, 3, 4 },//动画的季度（总共就4个季度，而且是常量的）
+            //        //AnimeTags = filter.AnimeTagName,  //动画的标签合集
+            //        //AnimeYear = filter.AnimeYear   //动画的年份合集
+            //    }
+            //    );
+            return View();
+        }
 
         /// <summary>
         /// 查询一部动画的数据
@@ -177,7 +178,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     (new BoolLoader(nameof(Bangumi_OneAnime.IsShowEdit)).SetParams(isOK));
 
                 corePageLoader.SetModelStream(bangumi_OneAnimeModelStream);
-               
+                
                 //构建数据
                 IPage PageW = new Bangumi_OneAnimePageSwitch(YuriMode, ShowYuriPage);
                 return View(

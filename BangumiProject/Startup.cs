@@ -17,6 +17,8 @@ using BangumiProjectDBServices;
 using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.Services;
 using BangumiProject.Utils;
+using BaseProject.Process;
+using BangumiProjectDBServices.PageModels;
 
 namespace BangumiProject
 {
@@ -72,8 +74,10 @@ namespace BangumiProject
             //    option.UseSqlite(Final.DBStr_MoeMushi)
             //);
             //加载数据库
-            services.AddDbContextPool<CoreContext>(option =>
-                option.UseSqlite(Final.DBStr), poolSize: 128);
+            services.AddDbContextPool<CoreContext>(
+                optionsAction: option =>
+                    option.UseSqlite(Final.DBStr, b => b.MigrationsAssembly(nameof(BangumiProject))), 
+                poolSize: 128);
 
             //使用微软提供的内存缓存
             services.AddMemoryCache(cache =>
@@ -203,21 +207,6 @@ namespace BangumiProject
         /// </summary>
         private void Init()
         {
-            Mkdir();
-            InitSetting();
-        }
-        private void InitSetting()
-        {
-            //AdminSettingWriteAndReadUtils adminSettingWriteAndRead = new AdminSettingWriteAndReadUtils();
-            //var setting = adminSettingWriteAndRead.Read();
-
-            //WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
-            //WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
-            //WebSiteSetting.PicPath = setting.PicPath;
-            //WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
-        }
-        private void Mkdir()
-        {
             if (!Directory.Exists(Final.FilePath))
                 Directory.CreateDirectory(Final.FilePath);
             if (!Directory.Exists(Final.FilePath_Image))
@@ -251,11 +240,32 @@ namespace BangumiProject
                 
             }
 #endif
-        }
-    }
 
-    public static class Config
-    {
-        
+            //AdminSettingWriteAndReadUtils adminSettingWriteAndRead = new AdminSettingWriteAndReadUtils();
+            //var setting = adminSettingWriteAndRead.Read();
+
+            //WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
+            //WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
+            //WebSiteSetting.PicPath = setting.PicPath;
+            //WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
+
+            BuildMap.Build<Anime>();
+            BuildMap.Build<AnimeComm>();
+            BuildMap.Build<AnimeNumInfo>();
+            BuildMap.Build<AnimeMemo>();
+            BuildMap.Build<AnimeMoreInfo>();
+            BuildMap.Build<AnimeNumInfos>();
+            BuildMap.Build<AnimeSouce>();
+            BuildMap.Build<AnimeSouceComm>();
+            BuildMap.Build<AnimeTag>();
+            BuildMap.Build<AnimeUserInfo>();
+            BuildMap.Build<FileImages>();
+            BuildMap.Build<Music>();
+            BuildMap.Build<MusicAlbum>();
+            BuildMap.Build<AdminSetting>();
+            BuildMap.Build<AnimeEdit>();
+            BuildMap.Build<AnimeInfoModel>();
+            BuildMap.Build<Bangumi_OneAnime>();
+        }
     }
 }
