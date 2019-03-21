@@ -4,6 +4,12 @@ using System.Text;
 
 namespace System
 {
+    /// <summary>
+    /// 为 .NET Core 设计一个 3D 图形渲染库
+    /// <see cref="https://www.cnblogs.com/savorboard/p/designing-a-3d-rendering-library-for-net-core.html"/>
+    /// 棒！使用.NET Core构建3D游戏引擎
+    /// <see cref="https://www.cnblogs.com/savorboard/p/net-core-game-engine.html"/>
+    /// </summary>
     public class Final
     {
 
@@ -16,7 +22,7 @@ namespace System
          * 以下是Session的Key
          * ====================================================
          */
-        public const string YuriMode = "yuriMode";
+        public const string YuriMode = nameof(YuriMode);
 
 
 
@@ -138,37 +144,37 @@ namespace System
          * 以下是路由
          * ====================================================
          */
-        public const string Route_Index = "Index";
-        public const string Route_Profile_UID = "Profile_Uid";
-        public const string Route_Profile = "Profile";
-        public const string Route_Test = "Test";
-        public const string Route_Bangumi_Create = "Route_Bangumi_Create";
-        public const string Route_Bangumi_Create_POST = "Route_Bangumi_Create_POST";
-        public const string Route_Bangumi_Index = "Route_Bangumi_Index";
+        public const string Route_Index =                   nameof(Route_Index);
+        public const string Route_Profile_UID =             nameof(Route_Profile_UID);
+        public const string Route_Profile =                 nameof(Route_Profile);
+        public const string Route_Test =                    nameof(Route_Test);
+        public const string Route_Bangumi_Create =          nameof(Route_Bangumi_Create);
+        public const string Route_Bangumi_Create_POST =     nameof(Route_Bangumi_Create_POST);
+        public const string Route_Bangumi_Index =           nameof(Route_Bangumi_Index);
         /// <summary>
         /// 查看一部详细的动画
         /// </summary>
-        public const string Route_Bangumi_Details = "Route_Bangumi_Details";
-        public const string Route_Bangumi_Edit = "Route_Bangumi_Edit";
-        public const string Route_Bangumi_Edit_POST = "Route_Bangumi_Edit_POST";
-        public const string Route_Bangumi_Delete = "Route_Bangumi_Delete";
-        public const string Route_Bangumi_Delete_POST = "Route_Bangumi_Delete_POST";
-        public const string Route_Video_Index = "Route_Video_Index";
-        public const string Route_Video_Details = "Route_Video_Details";
-        public const string Route_Video_Create = "Route_Video_Create";
-        public const string Route_Video_Create_POST = "Route_Video_Create_POST";
-        public const string Route_Video_Edit = "Route_Video_Edit";
-        public const string Route_Video_Edit_POST = "Route_Video_Edit_POST";
-        public const string Route_Video_Delete = "Route_Video_Delete";
-        public const string Route_Video_Delete_POST = "Route_Video_Delete_POST";
-        public const string Route_Files_Index = "Route_Files_Index";
-        public const string Route_Files_Details = "Route_Files_Details";
-        public const string Route_Files_Create_POST = "Route_Files_Create_POST";
-        public const string Route_PlaySouce_Details = "Route_PlaySouce_Details";
-        public const string Route_PlaySouce_Create_POST = "Route_PlaySouce_Create_POST";
-        public const string Route_PlaySouce_Create = "Route_PlaySouce_Create";
-        public const string Route_BangumiMemo_Create_POST = "Route_BangumiMemo_Create_POST";
-        public const string Route_BangumiMemo_Create = "Route_BangumiMemo_Create";
+        public const string Route_Bangumi_Details =         nameof(Route_Bangumi_Details);
+        public const string Route_Bangumi_Edit =            nameof(Route_Bangumi_Edit);
+        public const string Route_Bangumi_Edit_POST =       nameof(Route_Bangumi_Edit_POST);
+        public const string Route_Bangumi_Delete =          nameof(Route_Bangumi_Delete);
+        public const string Route_Bangumi_Delete_POST =     nameof(Route_Bangumi_Delete_POST);
+        public const string Route_Video_Index =             nameof(Route_Video_Index);
+        public const string Route_Video_Details =           nameof(Route_Video_Details);
+        public const string Route_Video_Create =            nameof(Route_Video_Create);
+        public const string Route_Video_Create_POST =       nameof(Route_Video_Create_POST);
+        public const string Route_Video_Edit =              nameof(Route_Video_Edit);
+        public const string Route_Video_Edit_POST =         nameof(Route_Video_Edit_POST);
+        public const string Route_Video_Delete =            nameof(Route_Video_Delete);
+        public const string Route_Video_Delete_POST =       nameof(Route_Video_Delete_POST);
+        public const string Route_Files_Index =             nameof(Route_Files_Index);
+        public const string Route_Files_Details =           nameof(Route_Files_Details);
+        public const string Route_Files_Create_POST =       nameof(Route_Files_Create_POST);
+        public const string Route_PlaySouce_Details =       nameof(Route_PlaySouce_Details);
+        public const string Route_PlaySouce_Create_POST =   nameof(Route_PlaySouce_Create_POST);
+        public const string Route_PlaySouce_Create =        nameof(Route_PlaySouce_Create);
+        public const string Route_BangumiMemo_Create_POST = nameof(Route_BangumiMemo_Create_POST);
+        public const string Route_BangumiMemo_Create =      nameof(Route_BangumiMemo_Create);
         /*
          * ====================================================
          * 以下是阿里云OSS的文件使用

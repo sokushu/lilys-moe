@@ -10,8 +10,4 @@
     <ProjectReference Include="..\System\MoeUtils.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ParamsModels\" />
-  </ItemGroup>
-
 </Project>

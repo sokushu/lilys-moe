@@ -15,6 +15,7 @@ using BangumiProjectDBServices.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using BangumiProjectDBServices.ParamsModels;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -194,113 +195,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 throw info;
             }
-
-
-            ////从数据库中读取数据
-            //if (!_Services.HasAnimeID(id))
-            //    return NotFound();
-            //var AnimeCacheKey = CacheKey.Anime_One(id);
-            //Anime Anime = _Services.Save_ToFirst<Anime>(AnimeCacheKey, db =>
-            //            db.Where(a => a.AnimeID == id)
-            //            .Include(a => a.Souce)
-            //            .Include(a => a.Tags)
-            //            .Include(a => a.AnimeComms));
-            //YURIModeCheck();
-            ///**
-            // * 这里是变化的数据
-            // * 未来可能会加入不同的页面展示模块
-            // * 想办法把这里拆分出来
-            // */
-            ////初始化数据
-            //var userAnimeNumber = 0;                                    //动画观看集数
-            //var IsSignIn = false;                                       //用户是否登录
-            //var IsSub = false;                                          //用户是否订阅某动画
-            //var IsShowEdit = false;                                     //用户是否可以编辑
-            //ICollection<AnimeMemo> memo = new List<AnimeMemo>();        //用户写下的MEMO
-            ////未登录也可以显示：
-            //ICollection<Blog> blog = blogs.GetListDate();               //用户对该动画的长评短评
-            //ICollection<AnimeTag> animeTags = new List<AnimeTag>();     //动画的标签
-            //ICollection<AnimeSouce> animeSouces = new List<AnimeSouce>();//动画的播放源
-            //ICollection<AnimeComm> animeComms = new List<AnimeComm>();  //动画的评论
-            ////var SubNum = 0;                                           //用户订阅量（暂时用不到呢）
-
-            //animeTags = Anime.Tags;
-            //animeSouces = Anime.Souce;
-            //animeComms = Anime.AnimeComms;
-            ////动画集数列表的相关计算
-            //AnimeNumberInfo animeNumberInfo = Anime.AnimeNumPage();
-
-            //AnimeProcess animeProcess = new AnimeProcess();
-
-            ////动画集数处理
-            //bool IsChange = new AnimeProcessByNumber(new List<AnimeNumInfo> { }, ref Anime).Process();
-            //if (IsChange)
-            //{
-            //    //需要更新动画信息
-            //    _Services.Save_Updata(AnimeCacheKey, Anime).Commit();
-            //}
-
-            //if (YuriMode)
-            //{
-            //    var YuriTag = animeTags.Where(tag => tag.TagName == YuriName).FirstOrDefault();
-            //    if (YuriTag == null)
-            //    {
-            //        //返回一个不是百合影视的警告
-            //        return View(
-            //            viewName: "NotYuriWarning",
-            //            model: animeProcess.BuildModel<Bangumi_OneAnime>(model => 
-            //            {
-            //                model.Anime = Anime;
-            //                model.IsSignIn = IsSignIn;
-            //            })
-            //            );
-            //    }
-            //}
-
-            //if (!(IsSignIn = _signInManager.IsSignedIn(HttpContext.User))) //如果没登陆，后面的就不需要处理了
-            //{
-            //    return View(
-            //        viewName: "Bangumi_OneAnime",
-            //        model: animeProcess.BuildModel<Bangumi_OneAnime>(model => 
-            //        {
-            //            model.Anime = Anime;
-            //            model.UserAnimeNumber = userAnimeNumber;
-            //            model.Memos = memo;
-            //            model.IsSub = IsSub;
-            //            model.IsSignIn = IsSignIn;
-            //            model.IsShowEdit = IsShowEdit;
-            //            model.Page = animeNumberInfo;
-            //        })
-            //        );
-            //}
-            ////如果没有登陆，返回Null
-            //var userID = _userManager.GetUserId(HttpContext.User);
-            ////尝试读取缓存
-            //AnimeUserInfo Infos = _Services.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(userID, id), db => db.Where(info => info.Users.Id == userID && info.SubAnime.AnimeID == id)
-            //                            .Include(info => info.Memos));
-            //if (Infos != null)//没有订阅
-            //{
-            //    IsSub = true;
-            //    memo = Infos.Memos;
-            //    userAnimeNumber = Infos.NowAnimeNum;
-            //}
-            ////检查权限
-            //var EditAnime = await _authorizationService.AuthorizeAsync(HttpContext.User, Final.Yuri_Yuri4);
-            //IsShowEdit = EditAnime.Succeeded;
-
-            //return View(
-            //    viewName: "Bangumi_OneAnime",
-            //    model:new Bangumi_OneAnime
-            //    {
-            //        Anime = Anime,
-            //        UserAnimeNumber = userAnimeNumber,
-            //        Memos = memo,
-            //        IsSub = IsSub,
-            //        IsSignIn = IsSignIn,
-            //        IsShowEdit = IsShowEdit,
-            //        Page = animeNumberInfo
-            //    }
-            //    );
         }
 
         // GET: Bangumi/Create
@@ -377,77 +271,70 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             }
         }
 
-        //// GET: Bangumi/Edit/5
-        //[HttpGet]
-        //[Authorize(Policy = Final.Yuri_Admin)]
-        //[Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit)]
-        //public ActionResult EditAsync(int id)
-        //{
-        //    if (_Services.HasAnimeID(id))
-        //    {
-        //        var key = new KEY { Key = CacheKey.Anime_One(id).ToCharArray() };
-        //        if (!_Services.TryGet(CacheKey.Anime_One(id), out Anime Anime))
-        //        {
-        //            //如果缓存中没有就临时读取一下，因为提交后会删除缓存，所以不保存了
-        //            Anime = _Services.ToFirst<Anime>(db =>
-        //                    db.Where(a => a.AnimeID == id)
-        //                    .Include(a => a.Tags));
-        //        }
+        // GET: Bangumi/Edit/5
+        [HttpGet]
+        [Authorize(Policy = Final.Yuri_Admin)]
+        [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit)]
+        public ActionResult EditAsync(int id)
+        {
+            if (_Services.HasAnimeID(id))
+            {
+                
 
-        //        return View(
-        //        viewName: "BangumiEdit",
-        //        model: new BangumiEdit
-        //        {
-        //            Anime = Anime
-        //        }
-        //        );
-        //    }
-        //    return NotFound();
-        //}
+                return View(
+                viewName: "BangumiEdit",
+                model: new AnimeEdit
+                {
+                    Anime = null
+                }
+                );
+            }
+            return NotFound();
+        }
 
-        //// POST: Bangumi/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Policy = Final.Yuri_Admin)]
-        //[Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit_POST)]
-        //public ActionResult EditAsync(int id, BangumiEdit bangumiEdit)
-        //{
-        //    try
-        //    {
-        //        if (_Services.HasAnimeID(id))
-        //        {
-        //            Anime Anime = bangumiEdit.Anime;
-        //            var NewTag = bangumiEdit.AddTag;
+        // POST: Bangumi/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = Final.Yuri_Admin)]
+        [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit_POST)]
+        public ActionResult EditAsync(int id, AnimeEdit bangumiEdit)
+        {
+            try
+            {
+                if (_Services.HasAnimeID(id))
+                {
+                    Anime Anime = bangumiEdit.Anime;
+                    var NewTag = bangumiEdit.AddTag;
 
-        //            Anime anime = _Services.ToFirst<Anime>(db => db.Where(a => a.AnimeID == id).Include(a => a.Tags));
+                    Anime anime = _Services.ToFirst<Anime>(db => db.Where(a => a.AnimeID == id).Include(a => a.Tags));
 
-        //            anime.AnimeInfo = Anime.AnimeInfo;
-        //            anime.AnimeName = Anime.AnimeName;
-        //            anime.AnimeNum = Anime.AnimeNum;
-        //            anime.AnimePic = Anime.AnimePic;
-        //            anime.AnimeType = Anime.AnimeType;
-        //            anime.IsEnd = Anime.IsEnd;
-        //            anime.AnimePlayTime = Anime.AnimePlayTime;
-        //            if (!string.IsNullOrEmpty(NewTag) && !string.IsNullOrWhiteSpace(NewTag))
-        //            {
-        //                anime.Tags.Add(new AnimeTag
-        //                {
-        //                    TagName = bangumiEdit.AddTag
-        //                });
-        //            }
-        //            UpDataNotEnd(anime);
-        //            //把缓存数据，数据库数据更新
-        //            _Services.Save_Updata(CacheKey.Anime_One(id), anime).Commit();
-        //            //回到动画详细页面
-        //            return RedirectToRoute(Final.Route_Bangumi_Details, id);
-        //        }
-        //        return NotFound();
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
+                    anime.AnimeInfo = Anime.AnimeInfo;
+                    anime.AnimeName = Anime.AnimeName;
+                    anime.AnimeNum = Anime.AnimeNum;
+                    anime.AnimePic = Anime.AnimePic;
+                    anime.AnimeType = Anime.AnimeType;
+                    anime.IsEnd = Anime.IsEnd;
+                    anime.AnimePlayTime = Anime.AnimePlayTime;
+                    if (!string.IsNullOrEmpty(NewTag) && !string.IsNullOrWhiteSpace(NewTag))
+                    {
+                        anime.Tags.Add(new AnimeTag
+                        {
+                            TagName = bangumiEdit.AddTag
+                        });
+                    }
+                    UpDataNotEnd(anime);
+                    //把缓存数据，数据库数据更新
+                    _Services.Save_Updata(CacheKey.Anime_One(id), anime).Commit();
+                    //回到动画详细页面
+                    return RedirectToRoute(Final.Route_Bangumi_Details, id);
+                }
+                return NotFound();
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         //// GET: Bangumi/Delete/5
         //[HttpGet]
@@ -522,6 +409,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             _Services.GetCacheEntry(CacheKey.Anime_NotEnd()).Value = List;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void YURIModeCheck()
         {
             //获取百合模式
