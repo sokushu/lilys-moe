@@ -17,5 +17,10 @@ namespace BaseProject.Core
         {
             this.Obj = obj;
         }
+
+        public void Send<T>(T obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

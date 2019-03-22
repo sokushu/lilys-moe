@@ -6,8 +6,6 @@ namespace BaseProject.Interfaces
 {
     public interface ISender
     {
-        void Send(object obj);
-
-        T GetInfo<T>();
+        void Send<T>(T obj);
     }
 }
