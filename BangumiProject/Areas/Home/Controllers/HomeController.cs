@@ -30,6 +30,11 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        private bool YuriMode { get; set; } = false;
+
+        /// <summary>
         /// 返回首页
         /// </summary>
         /// <returns></returns>
@@ -37,60 +42,71 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         [Route("/", Name = Final.Route_Index)]
         public async Task<IActionResult> GetIndex()
         {
-            //得到最新的4部动画
-            List<Anime> animes = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
-            //得到未完结的动画
-            List<Anime> SAnime = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_NotEnd(), db => db.Where(anime => anime.IsEnd == false));
-            //对未完结动画分成星期一，星期二的形式
-            WeekSwitch WeekSwitch = new WeekSwitch();
-            var weeks = WeekSwitch.SwitchAnime(SAnime, WeekSwitch.SwitchType.Week);
-            //读取博客
-            //读取新闻
-
-            //测试用功能
-            var AllUsers = await _DBCORE.UserManager.Users.ToListAsync();
-            var User = await _DBCORE.UserManager.GetUserAsync(HttpContext.User);
-            if (User != null)
+            //
+            YuriMode = HttpContext.YuriModeCheck();
+            UIMode iMode = UIMode.Normal_;
+            switch (iMode)
             {
-                var UserYuri = await _DBCORE.UserManager.GetRolesAsync(User);
-                var Role = UserYuri.FirstOrDefault();
-                switch (Role)
-                {
-                    case Final.Yuri_Admin:
-                    // 显示管理员的界面
-                    case Final.Yuri_Girl:
-                    case Final.Yuri_Yuri5:  // 较高的权限
-                        //显示添加动画的连接
-                        
-                        break;
-                    case Final.Yuri_Yuri4:
-                    case Final.Yuri_Yuri3:
-                    case Final.Yuri_Yuri2:
-                    case Final.Yuri_Yuri1:  // 普通的权限
+                case UIMode.YuriMode_:
+                    break;
+                case UIMode.YuriMode_Shojo:
+                    break;
+                case UIMode.YuriMode_G:
+                    break;
+                case UIMode.Normal_:
+                    //得到最新的4部动画
+                    List<Anime> animes = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
+                    //得到未完结的动画
+                    List<Anime> SAnime = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_NotEnd(), db => db.Where(anime => anime.IsEnd == false));
+                    //对未完结动画分成星期一，星期二的形式
+                    WeekSwitch WeekSwitch = new WeekSwitch();
+                    var weeks = WeekSwitch.SwitchAnime(SAnime, WeekSwitch.SwitchType.Week);
+                    //读取博客
+                    //读取新闻
 
-                        break;
-                    case Final.Yuri_Boy:    // 猪狗不如的权限
+                    //测试用功能
+                    var AllUsers = await _DBCORE.UserManager.Users.ToListAsync();
+                    var User = await _DBCORE.UserManager.GetUserAsync(HttpContext.User);
+                    if (User != null)
+                    {
+                        var UserYuri = await _DBCORE.UserManager.GetRolesAsync(User);
+                        var Role = UserYuri.FirstOrDefault();
+                        switch (Role)
+                        {
+                            case Final.Yuri_Admin:
+                            // 显示管理员的界面
+                            case Final.Yuri_Girl:
+                            case Final.Yuri_Yuri5:  // 较高的权限
+                                                    //显示添加动画的连接
 
-                        break;
-                    default:                // 用户没有权限？滚开！！拒绝访问！！！
-                        // 当然，正常情况是走不到这里的(*^_^*)
-                        return StatusCode(Final.StatusCode403);
-                }
+                                break;
+                            case Final.Yuri_Yuri4:
+                            case Final.Yuri_Yuri3:
+                            case Final.Yuri_Yuri2:
+                            case Final.Yuri_Yuri1:  // 普通的权限
+
+                                break;
+                            case Final.Yuri_Boy:    // 猪狗不如的权限
+
+                                break;
+                            default:                // 用户没有权限？滚开！！拒绝访问！！！
+                                                    // 当然，正常情况是走不到这里的(*^_^*)
+                                return StatusCode(Final.StatusCode403);
+                        }
+                    }
+                    //进行渲染
+                    return PartialView("Index", new Index
+                    {
+                        Animes = animes,
+                        WeekAnimes = weeks,
+                        AllUsers = AllUsers
+                    });
+                case UIMode.Normal_G:
+                    break;
+                default:
+                    break;
             }
-            //进行渲染
-            return PartialView("Index", new Index
-            {
-                Animes = animes,
-                WeekAnimes = weeks,
-                AllUsers = AllUsers
-            });
-            //return View("Index", new Index
-            //{
-            //    Animes = animes,
-            //    WeekAnimes = weeks,
-            //    AllUsers = AllUsers,
-            //    Log = log
-            //});
+            return View();
         }
 
         /// <summary>
