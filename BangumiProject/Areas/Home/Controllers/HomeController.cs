@@ -30,7 +30,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 百合模式
         /// </summary>
         private bool YuriMode { get; set; } = false;
 
@@ -42,9 +42,10 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         [Route("/", Name = Final.Route_Index)]
         public async Task<IActionResult> GetIndex()
         {
-            //
+            //加载百合模式
             YuriMode = HttpContext.YuriModeCheck();
-            UIMode iMode = UIMode.Normal_;
+            //加载UI模式
+            UIMode iMode = HttpContext.UIModeCheck();
             switch (iMode)
             {
                 case UIMode.YuriMode_:
@@ -106,6 +107,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                 default:
                     break;
             }
+            Tuple.Create(new Common());
             return View();
         }
 
@@ -127,18 +129,14 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         [Route("/About.jsp", Name = "About")]
         public IActionResult GetAbout()
         {
-            //ReadConfig readConfig = new ReadConfig();
-            //ViewData["About"] = readConfig;
             return View("About");
         }
 
-        //[HttpPost]
-        //[Route("/About.jsp")]
-        //public IActionResult PostAbout(string wenti)
-        //{
-        //    ReadConfig readConfig = new ReadConfig();
-        //    readConfig.Add($"问题：{readConfig.Count}号", $"{wenti} || Time:{DateTime.Now}");
-        //    return Json("谢谢你的问题，我已经记下了，现在你可以关闭页面了");
-        //}
+        [HttpPost]
+        [Route("/About.jsp")]
+        public IActionResult PostAbout(string wenti)
+        {
+            return Json("谢谢你的问题，我已经记下了，现在你可以关闭页面了");
+        }
     }
 }

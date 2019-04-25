@@ -42,6 +42,22 @@ namespace System
         /// <returns></returns>
         public static UIMode UIModeCheck(this HttpContext httpContext)
         {
+            int? iMode = httpContext.Session.GetInt32(nameof(UIMode));
+            if (iMode != null)
+            {
+                UIMode ReturnMode = (UIMode)iMode;
+                switch (ReturnMode)
+                {
+                    case UIMode.Normal_:
+                    case UIMode.Normal_G:
+                    case UIMode.YuriMode_:
+                    case UIMode.YuriMode_Shojo:
+                    case UIMode.YuriMode_G:
+                        return ReturnMode;
+                    default:
+                        return UIMode.Normal_;
+                }
+            }
             return UIMode.Normal_;
         }
 
@@ -53,7 +69,7 @@ namespace System
         public static void SetUIMode(this HttpContext httpContext, UIMode iMode)
         {
             int UIMode_Int = (int)iMode;
-            httpContext.Session.SetInt32("", UIMode_Int);
+            httpContext.Session.SetInt32(nameof(UIMode), UIMode_Int);
         }
     }
 }
