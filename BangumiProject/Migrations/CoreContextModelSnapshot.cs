@@ -14,7 +14,7 @@ namespace BangumiProject.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("BangumiProjectDBServices.Models.Anime", b =>
                 {
@@ -362,6 +362,8 @@ namespace BangumiProject.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<int?>("Common_UIEnableID");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -407,6 +409,8 @@ namespace BangumiProject.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Common_UIEnableID");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -434,6 +438,28 @@ namespace BangumiProject.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
+            modelBuilder.Entity("BangumiProjectDBServices.PageModels.Common_UIEnable", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("BackPic");
+
+                    b.Property<bool>("NewBangumiTime");
+
+                    b.Property<bool>("New_4Anime");
+
+                    b.Property<bool>("YuriGoods");
+
+                    b.Property<bool>("YuriInfo");
+
+                    b.Property<bool>("YuriNews");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Common_UIEnables");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -459,57 +485,57 @@ namespace BangumiProject.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "89daa059-0441-4b26-8f3a-fa29eebce314",
-                            ConcurrencyStamp = "3deafab4-97ef-4e98-b7a8-e1723632ed4a",
+                            Id = "2383a0ce-c303-4bf7-8a5c-115437548948",
+                            ConcurrencyStamp = "50a4a478-d40b-49c1-8186-351806b52c0c",
                             Name = "Admin,",
                             NormalizedName = "ADMIN,"
                         },
                         new
                         {
-                            Id = "d8af03b9-e890-4127-a1ae-c3dfdd5bf69c",
-                            ConcurrencyStamp = "5c7e4b81-cde8-4397-99fe-3648b7cf47df",
+                            Id = "9e5a379a-33b7-40d8-8e7e-fef1c3234ae7",
+                            ConcurrencyStamp = "229b27d2-5c2e-4892-b5cc-d69bd62ce5b1",
                             Name = "Girl,",
                             NormalizedName = "GIRL,"
                         },
                         new
                         {
-                            Id = "1c43abde-2550-4382-9c7f-1e1f8b2b9ebc",
-                            ConcurrencyStamp = "8279fd21-35de-43ae-b72f-23535c181bfe",
+                            Id = "0fa87c95-2ca0-4303-8d31-ca1534c330c3",
+                            ConcurrencyStamp = "cf9bde39-1503-4903-b207-1784747777f6",
                             Name = "Yuri5,",
                             NormalizedName = "YURI5,"
                         },
                         new
                         {
-                            Id = "c67c6408-07b1-4669-8e7c-4157f43d530f",
-                            ConcurrencyStamp = "bad1a415-14b1-460c-a53d-b2eeddb89d33",
+                            Id = "8814d305-fa0f-4bff-8006-cf8ded8e5a9d",
+                            ConcurrencyStamp = "afdea45a-2f5a-455e-9926-9a6ad9b8738f",
                             Name = "Yuri4,",
                             NormalizedName = "YURI4,"
                         },
                         new
                         {
-                            Id = "cc12be5d-a53a-4fa6-953e-6fe4abbc61a1",
-                            ConcurrencyStamp = "dca38b85-fe7b-4f18-9725-7b1397c2b139",
+                            Id = "969ef72b-0137-4377-b234-3b13d2954b85",
+                            ConcurrencyStamp = "34054b25-96dc-4fa9-878b-af500ee4657b",
                             Name = "Yuri3,",
                             NormalizedName = "YURI3,"
                         },
                         new
                         {
-                            Id = "9046b131-4eec-4cab-afbf-f316a7d045e3",
-                            ConcurrencyStamp = "5bf69c7c-1afc-48c5-9db2-3032a44efdb7",
+                            Id = "e84c1db4-1feb-4d1a-bed5-c30a5eb88f58",
+                            ConcurrencyStamp = "a87e8e67-e0ac-41dc-8bbf-37a57cb5ffa5",
                             Name = "Yuri2,",
                             NormalizedName = "YURI2,"
                         },
                         new
                         {
-                            Id = "3080887f-75f1-477b-a480-7350fe1dc10c",
-                            ConcurrencyStamp = "a6ba8bd9-28be-4622-bc52-b4e6f53d98f1",
+                            Id = "27d96732-43e6-4b39-9c3e-8ac7a57c707d",
+                            ConcurrencyStamp = "5cbfbced-cdac-4213-aea0-24fbc10cc406",
                             Name = "Yuri1,",
                             NormalizedName = "YURI1,"
                         },
                         new
                         {
-                            Id = "1224f41b-b2c9-479a-b8ae-469e816edeb8",
-                            ConcurrencyStamp = "6a0feaff-3f3c-4c6d-a826-d13b6b74987c",
+                            Id = "e4ce4088-10f5-44f9-b45f-1ba2de0db653",
+                            ConcurrencyStamp = "da6ac72e-57e3-4f07-b323-0a8fde241ca1",
                             Name = "Boy,",
                             NormalizedName = "BOY,"
                         });
@@ -690,6 +716,13 @@ namespace BangumiProject.Migrations
                     b.HasOne("BangumiProjectDBServices.Models.AnimeMoreInfo")
                         .WithMany("MusicAlbums")
                         .HasForeignKey("AnimeMoreInfoINFOID");
+                });
+
+            modelBuilder.Entity("BangumiProjectDBServices.Models.User", b =>
+                {
+                    b.HasOne("BangumiProjectDBServices.PageModels.Common_UIEnable", "Common_UIEnable")
+                        .WithMany()
+                        .HasForeignKey("Common_UIEnableID");
                 });
 
             modelBuilder.Entity("BangumiProjectDBServices.Models.UserRole", b =>

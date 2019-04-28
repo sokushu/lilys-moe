@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BangumiProjectDBServices.PageModels;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -46,5 +47,7 @@ namespace BangumiProjectDBServices.Models
         public ICollection<AnimeUserInfo> UserAnimeInfos { get; set; }
         public ICollection<AnimeSouceComm> AnimeSouceComms { get; set; }
         public ICollection<AnimeComm> AnimeComms { get; set; }
+
+        public Common_UIEnable Common_UIEnable { get; set; }
     }
 }

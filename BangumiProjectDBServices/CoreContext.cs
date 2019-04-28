@@ -1,4 +1,5 @@
 ﻿using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace BangumiProjectDBServices
         public DbSet<AnimeNumInfo> AnimeNums { get; set; }
         public DbSet<Music> Musics { get; set; }
         public DbSet<AnimeMoreInfo> AnimeMoreInfos { get; set; }
+        public DbSet<Common_UIEnable> Common_UIEnables { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -87,7 +89,7 @@ namespace BangumiProjectDBServices
             builder.Entity<AnimeSouceComm>().HasOne(aniSoComm => aniSoComm.Users).WithMany(user => user.AnimeSouceComms).HasConstraintName("AnimeSouceComm_User_PK");
             builder.Entity<AnimeComm>().HasOne(anicomm => anicomm.Users).WithMany(user => user.AnimeComms).HasConstraintName("AnimeComm_User_PK");
             builder.Entity<AnimeComm>().HasOne(aniComm => aniComm.Anime).WithMany(anime => anime.AnimeComms).HasConstraintName("AnimeComm_Anime_PK");
-
+            
             //默认值
             builder.Entity<User>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");
             builder.Entity<AnimeUserInfo>().Property(v => v.Time).HasDefaultValueSql("datetime('now')");

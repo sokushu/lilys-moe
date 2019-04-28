@@ -37,8 +37,8 @@ namespace BangumiProject
     /// 
     /// 以上就是多行的时候进行的操作
     /// 
-    /// dotnet ef migrations add --context BangumiProjectContext "Init"
-    /// dotnet ef database update --context BangumiProjectContext "Init"
+    /// dotnet ef migrations add --context CoreContext "Init00"
+    /// dotnet ef database update --context CoreContext "Init00"
     /// 
     /// ef migrations remove
     /// 

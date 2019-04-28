@@ -16,9 +16,23 @@ namespace System
         {
             return $"Anime{ID}";
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="AnimeID"></param>
+        /// <returns></returns>
         public static string Blog_One_ByAnimeID(int AnimeID)
         {
             return $"BlogsByAnimeID{AnimeID}";
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UID"></param>
+        /// <returns></returns>
+        public static string Common_UI(string UID)
+        {
+            return $"Common_UI{UID}";
         }
         /// <summary>
         /// 所有的动画

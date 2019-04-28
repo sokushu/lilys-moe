@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BangumiProjectDBServices.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace BangumiProjectDBServices.PageModels
@@ -12,35 +14,38 @@ namespace BangumiProjectDBServices.PageModels
         //==========================================================
         //Index
         //==========================================================
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool New_4Anime { get; set; } = false;
+        [Key]
+        public int ID { get; set; }
 
         /// <summary>
-        /// 
+        /// 最近更新
         /// </summary>
-        public bool YuriNews { get; set; } = false;
+        public bool New_4Anime { get; set; }
 
         /// <summary>
-        /// 
+        /// 百合新闻
         /// </summary>
-        public bool YuriInfo { get; set; } = false;
+        public bool YuriNews { get; set; }
 
         /// <summary>
-        /// 
+        /// 百合新情报
         /// </summary>
-        public bool YuriGoods { get; set; } = false;
+        public bool YuriInfo { get; set; }
 
         /// <summary>
-        /// 
+        /// 百合商品新信息
         /// </summary>
-        public bool NewBangumiTime { get; set; } = false;
+        public bool YuriGoods { get; set; }
 
         /// <summary>
-        /// 
+        /// 新番时间表
         /// </summary>
-        public bool BackPic { get; set; } = false;
+        public bool NewBangumiTime { get; set; }
+
+        /// <summary>
+        /// 背景图片
+        /// </summary>
+        public bool BackPic { get; set; }
         //==========================================================
         //Index
         //==========================================================
@@ -51,7 +56,7 @@ namespace BangumiProjectDBServices.PageModels
         /// <param name="iMode"></param>
         /// <param name="common_UIs"></param>
         /// <returns></returns>
-        public static Common_UIEnable CreateUI(bool YuriMode, UIMode iMode, Common_UIEnable common_UIs = null)
+        public static Common_UIEnable CreateUI(bool YuriMode, UIMode iMode)
         {
             Common_UIEnable common_UI = new Common_UIEnable();
             switch (iMode)
@@ -84,10 +89,7 @@ namespace BangumiProjectDBServices.PageModels
                     break;
                 case UIMode.YuriMode_G:
                 case UIMode.Normal_G:
-                    if (common_UIs != null)
-                    {
-                        common_UI = common_UIs;
-                    }
+                    //需要从数据库中读取自定义配置
                     break;
                 default:
                     throw new Exception();

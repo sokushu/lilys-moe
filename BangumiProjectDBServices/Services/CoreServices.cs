@@ -15,11 +15,6 @@ namespace BangumiProjectDBServices.Services
         private static HashSet<string> Keys = new HashSet<string>();
         private static HashSet<int> AnimeIDs = new HashSet<int>();
         private static bool AddED = false;
-        public UserManager<User> UserManager { get; }
-
-        public SignInManager<User> SignInManager { get; }
-
-        public IAuthorizationService AuthorizationService { get; }
 
         public IMemoryCache MemoryCache { get; }
 
@@ -31,16 +26,10 @@ namespace BangumiProjectDBServices.Services
         /// <param name="MemoryCache"></param>
         /// <param name="DB"></param>
         public CoreServices(
-            UserManager<User> UserManager,
-            SignInManager<User> SignInManager,
-            IAuthorizationService AuthorizationService,
             IMemoryCache MemoryCache,
             CoreContext DB
             )
         {
-            this.UserManager = UserManager;
-            this.SignInManager = SignInManager;
-            this.AuthorizationService = AuthorizationService;
             this.MemoryCache = MemoryCache;
             this.DB = DB;
             if (AddED == false)

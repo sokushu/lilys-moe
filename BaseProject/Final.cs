@@ -232,7 +232,7 @@ namespace System
     /// <summary>
     /// 这个是判断是否已经有了管理员，第一个创建的用户即为管理员
     /// </summary>
-    public class Common
+    public class CommonHasAdmin
     {
         public static bool HasAdmin { get; set; }
     }

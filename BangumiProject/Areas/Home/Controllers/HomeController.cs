@@ -12,136 +12,105 @@ using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.Services;
 using BangumiProjectProcess.Common;
 using BangumiProjectDBServices.PageModels;
+using Microsoft.AspNetCore.Authorization;
+using BangumiProject.Controllers;
 
 namespace BangumiProject.Areas.HomeBar.Controllers
 {
     [Area("Home")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         /// <summary>
-        /// 用户数据库，以及工具的初始化
-        /// </summary>
-        private readonly IServices _DBCORE;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        /// <summary>
-        /// 
+        /// 初始化
         /// </summary>
         /// <param name="_DBCORE"></param>
         /// <param name="_roleManager"></param>
         public HomeController(
             IServices _DBCORE, 
-            RoleManager<IdentityRole> _roleManager)
-        {
-            this._roleManager = _roleManager;
-            this._DBCORE = _DBCORE;
-
-            YuriName = YuriMode_Process.GetYuriName(this._DBCORE);
-        }
-
-        /// <summary>
-        /// 百合模式
-        /// </summary>
-        private bool YuriMode { get; set; } = false;
+            RoleManager<IdentityRole> _roleManager,
+            UserManager<User> _UserManager
+            )
+            :base(
+                 DBServices: _DBCORE, 
+                 RoleManager: _roleManager, 
+                 UserManager: _UserManager
+                 ) {}
 
         /// <summary>
-        /// 
-        /// </summary>
-        private string[] YuriName { get; set; }
-
-        /// <summary>
-        /// 返回首页
+        /// 显示首页
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("/", Name = Final.Route_Index)]
         public async Task<IActionResult> GetIndex()
         {
-            //加载百合模式
-            YuriMode = HttpContext.YuriModeCheck();
-            //加载UI模式
-            UIMode iMode = HttpContext.UIModeCheck(YuriMode);
-            bool IsSignIn = _DBCORE.SignInManager.IsSignedIn(HttpContext.User);
-            if (IsSignIn)
-            {
-                //从数据库中读取Common_UIEnable
-            }
-            Common_UIEnable common_UI = Common_UIEnable.CreateUI(YuriMode, iMode);
-            switch (iMode)
+            // 模式初始化
+            Init(LoadMode.YuriMode, LoadMode.UIMode, LoadMode.SignIn);
+            switch (IMode)
             {
                 case UIMode.YuriMode_:
                 case UIMode.YuriMode_Shojo:
-                case UIMode.YuriMode_G:
+                 case UIMode.YuriMode_G:
                     //得到最新的4部动画
+                    //得到含有百合标签的最新4部动画
                     HashSet<string> YuriTags = YuriName.ToHashSet();
-                    List<Anime> YuriAnime = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_New4_Yuri(), 
+                    List<Anime> YuriAnime = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4_Yuri(), 
                         db => db.Include(anime => anime.Tags).Where(anime => anime.Tags.FirstOrDefault(tag => YuriTags.Contains(tag.TagName)) != null));
-
-                    switch (iMode)
+                    //因为动画在完结之前我们不会知道这到底是不是百合动画，所以暂时没有未完结动画的数据
+                    switch (IMode)
                     {
                         case UIMode.YuriMode_:
                             break;
                         case UIMode.YuriMode_Shojo:
                             break;
                         case UIMode.YuriMode_G:
+                            // 加载所有模块的数据（或者根据画面显示元素加载）
                             break;
                         default:
 #if DEBUG
-                            Console.WriteLine(iMode);
+                            Console.WriteLine($"居然会出错？？是谁改了值？？？IMode ：{IMode}");
                             break;
 #else
                             throw new Exception($"Error : {iMode}");
 #endif
                     }
-                    return View("Index");
+                    return View("Index", Tuple.Create(Common_UI, Common));
                 case UIMode.Normal_:
                     //得到最新的4部动画
-                    List<Anime> animes = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
+                    List<Anime> animes = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
                     //得到未完结的动画
-                    List<Anime> SAnime = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_NotEnd(), db => db.Where(anime => anime.IsEnd == false));
+                    List<Anime> SAnime = DBServices.Save_ToList<Anime>(CacheKey.Anime_NotEnd(), db => db.Where(anime => anime.IsEnd == false));
                     //对未完结动画分成星期一，星期二的形式
                     WeekSwitch WeekSwitch = new WeekSwitch();
                     var weeks = WeekSwitch.SwitchAnime(SAnime, WeekSwitch.SwitchType.Week);
-                    //读取博客
-                    //读取新闻
 
                     //测试用功能
-                    var AllUsers = await _DBCORE.UserManager.Users.ToListAsync();
-                    var User = await _DBCORE.UserManager.GetUserAsync(HttpContext.User);
+                    var AllUsers = await UserManager.Users.ToListAsync();
+                    var User = await UserManager.GetUserAsync(HttpContext.User);
                     if (User != null)
                     {
-                        var UserYuri = await _DBCORE.UserManager.GetRolesAsync(User);
+                        var UserYuri = await UserManager.GetRolesAsync(User);
                         var Role = UserYuri.FirstOrDefault();
                         switch (Role)
                         {
-                            case Final.Yuri_Admin:
-                            // 显示管理员的界面
-                            case Final.Yuri_Girl:
-                            case Final.Yuri_Yuri5:  // 较高的权限
-                                                    //显示添加动画的连接
-
-                                break;
-                            case Final.Yuri_Yuri4:
-                            case Final.Yuri_Yuri3:
-                            case Final.Yuri_Yuri2:
-                            case Final.Yuri_Yuri1:  // 普通的权限
-
-                                break;
-                            case Final.Yuri_Boy:    // 猪狗不如的权限
+                            case Final.Yuri_Boy:    // 猪狗不如的权限，封禁禁言等
 
                                 break;
                             default:                // 用户没有权限？滚开！！拒绝访问！！！
-                                                    // 当然，正常情况是走不到这里的(*^_^*)
+                                                    // 当然，正常情况是走不到这里的(*^_^*),能走到的都是不正常用户
                                 return StatusCode(Final.StatusCode403);
                         }
                     }
-                    //进行渲染
-                    return PartialView("Index", new Index
+                    Index index = new Index
                     {
                         Animes = animes,
                         WeekAnimes = weeks,
                         AllUsers = AllUsers
-                    });
+                    };
+
+                    var Model = Tuple.Create(index, Common_UI, Common);
+                    //进行渲染
+                    return View("Index", Model);
                 case UIMode.Normal_G:
                     break;
                 default:
@@ -171,6 +140,11 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             return View("About");
         }
 
+        /// <summary>
+        /// 提交问题的方法
+        /// </summary>
+        /// <param name="wenti"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("/About.jsp")]
         public IActionResult PostAbout(string wenti)

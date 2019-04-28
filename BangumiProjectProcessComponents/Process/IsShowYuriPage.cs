@@ -9,10 +9,10 @@ namespace BangumiProjectProcessComponents.Process
 {
     public class IsShowYuriPage : IProcess<bool, Anime>
     {
-        private string YuriName { get; set; }
-        public IsShowYuriPage(string YuriName)
+        private HashSet<string> YuriName { get; set; }
+        public IsShowYuriPage(string[] YuriName)
         {
-            this.YuriName = YuriName;
+            this.YuriName = YuriName.ToHashSet();
         }
         public bool Process(Anime input)
         {
@@ -23,7 +23,7 @@ namespace BangumiProjectProcessComponents.Process
             }
             else
             {
-                var YuriTag = animeTags.FirstOrDefault(tag => tag.TagName == YuriName);
+                var YuriTag = animeTags.FirstOrDefault(tag => YuriName.Contains(tag.TagName));
                 if (YuriTag != null)
                 {
                     return NotShow();

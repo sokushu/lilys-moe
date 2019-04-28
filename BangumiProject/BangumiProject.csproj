@@ -50,8 +50,6 @@
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\Lilys\Views\Lilys\Model\" />
     <Folder Include="Areas\Search\Views\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Views\Menu\Index\" />
   </ItemGroup>
 
   <ItemGroup>

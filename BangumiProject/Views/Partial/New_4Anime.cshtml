@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@* 
+    最新更新的4部动画    
+*@
+@model Index
+<div class="mdui-row mdui-grid-list">
+    <h3 class="header">最近更新</h3>
+    @foreach (var item in Model.Animes)
+    {
+        <div class="mdui-col-md-3 mdui-col-sm-6 mdui-col-xs-12 ">
+            <div class="mdui-card mdui-hoverable">
+                <div class="mdui-card-media">
+                    <img class="mdui-img-fluid" src="@Model.AnimePic(item)" />
+                    <div class="mdui-card-media-covered" style="background:rgba(0, 0, 0, 0.57);">
+                        <div class="mdui-card-primary">
+                            <div class="mdui-card-primary-title">@item.AnimeName</div>
+                            <div class="mdui-card-primary-subtitle">@Model.AnimeInfo(item)</div>
+                        </div>
+                        <div class="mdui-card-actions">
+                            <a class="mdui-btn mdui-ripple mdui-ripple-white" asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">
+                                @item.AnimeName
+                            </a>
+                            <a class="mdui-btn mdui-ripple mdui-ripple-white" asp-route="@Final.Route_Bangumi_Details" asp-route-id="@item.AnimeID">
+                                @item.AnimeName
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

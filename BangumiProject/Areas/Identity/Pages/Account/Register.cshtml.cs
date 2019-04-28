@@ -75,10 +75,10 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     // 检查是否有管理员用户，如果没有，第一个注册的就是管理员用户
-                    if (Common.HasAdmin == false)
+                    if (CommonHasAdmin.HasAdmin == false)
                     {
                         await _userManager.AddToRoleAsync(user, Final.Yuri_Admin);
-                        Common.HasAdmin = true;
+                        CommonHasAdmin.HasAdmin = true;
                     }
                     else
                     {
@@ -121,11 +121,11 @@ namespace BangumiProject.Areas.Identity.Pages.Account
             var user = userManager.GetUsersInRoleAsync(Final.Yuri_Admin).Result;
             if (user.Count > 0)
             {
-                Common.HasAdmin = true;
+                CommonHasAdmin.HasAdmin = true;
             }
             else
             {
-                Common.HasAdmin = false;
+                CommonHasAdmin.HasAdmin = false;
             }
         }
     }

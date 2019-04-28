@@ -10,12 +10,19 @@ using System.Text;
 
 namespace BangumiProjectDBServices.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IServices
     {
-        UserManager<User> UserManager { get; }
-        SignInManager<User> SignInManager { get; }
-        IAuthorizationService AuthorizationService { get; }
+        /// <summary>
+        /// 缓存
+        /// </summary>
         IMemoryCache MemoryCache { get; }
+
+        /// <summary>
+        /// 数据库
+        /// </summary>
         CoreContext DB { get; }
 
         /// <summary>
