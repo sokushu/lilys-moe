@@ -28,12 +28,14 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         public HomeController(
             IServices _DBCORE, 
             RoleManager<IdentityRole> _roleManager,
-            UserManager<User> _UserManager
+            UserManager<User> _UserManager,
+            SignInManager<User> _SignInManager
             )
             :base(
                  DBServices: _DBCORE, 
                  RoleManager: _roleManager, 
-                 UserManager: _UserManager
+                 UserManager: _UserManager,
+                 SignInManager: _SignInManager
                  ) {}
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             {
                 case UIMode.YuriMode_:
                 case UIMode.YuriMode_Shojo:
-                 case UIMode.YuriMode_G:
+                case UIMode.YuriMode_G:
                     //得到最新的4部动画
                     //得到含有百合标签的最新4部动画
                     HashSet<string> YuriTags = YuriName.ToHashSet();

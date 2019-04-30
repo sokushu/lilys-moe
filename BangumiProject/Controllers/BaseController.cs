@@ -74,17 +74,17 @@ namespace BangumiProject.Controllers
         protected RoleManager<IdentityRole> RoleManager { get; }
 
         /// <summary>
-        /// 
+        /// 用户数据表
         /// </summary>
         protected UserManager<User> UserManager { get; }
 
         /// <summary>
-        /// 
+        /// 用户登录相关
         /// </summary>
         protected SignInManager<User> SignInManager { get; }
 
         /// <summary>
-        /// 
+        /// 用户权限服务
         /// </summary>
         protected IAuthorizationService AuthorizationService { get; }
 
