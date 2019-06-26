@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BangumiProject.Utils;
+﻿using BangumiProject.Utils;
 using BangumiProjectDBServices.PageModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BangumiProject.Areas.Admin.Controllers
 {
@@ -45,8 +42,8 @@ namespace BangumiProject.Areas.Admin.Controllers
         {
             AdminSetting setting = AdminSettingWriteAndRead.Read();
             return View(
-                viewName:"Setting",
-                model:setting
+                viewName: "Setting",
+                model: setting
                 );
         }
     }
