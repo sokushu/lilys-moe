@@ -48,6 +48,10 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         {
             // 模式初始化
             Init(LoadMode.YuriMode, LoadMode.UIMode, LoadMode.SignIn);
+
+            Index index = new Index();
+            Tuple<Index, Common_UIEnable, Common> Model = null;
+
             switch (IMode)
             {
                 case UIMode.YuriMode_:
@@ -76,7 +80,8 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                             throw new Exception($"Error : {iMode}");
 #endif
                     }
-                    return View("Index", Tuple.Create(Common_UI, Common));
+                    Model = Tuple.Create(index, Common_UI, Common);
+                    break;
                 case UIMode.Normal_:
                     //得到最新的4部动画
                     List<Anime> animes = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
@@ -96,29 +101,23 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                         switch (Role)
                         {
                             case Final.Yuri_Boy:    // 猪狗不如的权限，封禁禁言等
-
-                                break;
-                            default:                // 用户没有权限？滚开！！拒绝访问！！！
-                                                    // 当然，正常情况是走不到这里的(*^_^*),能走到的都是不正常用户
                                 return StatusCode(Final.StatusCode403);
+                            default:
+                                break;
                         }
                     }
-                    Index index = new Index
-                    {
-                        Animes = animes,
-                        WeekAnimes = weeks,
-                        AllUsers = AllUsers
-                    };
-
-                    var Model = Tuple.Create(index, Common_UI, Common);
-                    //进行渲染
-                    return View("Index", Model);
+                    index.AllUsers = AllUsers;
+                    index.Animes = animes;
+                    index.WeekAnimes = weeks;
+                    Model = Tuple.Create(index, Common_UI, Common);
+                    break;
                 case UIMode.Normal_G:
                     break;
                 default:
                     break;
             }
-            return View();
+            // 最后返回页面
+            return View("Index", Model);
         }
 
         /// <summary>

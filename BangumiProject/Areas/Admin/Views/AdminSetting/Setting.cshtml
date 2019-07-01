@@ -9,18 +9,22 @@
 <h1>Setting</h1>
 
 <form method="post">
+    @* 网站是否开启 *@
     <div class="mdui-textfield mdui-textfield-floating-label">
         <label asp-for="IsWebSiteOpen"></label>
         <input asp-for="IsWebSiteOpen" />
     </div>
+    @* 网站是否开启注册 *@
     <div class="mdui-textfield mdui-textfield-floating-label">
         <label asp-for="IsOpenSignUp"></label>
         <input asp-for="IsOpenSignUp" />
     </div>
+    @* 是否显示头图 *@
     <div class="mdui-textfield mdui-textfield-floating-label">
         <label asp-for="IsShowTopPic"></label>
         <input asp-for="IsShowTopPic" />
     </div>
+    @* 头图的显示路径 *@
     <div class="mdui-textfield mdui-textfield-floating-label">
         <label asp-for="PicPath"></label>
         <input asp-for="PicPath" />

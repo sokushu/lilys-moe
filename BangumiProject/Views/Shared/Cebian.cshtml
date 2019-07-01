@@ -1,0 +1,59 @@
+﻿@model Tuple<bool, int>
+@*  bool ： 用户是否登录  *@
+@*  int  ： 用户登陆的等级 *@
+
+
+<fieldset>
+    <legend>搜索</legend>
+    <div>
+        <p style="font-size:14px;">搜索你想要的数据</p>
+        <form method="get">
+            <input type="text" name="keyword" style="width:130px;" />
+            <input type="submit" value="搜索" />
+        </form>
+    </div>
+</fieldset>
+<br />
+
+@if (Model.Item1)
+{
+    <fieldset>
+        <legend>用户操作</legend>
+        <div>
+            <p>用户信息/资料</p>
+            <ul>
+                <li>消息<br /><span style="color:red;">(12条新消息)</span></li>
+                <li>公共留言板<br /><span style="color:red;">(有新留言)</span></li>
+                <li>个人资料页面</li>
+                <li>个人信息</li>
+                <li><a href="#">普通模式</a>/<a href="#">百合模式</a><br /><span style="color:red;">（当前：百合模式)</span></li>
+                <li>上传文件</li>
+                <li>文件列表</li>
+                <li><a asp-area="Identity" asp-page="/Account/Logout">退出登录</a></li>
+                <li>帮助？</li>
+            </ul>
+            <p>网站数据管理</p>
+            <ul>
+                <li><a asp-route="@Final.Route_Bangumi_Create_POST">添加动画数据</a></li>
+                <li>编辑动画数据</li>
+            </ul>
+            <p>追番管理</p>
+            <ul>
+                <li>正在看的<span>(19)</span></li>
+                <li>看完的<span>(30)</span></li>
+                <li>完整列表<span>(49)</span></li>
+            </ul>
+            <p>管理员</p>
+            <ul>
+                <li>网站开启<span style="color:red;">(开)</span></li>
+                <li>注册用户管理<span style="color:red;">(208人)</span></li>
+                <li>爬虫管理<span style="color:red;">(开|2344个页面|30分钟)</span></li>
+            </ul>
+        </div>
+    </fieldset>
+    <br />
+}
+
+    <img src="~/Image/banner.gif" />
+
+

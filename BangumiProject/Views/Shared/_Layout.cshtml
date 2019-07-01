@@ -6,6 +6,7 @@
     bool IsSignED = SignInManager.IsSignedIn(User);
     string UserName = UserManager.GetUserName(User);
     var Model = new Tuple<bool, string>(IsSignED, UserName);
+    var a = new Tuple<bool, int>(true, 2);
 }
 <!DOCTYPE html>
 <html>
@@ -13,20 +14,58 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Lilys.moe</title>
-    <link rel="stylesheet" href="@Final.StaticFiles_css" />
-    <script src="@Final.StaticFiles_JS"></script>
 </head>
-<body class="padding-top mdui-theme-primary-orange">
-    @* 顶部菜单栏 *@
-    <partial name="MenuBar" model="Model" />
-    @* 右下角的那个工具按钮 *@
-    <partial name="ToolBar" model="Model" />
-    @* 这里显示的就是内容了 *@
-    <div class="mdui-container">
-        @RenderBody()
-    </div>
-    @* 这里显示的就是页面下部了 *@
-    <partial name="Footer" />
+<body style="background-image:url(/Image/8754391_p0.jpg);font-size:14px;">
+    <style>
+        a:link {
+            color: blue;
+            font-weight:900;
+            text-decoration: none;
+        }
+        a:hover{color:deeppink}
+    </style>
+    <center>
+        <table style="width:1024px;">
+            @* Logo *@
+            <tr>
+                <td colspan="2">
+                    <img src="~/Image/dlbn4a_pro.gif" />
+                    <img src="~/Image/banner.gif" />
+                </td>
+            </tr>
+            @* 顶部菜单栏 *@
+            <tr>
+                <td style="background-color:cyan;" colspan="2">
+                    <partial name="MenuBar" model="Model" />
+                </td>
+            </tr>
+            @* 这里显示的就是内容了 *@
+            <tr>
+                <td colspan="2"><hr /><hr /></td>
+            </tr>
+            <tr>
+                <td style="background-color:azure;" valign="top">
+                    <div style="width:800px;padding:10px;">
+                        @RenderBody()
+                    </div>
+                </td>
+                <td style="background-color:orange;" valign="top">
+                    <div style="width:224px;">
+                        <partial name="Cebian" model="a" />
+                    </div>
+                </td>
+            </tr>
+            @* 这里显示的就是页面下部了 *@
+            <tr>
+                <td colspan="2"><hr /><hr /></td>
+            </tr>
+            <tr>
+                <td style="background-color:gainsboro;" colspan="2">
+                    <partial name="Footer" />
+                </td>
+            </tr>
+        </table>
+    </center>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

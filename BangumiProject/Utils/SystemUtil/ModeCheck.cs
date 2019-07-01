@@ -16,7 +16,7 @@ namespace System
     public static class ModeCheck
     {
         /// <summary>
-        /// 
+        /// 检查是否是百合模式
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>

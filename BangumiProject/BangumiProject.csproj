@@ -15,29 +15,9 @@
   
   <ItemGroup>
     <Compile Remove="Views\jj\**" />
-    <Compile Remove="wwwroot\lib\bootstrap\**" />
-    <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <Compile Remove="wwwroot\lib\jquery-validation\**" />
-    <Compile Remove="wwwroot\lib\jquery\**" />
     <Content Remove="Views\jj\**" />
-    <Content Remove="wwwroot\lib\bootstrap\**" />
-    <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <Content Remove="wwwroot\lib\jquery-validation\**" />
-    <Content Remove="wwwroot\lib\jquery\**" />
     <EmbeddedResource Remove="Views\jj\**" />
-    <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
-    <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
-    <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
     <None Remove="Views\jj\**" />
-    <None Remove="wwwroot\lib\bootstrap\**" />
-    <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <None Remove="wwwroot\lib\jquery-validation\**" />
-    <None Remove="wwwroot\lib\jquery\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\js\Ajax.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,33 +28,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Admin\" />
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Areas\Lilys\Views\Lilys\Model\" />
     <Folder Include="Areas\Search\Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\lib\mdui-v0.4.2\css\mdui.min.css.map" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Black.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-BlackItalic.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Bold.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-BoldItalic.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Light.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-LightItalic.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Medium.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-MediumItalic.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Regular.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-RegularItalic.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-Thin.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\fonts\roboto\Roboto-ThinItalic.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\icons\material-icons\MaterialIcons-Regular.ijmap" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\icons\material-icons\MaterialIcons-Regular.woff2" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.js" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.min.js" />
-    <None Include="wwwroot\lib\mdui-v0.4.2\js\mdui.min.js.map" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="wwwroot\js\Ajax.ts" />
   </ItemGroup>
 
   <ItemGroup>

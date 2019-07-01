@@ -1,4 +1,4 @@
-﻿@using BangumiProjectDBServices.Models
+﻿@using BangumiProject.Areas.Bangumi.Views.Bangumi.Model
 @model BangumiEdit
 @{
     ViewData["Title"] = "AddBangumi";
@@ -29,10 +29,10 @@
             <td><input asp-for="Anime.AnimePlayTime" style="width:100%;" /></td>
         </tr>
         <tr>
-            <td>动画类型：</td>
+            @*<td>动画类型：</td>
             <td>
                 <select class="browser-default" asp-for="Anime.AnimeType" asp-items="@Html.GetEnumSelectList(typeof(AnimeType))" style="width:100%;"></select>
-            </td>
+            </td>*@
         </tr>
         <tr>
             <td>动画是否已经完结：</td>
@@ -42,7 +42,7 @@
             <td>添加标签：</td>
             <td><input asp-for="AddTag" />标签</td>
         </tr>
-        
+
         <tr>
             <td>现在存在的标签</td>
             <td>

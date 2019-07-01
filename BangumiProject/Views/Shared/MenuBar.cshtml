@@ -1,106 +1,56 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@using Microsoft.AspNetCore.Authorization
-@inject IAuthorizationService AuthorizationService
-@model Tuple<bool, string>
+@using Microsoft.AspNetCore.Identity
+@using BangumiProjectDBServices.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 
-<div class="mdui-toolbar mdui-color-amber-a100 mdui-shadow-10" >
-    <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
-    <span class="mdui-typo-title">Lilys</span>
-    <div class="mdui-toolbar-spacer"></div>
+<table border="1" style="width:100%;text-align:center;">
+    <tr>
+        <td><a asp-route="@Final.Route_Index">首页</a></td>
+        <td>动画</td>
+        <td>新番</td>
+        <td>文件</td>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <td>已经登陆</td>
+            <td>@UserManager.GetUserName(User)</td>
+        }
+        else
+        {
+            <td><a asp-area="Identity" asp-page="/Account/Login">登录</a></td>
+            <td><a asp-area="Identity" asp-page="/Account/Register">注册</a></td>
+        }
 
+    </tr>
+</table>
 
-    <a class="mdui-btn" asp-route="Index">主页</a>
-    <a class="mdui-btn" href="http://sukerasparo.com/">言语关系</a>
-    <a class="mdui-btn" asp-route="Lilys">Lilys里站</a>
-    <a class="mdui-btn" asp-route="About">关于</a>
-    <a class="mdui-btn" asp-route="Bangumi">动画索引</a>
-
-
-    @if (Model.Item1)
-    {
-        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{position:'bottom', target:'#user-menu'}" mdui-tooltip="{content:'@Model.Item2'}">
-            <img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" />
-        </a>
-        <ul class="mdui-menu" id="user-menu">
-            <li class="mdui-menu-item">
-                <a asp-route="@Final.Route_Profile_UID" class="mdui-ripple">我的主页</a>
-            </li>
-            <li class="mdui-divider"></li>
-            <li class="mdui-menu-item">
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="mdui-ripple">自定义设置</a>
-            </li>
-        </ul>
-    }
-    else
-    {
-        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'请登录'}" mdui-dialog="{target:'#SignIn'}">
-            <img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" class="mdui-img-fluid mdui-img-circle" />
-        </a>
-        <div id="SignIn" class="mdui-dialog">
-            <div class="mdui-dialog-title">登录</div>
-            <a class="mdui-btn mdui-ripple" asp-area="Identity" asp-page="/Account/Login">立即登录</a>
-            <a class="mdui-btn mdui-ripple" asp-area="Identity" asp-page="/Account/Register">没有注册？注册一个账号！</a>
-        </div>
-    }
-    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'搜索'}"><i class="mdui-icon material-icons">search</i></a>
-    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content:'刷新'}"><i class="mdui-icon material-icons">refresh</i></a>
-    @if (Model.Item1)
-    {
-        <a href="javascript:;" mdui-menu="{target:'#Infostream', subMenuTrigger:'hover', subMenuDelay:200}">动态<span>(3)</span></a>
-        <ul class="mdui-list mdui-menu mdui-menu-cascade" style="max-width:400px; min-width:400px;" id="Infostream">
-            <li class="mdui-menu-item mdui-list-item mdui-ripple">
-                <div class="mdui-list-item-avatar"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" /></div>
-                <div class="mdui-list-item-content">
-                    <div class="mdui-list-item-title">你的订阅动画更新了</div>
-                    <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">All Connors</span> - I'll be in your neighborhood ...</div>
-                </div>
-            </li>
-            <li class="mdui-divider-inset mdui-m-y-0"></li>
-            <li class="mdui-menu-item mdui-list-item mdui-ripple">
-                <div class="mdui-list-item-avatar"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" /></div>
-                <div class="mdui-list-item-content">
-                    <div class="mdui-list-item-title">JOJO第十集</div>
-                    <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">to Alex, Scott, Jennifer</span> - Wish I could ...</div>
-                </div>
-            </li>
-            <li class="mdui-divider-inset mdui-m-y-0"></li>
-            <li class="mdui-menu-item mdui-list-item mdui-ripple">
-                <div class="mdui-list-item-avatar"><img src="~/images/6c573befgw1fabxbznz9sj20qo0xcdk4.jpg" /></div>
-                <div class="mdui-list-item-content">
-                    <div class="mdui-list-item-title">新的图片</div>
-                    <div class="mdui-list-item-text mdui-list-item-one-line"><span class="mdui-text-color-theme-text">Sandra Adams</span> - Do you have Paris reco ...</div>
-                </div>
-            </li>
-        </ul>
-
-
-        <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
-        <ul class="mdui-menu" id="menu-more">
-            <li class="mdui-menu-item">
-                <a href="javascript:;" class="mdui-ripple">Refresh</a>
-            </li>
-            @if ((await AuthorizationService.AuthorizeAsync(User, Final.Yuri_Girl)).Succeeded)
-            {
+@*<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
+            <ul class="mdui-menu" id="menu-more">
                 <li class="mdui-menu-item">
-                    <a class="mdui-ripple" asp-route="@Final.Route_Video_Create_POST">BT文件上传</a>
+                    <a href="javascript:;" class="mdui-ripple">Refresh</a>
                 </li>
-            }
-            <li class="mdui-menu-item">
-                <a class="mdui-ripple" asp-route="@Final.Route_Bangumi_Create">添加动画</a>
-            </li>
-            <li class="mdui-menu-item">
-                <a class="mdui-ripple" asp-route="@Final.Route_Files_Index">文件上传</a>
-            </li>
-            <li class="mdui-divider"></li>
-            <li class="mdui-menu-item">
-                <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" class="mdui-ripple">退出登录</a>
-            </li>
-        </ul>
-    }
-</div>
+                @if ((await AuthorizationService.AuthorizeAsync(User, Final.Yuri_Girl)).Succeeded)
+                {
+                    <li class="mdui-menu-item">
+                        <a class="mdui-ripple" asp-route="@Final.Route_Video_Create_POST">BT文件上传</a>
+                    </li>
+                }
+                <li class="mdui-menu-item">
+                    <a class="mdui-ripple" asp-route="@Final.Route_Bangumi_Create">添加动画</a>
+                </li>
+                <li class="mdui-menu-item">
+                    <a class="mdui-ripple" asp-route="@Final.Route_Files_Index">文件上传</a>
+                </li>
+                <li class="mdui-divider"></li>
+                <li class="mdui-menu-item">
+                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" class="mdui-ripple">退出登录</a>
+                </li>
+            </ul>
+        }
+    </div>*@
 @* <div class="mdui-container-fluid mdui-color-grey-50 mdui-row-gapless" style="height:300px;">
-    <img class="mdui-img-fluid mdui-center" style="height:300px;" src="~/images/18513240.jpg" />
-</div> *@
+        <img class="mdui-img-fluid mdui-center" style="height:300px;" src="~/images/18513240.jpg" />
+    </div> *@

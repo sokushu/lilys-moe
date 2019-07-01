@@ -26,7 +26,7 @@ namespace BangumiProject.Controllers
         /// <summary>
         /// 百合标签的名称
         /// </summary>
-        protected string[] YuriName { get; set; } = null;
+        protected string[] YuriName { get; set; } = new string[] { string.Empty };
 
         /// <summary>
         /// 是否显示非百合动画的警告页面
@@ -130,6 +130,8 @@ namespace BangumiProject.Controllers
                         YuriMode = HttpContext.YuriModeCheck();
                         if (YuriMode)
                         {
+                            // 如果是百合模式，那就加载百合名称
+                            YuriName = new string[] { "百合" };
                             switch (IMode)
                             {
                                 case UIMode.Normal_:

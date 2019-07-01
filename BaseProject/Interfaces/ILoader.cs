@@ -4,10 +4,8 @@ using System.Text;
 
 namespace BaseProject.Interfaces
 {
-    public interface ISender
+    public interface ILoader
     {
-        void Send<T>(T obj);
 
-        T GetInfo<T>();
     }
 }
