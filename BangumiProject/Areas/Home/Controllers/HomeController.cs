@@ -10,7 +10,6 @@ using BangumiProject.Areas.Bangumi.Process;
 using BangumiProject.Areas.HomeBar.Views.Home.Model;
 using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.Services;
-using BangumiProjectProcess.Common;
 using BangumiProjectDBServices.PageModels;
 using Microsoft.AspNetCore.Authorization;
 using BangumiProject.Controllers;
@@ -29,13 +28,15 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             IServices _DBCORE, 
             RoleManager<IdentityRole> _roleManager,
             UserManager<User> _UserManager,
-            SignInManager<User> _SignInManager
+            SignInManager<User> _SignInManager,
+            IAuthorizationService AuthorizationService
             )
             :base(
                  DBServices: _DBCORE, 
                  RoleManager: _roleManager, 
                  UserManager: _UserManager,
-                 SignInManager: _SignInManager
+                 SignInManager: _SignInManager,
+                 AuthorizationService: AuthorizationService
                  ) {}
 
         /// <summary>
@@ -48,10 +49,9 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         {
             // 模式初始化
             Init(LoadMode.YuriMode, LoadMode.UIMode, LoadMode.SignIn);
-
+            Authorization(User, Final.Yuri_Yuri4);
             Index index = new Index();
             Tuple<Index, Common_UIEnable, Common> Model = null;
-
             switch (IMode)
             {
                 case UIMode.YuriMode_:

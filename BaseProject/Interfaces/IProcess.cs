@@ -4,8 +4,8 @@ using System.Text;
 
 namespace BaseProject.Interfaces
 {
-    public interface ILoader<T>
+    public interface IProcess<T>
     {
-        T Load(params object[] Value);
+        void Process(ref T Input);
     }
 }

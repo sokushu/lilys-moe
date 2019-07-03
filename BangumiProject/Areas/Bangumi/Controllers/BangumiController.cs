@@ -4,10 +4,6 @@ using BaseProject.Core;
 using BangumiProjectDBServices.Services;
 using BaseProject.Exceptionss;
 using BangumiProjectDBServices.PageModels;
-using BangumiProjectProcessComponents.PageSwitch;
-using BangumiProjectProcessComponents.ModelStream;
-using BangumiProjectProcessComponents.ModelLoader;
-using BangumiProjectProcessComponents.Process;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -90,49 +86,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             int dayofweek = -1
             )
         {
-            /*
-             * 从缓存中读取数据，如果缓存中没有就从数据库中读取数据
-             */
-            var ListAnime = DBServices.Save_ToList<Anime>(CacheKey.Anime_All(),
-                    db => db.Select(a => a));
-            var ListTag = DBServices.Save_ToList<AnimeTag>(CacheKey.Anime_AllTags(),
-                    db => db.Include(a => a.Anime));
-            /*
-             * 这里是一个变化高发区
-             * 未来可能会加入不同的过滤条件
-             */
-            //AnimeFilters animeFilter = new AnimeFilters();
-
-
-            ////动画是否完结
-            //animeFilter.SetAnimeFilter(new AnimeFilterByEnd(animestats));
-            ////动画的年份
-            //animeFilter.SetAnimeFilter(new AnimeFilterByYear(year));
-            ////动画的类型
-            //animeFilter.SetAnimeFilter(new AnimeFilterByAnimeType(animetype));
-            ////动画播出日是星期几
-            //animeFilter.SetAnimeFilter(new AnimeFilterByWeek(dayofweek));
-            ////这是哪一季度的动画
-            //animeFilter.SetAnimeFilter(new AnimeFilterBySeason(season));
-            ////添加标签过滤
-            //animeFilter.SetAnimeFilter(new AnimeFilterByTagNameYuriMode(tagname, ListTag, YuriMode, string.Empty));
-
-
-            ////返回最终的过滤结果集
-            //var Animes = animeFilter.GetAnimeFilter(ListAnime);
-            //PageHelper pageHelper = new PageHelper(20);
-            //return View(
-            //    viewName: "Bangumi",
-            //    model: new Views.Bangumi.Model.Bangumi
-            //    {
-            //        AllPage = pageHelper.GetAllPage(),      //处理后动画的全部页数
-            //        NowPage = pageHelper.GetNowPage(),      //现在看到的页数
-            //        Animes = pageHelper.GetListPage(Page, Animes),        //处理后的动画集合
-            //        AnimeSeason = new List<int> { 1, 2, 3, 4 },//动画的季度（总共就4个季度，而且是常量的）
-            //        //AnimeTags = filter.AnimeTagName,  //动画的标签合集
-            //        //AnimeYear = filter.AnimeYear   //动画的年份合集
-            //    }
-            //    );
+            /*######################   BUG    #########################
+            * 这里要用搜索来实现了
+            *######################   BUG    #########################
+            */
             return View();
         }
 
@@ -151,32 +108,16 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/{id:int}", Name = Final.Route_Bangumi_Details)]
         public async Task<IActionResult> DetailsAsync(int id = -1)
         {
-            var Result = await AuthorizationService.AuthorizeAsync(HttpContext.User, Final.Yuri_Yuri4);
+            Init(LoadMode.SignIn, LoadMode.UIMode, LoadMode.YuriMode);
+            Authorization(User, Final.Yuri_Yuri4);
             var UID = UserManager.GetUserId(HttpContext.User);
             bool isOK = Result.Succeeded;
             // 百合模式检查
             YuriMode = HttpContext.YuriModeCheck();
             try
             {
-                // 初始化
-                CorePageLoader corePageLoader = new CorePageLoader();
-
-                Bangumi_OneAnimeModelStream bangumi_OneAnimeModelStream = new Bangumi_OneAnimeModelStream();
-                // 加载数据
-                ShowNotYuriPage = bangumi_OneAnimeModelStream.SetModelLoader
-                    (new AnimeModelLoader(DBServices).SetParams(id), new IsShowYuriPage(YuriName));
-                bangumi_OneAnimeModelStream.SetModelLoader
-                    (new AnimeUserInfoLoader(DBServices).SetParams(UID, id));
-                bangumi_OneAnimeModelStream.SetModelLoader
-                    (new BoolLoader(nameof(Bangumi_OneAnime.IsShowEdit)).SetParams(isOK));
-
-                corePageLoader.SetModelStream(bangumi_OneAnimeModelStream);
                 
-                //构建数据
-                IPage PageW = new Bangumi_OneAnimePageSwitch(YuriMode, ShowNotYuriPage);
                 return View(
-                    viewName: corePageLoader.GetPage(PageW),
-                    model: corePageLoader.Build<Bangumi_OneAnime>()
                     );
             }
             catch (AnimeNotFoundException NotFoundAnime)

@@ -10,9 +10,9 @@ using BangumiProject.Areas.Bangumi.Process;
 using BangumiProject.Areas.HomeBar.Views.Home.Model;
 using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.Services;
-using BangumiProjectProcess.Common;
 using BangumiProjectDBServices.PageModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BangumiProject.Controllers
 {
@@ -105,7 +105,78 @@ namespace BangumiProject.Controllers
             this.SignInManager = SignInManager;
             this.AuthorizationService = AuthorizationService;
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [NonAction]
+        protected virtual bool Authorization(ClaimsPrincipal user, string policyName)
+        {
+            bool ReturnValue = false;
+            if (ReturnValue = AuthorizationService.AuthorizeAsync(user, policyName).Result.Succeeded)
+            {
+                switch (policyName)
+                {
+                    case Final.Yuri_Boy:
+                        Common.Yuri_Boy = true;
+                        Common.Yuri_Yuri1 = true;
+                        Common.Yuri_Yuri2 = true;
+                        Common.Yuri_Yuri3 = true;
+                        Common.Yuri_Yuri4 = true;
+                        Common.Yuri_Yuri5 = true;
+                        Common.Yuri_Girl = true;
+                        Common.Yuri_Admin = true;
+                        break;
+                    case Final.Yuri_Yuri1:
+                        Common.Yuri_Yuri1 = true;
+                        Common.Yuri_Yuri2 = true;
+                        Common.Yuri_Yuri3 = true;
+                        Common.Yuri_Yuri4 = true;
+                        Common.Yuri_Yuri5 = true;
+                        Common.Yuri_Girl = true;
+                        Common.Yuri_Admin = true;
+                        break;
+                    case Final.Yuri_Yuri2:
+                        Common.Yuri_Yuri2 = true;
+                        Common.Yuri_Yuri3 = true;
+                        Common.Yuri_Yuri4 = true;
+                        Common.Yuri_Yuri5 = true;
+                        Common.Yuri_Girl = true;
+                        Common.Yuri_Admin = true;
+                        break;
+                    case Final.Yuri_Yuri3:
+                        Common.Yuri_Yuri3 = true;
+                        Common.Yuri_Yuri4 = true;
+                        Common.Yuri_Yuri5 = true;
+                        Common.Yuri_Girl = true;
+                        Common.Yuri_Admin = true;
+                        break;
+                    case Final.Yuri_Yuri4:
+                        Common.Yuri_Yuri4 = true;
+                        Common.Yuri_Yuri5 = true;
+                        Common.Yuri_Girl = true;
+                        Common.Yuri_Admin = true;
+                        break;
+                    case Final.Yuri_Yuri5:
+                        Common.Yuri_Yuri5 = true;
+                        Common.Yuri_Girl = true;
+                        Common.Yuri_Admin = true;
+                        break;
+                    case Final.Yuri_Girl:
+                        Common.Yuri_Girl = true;
+                        Common.Yuri_Admin = true;
+                        break;
+                    case Final.Yuri_Admin:
+                        Common.Yuri_Admin = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ReturnValue;
+        }
+
         /// <summary>
         /// 初始化，加载相应的数据
         /// </summary>

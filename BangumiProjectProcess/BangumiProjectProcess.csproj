@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AnimeProcess\" />
     <Folder Include="File\" />
   </ItemGroup>
 
