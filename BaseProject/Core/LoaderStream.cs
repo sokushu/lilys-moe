@@ -22,7 +22,7 @@ namespace BaseProject.Core
         /// 
         /// </summary>
         /// <param name="Value"></param>
-        public void SetParams(params object[] Value)
+        public virtual void SetParams(params object[] Value)
         {
             this.Vs = Value;
         }
@@ -32,14 +32,13 @@ namespace BaseProject.Core
         /// </summary>
         /// <param name="process"></param>
         /// <returns></returns>
-        public T Load(IProcess<T> process)
+        public T Load(params IProcess<T>[] process)
         {
-            if (process == null)
-            {
-                process = new NullCheck<T>();
-            }
             T value = Load(Vs);
-            process.Process(ref value);
+            foreach (var Process in process)
+            {
+                Process.Process(ref value);
+            }
             return value;
         }
 

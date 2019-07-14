@@ -20,6 +20,7 @@ using BangumiProject.Utils;
 using BaseProject.Process;
 using BangumiProjectDBServices.PageModels;
 using BangumiProjectDBServices.ParamsModels;
+using BangumiProject.Filter;
 
 namespace BangumiProject
 {
@@ -94,7 +95,9 @@ namespace BangumiProject
             }).AddEntityFrameworkStores<CoreContext>().AddDefaultTokenProviders();
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(option =>
+                option.Filters.Add<OpenSite>()
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -242,13 +245,13 @@ namespace BangumiProject
             }
 #endif
 
-            //AdminSettingWriteAndReadUtils adminSettingWriteAndRead = new AdminSettingWriteAndReadUtils();
-            //var setting = adminSettingWriteAndRead.Read();
+            AdminSettingReadAndWrite adminSettingWriteAndRead = new AdminSettingReadAndWrite();
+            var setting = adminSettingWriteAndRead.Read();
 
-            //WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
-            //WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
-            //WebSiteSetting.PicPath = setting.PicPath;
-            //WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
+            WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
+            WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
+            WebSiteSetting.PicPath = setting.PicPath;
+            WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
 
             BuildMap.Build<Anime>();
             BuildMap.Build<AnimeComm>();

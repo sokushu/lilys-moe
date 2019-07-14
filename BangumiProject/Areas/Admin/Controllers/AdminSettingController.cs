@@ -6,6 +6,9 @@ using System;
 
 namespace BangumiProject.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Area("Admin")]
     [Authorize(Policy = Final.Yuri_Admin)]
     public class AdminSettingController : Controller
@@ -14,6 +17,7 @@ namespace BangumiProject.Areas.Admin.Controllers
         /// 
         /// </summary>
         private AdminSettingReadAndWrite AdminSettingWriteAndRead { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -22,6 +26,11 @@ namespace BangumiProject.Areas.Admin.Controllers
             AdminSettingWriteAndRead = new AdminSettingReadAndWrite();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("/WebSetting")]
         public IActionResult Setting(AdminSetting setting)
@@ -36,6 +45,10 @@ namespace BangumiProject.Areas.Admin.Controllers
             return Redirect("/WebSetting");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("/WebSetting")]
         public IActionResult ShowSettingPage()

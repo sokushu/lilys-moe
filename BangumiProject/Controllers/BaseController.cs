@@ -46,7 +46,7 @@ namespace BangumiProject.Controllers
         /// <summary>
         /// 能够通用的数据
         /// </summary>
-        protected Common Common { get; set; } = new Common();
+        protected Common common { get; set; } = new Common();
 
         /// <summary>
         /// 是否已经登录
@@ -119,56 +119,56 @@ namespace BangumiProject.Controllers
                 switch (policyName)
                 {
                     case Final.Yuri_Boy:
-                        Common.Yuri_Boy = true;
-                        Common.Yuri_Yuri1 = true;
-                        Common.Yuri_Yuri2 = true;
-                        Common.Yuri_Yuri3 = true;
-                        Common.Yuri_Yuri4 = true;
-                        Common.Yuri_Yuri5 = true;
-                        Common.Yuri_Girl = true;
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
                         break;
                     case Final.Yuri_Yuri1:
-                        Common.Yuri_Yuri1 = true;
-                        Common.Yuri_Yuri2 = true;
-                        Common.Yuri_Yuri3 = true;
-                        Common.Yuri_Yuri4 = true;
-                        Common.Yuri_Yuri5 = true;
-                        Common.Yuri_Girl = true;
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
+                        common.Yuri_Yuri1 = true;
                         break;
                     case Final.Yuri_Yuri2:
-                        Common.Yuri_Yuri2 = true;
-                        Common.Yuri_Yuri3 = true;
-                        Common.Yuri_Yuri4 = true;
-                        Common.Yuri_Yuri5 = true;
-                        Common.Yuri_Girl = true;
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
+                        common.Yuri_Yuri1 = true;
+                        common.Yuri_Yuri2 = true;
                         break;
                     case Final.Yuri_Yuri3:
-                        Common.Yuri_Yuri3 = true;
-                        Common.Yuri_Yuri4 = true;
-                        Common.Yuri_Yuri5 = true;
-                        Common.Yuri_Girl = true;
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
+                        common.Yuri_Yuri1 = true;
+                        common.Yuri_Yuri2 = true;
+                        common.Yuri_Yuri3 = true;
                         break;
                     case Final.Yuri_Yuri4:
-                        Common.Yuri_Yuri4 = true;
-                        Common.Yuri_Yuri5 = true;
-                        Common.Yuri_Girl = true;
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
+                        common.Yuri_Yuri1 = true;
+                        common.Yuri_Yuri2 = true;
+                        common.Yuri_Yuri3 = true;
+                        common.Yuri_Yuri4 = true;
                         break;
                     case Final.Yuri_Yuri5:
-                        Common.Yuri_Yuri5 = true;
-                        Common.Yuri_Girl = true;
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
+                        common.Yuri_Yuri1 = true;
+                        common.Yuri_Yuri2 = true;
+                        common.Yuri_Yuri3 = true;
+                        common.Yuri_Yuri4 = true;
+                        common.Yuri_Yuri5 = true;
                         break;
                     case Final.Yuri_Girl:
-                        Common.Yuri_Girl = true;
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
+                        common.Yuri_Yuri1 = true;
+                        common.Yuri_Yuri2 = true;
+                        common.Yuri_Yuri3 = true;
+                        common.Yuri_Yuri4 = true;
+                        common.Yuri_Yuri5 = true;
+                        common.Yuri_Girl = true;
                         break;
                     case Final.Yuri_Admin:
-                        Common.Yuri_Admin = true;
+                        common.Yuri_Boy = true;
+                        common.Yuri_Yuri1 = true;
+                        common.Yuri_Yuri2 = true;
+                        common.Yuri_Yuri3 = true;
+                        common.Yuri_Yuri4 = true;
+                        common.Yuri_Yuri5 = true;
+                        common.Yuri_Girl = true;
+                        common.Yuri_Admin = true;
                         break;
                     default:
                         break;
@@ -184,13 +184,20 @@ namespace BangumiProject.Controllers
         [NonAction]
         protected virtual void Init(params LoadMode[] loadModes)
         {
-            foreach (var Mode in loadModes)
+
+            var Params = loadModes.ToList().OrderBy(key => key).ToList();
+
+            foreach (var Mode in Params)
             {
                 switch (Mode)
                 {
                     case LoadMode.SignIn:
                         //验证是否登录
                         IsSignIn = SignInManager.IsSignedIn(HttpContext.User);
+                        if (IsSignIn == false)
+                        {
+                            goto NOSIGNIN;
+                        }
                         break;
                     case LoadMode.UIMode:
                         //加载UI模式
@@ -244,10 +251,24 @@ namespace BangumiProject.Controllers
                 //获取用户的ID
                 UID = UserManager.GetUserId(HttpContext.User);
             }
+            NOSIGNIN://未登录，直接跳转
             // Comm类的设置
-            Common.IsSignIn = IsSignIn;
-            Common.UIMode = IMode;
-            Common.Username = UserName;
+            common.IsSignIn = IsSignIn;
+            common.UIMode = IMode;
+            common.Username = UserName;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [NonAction]
+        public override ViewResult View(string viewName, object model)
+        {
+            ViewData[nameof(Common)] = common;
+            return base.View(viewName, model);
         }
 
         /// <summary>
@@ -256,8 +277,8 @@ namespace BangumiProject.Controllers
         protected enum LoadMode
         {
             SignIn,
-            UIMode,
             YuriMode,
+            UIMode,
         }
     }
 }

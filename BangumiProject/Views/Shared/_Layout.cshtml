@@ -1,12 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using BangumiProjectDBServices.Models
+@using BangumiProjectDBServices.PageModels
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @{
-    bool IsSignED = SignInManager.IsSignedIn(User);
-    string UserName = UserManager.GetUserName(User);
-    var Model = new Tuple<bool, string>(IsSignED, UserName);
-    var a = new Tuple<bool, int>(true, 2);
+    Common common = (Common)ViewData[nameof(Common)];
 }
 <!DOCTYPE html>
 <html>
@@ -51,7 +49,7 @@
                 </td>
                 <td style="background-color:orange;" valign="top">
                     <div style="width:224px;">
-                        <partial name="Cebian" model="a" />
+                        <partial name="Cebian" model="common" />
                     </div>
                 </td>
             </tr>

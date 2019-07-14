@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using BangumiProjectDBServices.ParamsModels;
 using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Identity;
+using BangumiProjectProcessComponents.LoadStream;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -43,11 +44,13 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         public BangumiController(
             IServices _Services,
             UserManager<User> _UserManager,
-            IAuthorizationService _AuthorizationService
+            IAuthorizationService _AuthorizationService,
+            SignInManager<User> SignInManager
             ) :base(
                 DBServices: _Services,
                 UserManager: _UserManager,
-                AuthorizationService: _AuthorizationService
+                AuthorizationService: _AuthorizationService,
+                SignInManager: SignInManager
                 )
         {}
 
@@ -106,23 +109,21 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         // GET: Bangumi/5
         [HttpGet]
         [Route("/Bangumi/{id:int}", Name = Final.Route_Bangumi_Details)]
-        public async Task<IActionResult> DetailsAsync(int id = -1)
+        public IActionResult DetailsAsync(int ID = -1)
         {
             Init(LoadMode.SignIn, LoadMode.UIMode, LoadMode.YuriMode);
             Authorization(User, Final.Yuri_Yuri4);
-            var UID = UserManager.GetUserId(HttpContext.User);
-            bool isOK = Result.Succeeded;
-            // 百合模式检查
-            YuriMode = HttpContext.YuriModeCheck();
             try
             {
+                Bangumi_One bangumi_One = new Bangumi_One(DBServices);
+                bangumi_One.SetParams(ID, UID);
+
+                var Model = bangumi_One.Load();
                 
                 return View(
+                    "Bangumi_OneAnime",
+                    Model
                     );
-            }
-            catch (AnimeNotFoundException NotFoundAnime)
-            {
-                return NotFound(NotFoundAnime);
             }
             catch (Exception info)
             {
@@ -212,8 +213,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         {
             if (DBServices.HasAnimeID(id))
             {
-                
-
                 return View(
                 viewName: "BangumiEdit",
                 model: new AnimeEdit
