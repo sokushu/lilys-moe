@@ -30,10 +30,29 @@ namespace System
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <param name="common"></param>
         public static void SetComm(this HttpContext httpContext, Common common)
         {
             httpContext.Session.SetInt32(nameof(Common.IsSignIn), common.IsSignIn.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common))
+            httpContext.Session.SetString(nameof(Common.YURI_TYPE), common.YURI_TYPE);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
+        public static Common GetComm(this HttpContext httpContext)
+        {
+            return new Common
+            {
+                YURI_TYPE = httpContext.Session.GetString(nameof(Common.YURI_TYPE)),
+                IsSignIn = httpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool()
+            };
         }
 
         /// <summary>
