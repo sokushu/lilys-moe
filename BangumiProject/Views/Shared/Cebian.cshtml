@@ -15,7 +15,7 @@
 
 <br />
 
-@if (Model.IsSignIn)
+@if (Model != null && Model.IsSignIn)
 {
     <fieldset>
         <legend>用户操作</legend>

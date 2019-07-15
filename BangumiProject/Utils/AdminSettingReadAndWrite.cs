@@ -13,11 +13,24 @@ namespace BangumiProject.Utils
         /// <summary>
         /// 
         /// </summary>
+        private const string NULL = "null";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public AdminSettingReadAndWrite()
         {
             if (!File.Exists(Final.AdminSetting))
             {
+                //第一次初始化，为了不使程序运行出错，要将数据初始化
                 File.Create(Final.AdminSetting);
+                Write(new AdminSetting()
+                {
+                    IsOpenSignUp = true,
+                    IsWebSiteOpen = true,
+                    IsShowTopPic = true,
+                    PicPath = "HelloWorld"
+                });
             }
         }
 
@@ -51,7 +64,7 @@ namespace BangumiProject.Utils
                     {
                         object valObj = null;
                         TypeCode typef = Type.GetTypeCode(Type.GetType(type));
-                        if (value != "null")
+                        if (value != NULL)
                         {
                             switch (typef)
                             {
@@ -104,7 +117,7 @@ namespace BangumiProject.Utils
             var obj = setting.GetType();
             foreach (var item in obj.GetProperties())
             {
-                file.Add($"{item.Name}:{item.GetValue(setting) ?? "null"},{item.PropertyType.FullName}");
+                file.Add($"{item.Name}:{item.GetValue(setting) ?? NULL},{item.PropertyType.FullName}");
             }
             File.WriteAllLines(Final.AdminSetting, file);
         }

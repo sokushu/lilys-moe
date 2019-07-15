@@ -184,7 +184,7 @@ namespace BangumiProject.Controllers
         [NonAction]
         protected virtual void Init(params LoadMode[] loadModes)
         {
-
+            //对传入的数据进行排序
             var Params = loadModes.ToList().OrderBy(key => key).ToList();
 
             foreach (var Mode in Params)
