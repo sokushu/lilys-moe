@@ -89,6 +89,9 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("用户登录成功");
+
+                    //将通用数据写入到Session里面
+                    HttpContext.Session.
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

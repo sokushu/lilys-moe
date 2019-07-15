@@ -116,63 +116,7 @@ namespace BangumiProject.Controllers
             bool ReturnValue = false;
             if (ReturnValue = AuthorizationService.AuthorizeAsync(user, policyName).Result.Succeeded)
             {
-                switch (policyName)
-                {
-                    case Final.Yuri_Boy:
-                        common.Yuri_Boy = true;
-                        break;
-                    case Final.Yuri_Yuri1:
-                        common.Yuri_Boy = true;
-                        common.Yuri_Yuri1 = true;
-                        break;
-                    case Final.Yuri_Yuri2:
-                        common.Yuri_Boy = true;
-                        common.Yuri_Yuri1 = true;
-                        common.Yuri_Yuri2 = true;
-                        break;
-                    case Final.Yuri_Yuri3:
-                        common.Yuri_Boy = true;
-                        common.Yuri_Yuri1 = true;
-                        common.Yuri_Yuri2 = true;
-                        common.Yuri_Yuri3 = true;
-                        break;
-                    case Final.Yuri_Yuri4:
-                        common.Yuri_Boy = true;
-                        common.Yuri_Yuri1 = true;
-                        common.Yuri_Yuri2 = true;
-                        common.Yuri_Yuri3 = true;
-                        common.Yuri_Yuri4 = true;
-                        break;
-                    case Final.Yuri_Yuri5:
-                        common.Yuri_Boy = true;
-                        common.Yuri_Yuri1 = true;
-                        common.Yuri_Yuri2 = true;
-                        common.Yuri_Yuri3 = true;
-                        common.Yuri_Yuri4 = true;
-                        common.Yuri_Yuri5 = true;
-                        break;
-                    case Final.Yuri_Girl:
-                        common.Yuri_Boy = true;
-                        common.Yuri_Yuri1 = true;
-                        common.Yuri_Yuri2 = true;
-                        common.Yuri_Yuri3 = true;
-                        common.Yuri_Yuri4 = true;
-                        common.Yuri_Yuri5 = true;
-                        common.Yuri_Girl = true;
-                        break;
-                    case Final.Yuri_Admin:
-                        common.Yuri_Boy = true;
-                        common.Yuri_Yuri1 = true;
-                        common.Yuri_Yuri2 = true;
-                        common.Yuri_Yuri3 = true;
-                        common.Yuri_Yuri4 = true;
-                        common.Yuri_Yuri5 = true;
-                        common.Yuri_Girl = true;
-                        common.Yuri_Admin = true;
-                        break;
-                    default:
-                        break;
-                }
+                common.YURI_TYPE = policyName;
             }
             return ReturnValue;
         }

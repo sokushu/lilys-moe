@@ -6,21 +6,10 @@ namespace BangumiProjectDBServices.PageModels
 {
     public class Common
     {
-        public bool Yuri_Admin { get; set; }
-
-        public bool Yuri_Girl { get; set; }
-
-        public bool Yuri_Yuri5 { get; set; }
-
-        public bool Yuri_Yuri4 { get; set; }
-
-        public bool Yuri_Yuri3 { get; set; }
-
-        public bool Yuri_Yuri2 { get; set; }
-
-        public bool Yuri_Yuri1 { get; set; }
-
-        public bool Yuri_Boy { get; set; }
+        /// <summary>
+        /// 用户权限的类型
+        /// </summary>
+        public string YURI_TYPE { get; set; } = string.Empty;
 
         /// <summary>
         /// 是否已经登陆

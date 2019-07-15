@@ -30,6 +30,12 @@ namespace System
             return false;
         }
 
+        public static void SetComm(this HttpContext httpContext, Common common)
+        {
+            httpContext.Session.SetInt32(nameof(Common.IsSignIn), common.IsSignIn.BoolToInt());
+            httpContext.Session.SetInt32(nameof(Common))
+        }
+
         /// <summary>
         /// 
         /// </summary>
