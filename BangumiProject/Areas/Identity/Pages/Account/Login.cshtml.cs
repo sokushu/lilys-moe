@@ -97,8 +97,21 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                     Final.YURI_TYPE _type = policyName.GetYuri_Type();//获取权限类型
 
                     bool YuriMode = HttpContext.YuriModeCheck();
+                    bool ShowNotYuriPage = false;
                     UIMode iMode = HttpContext.UIModeCheck(YuriMode);
-
+                    switch (iMode)
+                    {
+                        case UIMode.Normal_:
+                        case UIMode.Normal_G:
+                            //普通模式下，是显示所有数据，所以显示警告
+                            //可以关掉。
+                            //后期再写相关功能模块
+                            ShowNotYuriPage = true;
+                            break;
+                        default:
+                            //其他的模式，不管了
+                            break;
+                    }
                     //将通用数据写入到Session里面
                     HttpContext.SetComm(new Common
                     {
