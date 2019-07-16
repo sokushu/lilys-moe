@@ -13,6 +13,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Caching.Memory;
 using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels;
 
 namespace BangumiProject.Areas.Identity.Pages.Account
 {
@@ -90,8 +91,19 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("用户登录成功");
 
+                    var user = await _userManager.GetUserAsync(User);
+                    string policyName = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+                    Final.YURI_TYPE _type = policyName.GetYuri_Type();//获取权限类型
+
+                    bool YuriMode = HttpContext.YuriModeCheck();
+                    UIMode iMode = HttpContext.UIModeCheck(YuriMode);
+
                     //将通用数据写入到Session里面
-                    HttpContext.Session.
+                    HttpContext.SetComm(new Common
+                    {
+                        IsSignIn = true
+                    });
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

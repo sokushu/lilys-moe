@@ -38,7 +38,37 @@ namespace System
         public static void SetComm(this HttpContext httpContext, Common common)
         {
             httpContext.Session.SetInt32(nameof(Common.IsSignIn), common.IsSignIn.BoolToInt());
-            httpContext.Session.SetString(nameof(Common.YURI_TYPE), common.YURI_TYPE);
+            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="policyName"></param>
+        /// <returns></returns>
+        public static Final.YURI_TYPE GetYuri_Type(this string policyName)
+        {
+            switch (policyName)
+            {
+                case Final.Yuri_Admin:
+                    return Final.YURI_TYPE.Yuri_Admin;
+                case Final.Yuri_Girl:
+                    return Final.YURI_TYPE.Yuri_Girl;
+                case Final.Yuri_Yuri1:
+                    return Final.YURI_TYPE.Yuri_Yuri1;
+                case Final.Yuri_Yuri2:
+                    return Final.YURI_TYPE.Yuri_Yuri2;
+                case Final.Yuri_Yuri3:
+                    return Final.YURI_TYPE.Yuri_Yuri3;
+                case Final.Yuri_Yuri4:
+                    return Final.YURI_TYPE.Yuri_Yuri4;
+                case Final.Yuri_Yuri5:
+                    return Final.YURI_TYPE.Yuri_Yuri5;
+                case Final.Yuri_Boy:
+                    return Final.YURI_TYPE.Yuri_Boy;
+                default:
+                    return Final.YURI_TYPE.Yuri_Yuri1;
+            }
         }
 
         /// <summary>
@@ -50,7 +80,7 @@ namespace System
         {
             return new Common
             {
-                YURI_TYPE = httpContext.Session.GetString(nameof(Common.YURI_TYPE)),
+                YURI_TYPE = 0,
                 IsSignIn = httpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool()
             };
         }

@@ -139,6 +139,18 @@ namespace System
         /// </summary>
         public const string Yuri_Boy = "Boy,";
 
+        public enum YURI_TYPE
+        {
+            Yuri_Boy,
+            Yuri_Yuri1,
+            Yuri_Yuri2,
+            Yuri_Yuri3,
+            Yuri_Yuri4,
+            Yuri_Yuri5,
+            Yuri_Girl,
+            Yuri_Admin,
+        }
+
         /*
          * ====================================================
          * 以下是路由

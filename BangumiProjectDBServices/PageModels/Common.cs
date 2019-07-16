@@ -9,7 +9,7 @@ namespace BangumiProjectDBServices.PageModels
         /// <summary>
         /// 用户权限的类型
         /// </summary>
-        public string YURI_TYPE { get; set; } = string.Empty;
+        public Final.YURI_TYPE YURI_TYPE { get; set; } = Final.YURI_TYPE.Yuri_Yuri1;
 
         /// <summary>
         /// 是否已经登陆
