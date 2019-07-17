@@ -51,7 +51,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             Init(LoadMode.YuriMode, LoadMode.UIMode, LoadMode.SignIn);
             Authorization(User, Final.Yuri_Yuri4);
             Index index = new Index();
-            Tuple<Index, Common_UIEnable, Common> Model = null;
+            Tuple<Index, Common> Model = null;
             switch (IMode)
             {
                 case UIMode.YuriMode_:
