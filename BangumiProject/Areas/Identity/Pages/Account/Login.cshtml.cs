@@ -98,7 +98,6 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                     Final.YURI_TYPE _type = policyName.GetYuri_Type();//获取权限类型
 
                     bool YuriMode = HttpContext.YuriModeCheck();
-                    bool ShowNotYuriPage = false;
                     UIMode iMode = HttpContext.UIModeCheck(YuriMode);
                     
                     //将通用数据写入到Session里面
