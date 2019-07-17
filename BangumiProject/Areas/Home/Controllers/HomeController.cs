@@ -80,7 +80,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                             throw new Exception($"Error : {iMode}");
 #endif
                     }
-                    Model = Tuple.Create(index, Common_UI, common);
+                    Model = Tuple.Create(index, common);
                     break;
                 case UIMode.Normal_:
                     //得到最新的4部动画
@@ -109,7 +109,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                     index.AllUsers = AllUsers;
                     index.Animes = animes;
                     index.WeekAnimes = weeks;
-                    Model = Tuple.Create(index, Common_UI, common);
+                    Model = Tuple.Create(index, common);
                     break;
                 case UIMode.Normal_G:
                     break;

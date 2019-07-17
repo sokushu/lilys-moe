@@ -4,7 +4,7 @@
 *@
 @using BangumiProjectDBServices.PageModels
 
-@model Tuple<Index, Common_UIEnable, Common>
+@model Tuple<Index, Common>
 
 @{
     ViewData["Title"] = "Home page";
@@ -12,37 +12,37 @@
 }
 
 @* 加载背景图片 *@
-@if (Model.Item2.BackPic)
+@if (Model.Item2.UI.BackPic)
 {
 
 }
 
 @* 加载最近更新 *@
-@if (Model.Item2.New_4Anime)
+@if (Model.Item2.UI.New_4Anime)
 {
     <partial name="~/Views/Partial/New_4Anime.cshtml" model="Model.Item1" />
 }
 
 @* 加载新番组时间表 *@
-@if (Model.Item2.NewBangumiTime)
+@if (Model.Item2.UI.NewBangumiTime)
 {
     <partial name="~/Views/Partial/NewBangumiTime.cshtml" model="Model.Item1" />
 }
 
 @* 加载百合情报 *@
-@if (Model.Item2.YuriInfo)
+@if (Model.Item2.UI.YuriInfo)
 {
 
 }
 
 @* 加载百合新闻 *@
-@if (Model.Item2.YuriNews)
+@if (Model.Item2.UI.YuriNews)
 {
 
 }
 
 @* 加载百合商品信息 *@
-@if (Model.Item2.YuriGoods)
+@if (Model.Item2.UI.YuriGoods)
 {
 
 }

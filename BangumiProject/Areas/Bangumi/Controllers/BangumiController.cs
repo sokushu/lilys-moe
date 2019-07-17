@@ -347,7 +347,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         private void YURIModeCheck()
         {
             //获取百合模式
-            int? mode = HttpContext.Session.GetInt32(Final.YuriMode);
+            int? mode = HttpContext.Session.GetInt32(nameof(Common.YuriMode));
             if (mode != null)
             {
                 YuriMode = mode == 1 ? true : false;

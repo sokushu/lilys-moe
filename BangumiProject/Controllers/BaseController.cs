@@ -39,11 +39,6 @@ namespace BangumiProject.Controllers
         protected UIMode IMode { get; set; } = UIMode.Normal_;
 
         /// <summary>
-        /// 哪些元素显示，哪些不显示
-        /// </summary>
-        protected Common_UIEnable Common_UI { get; set; } = Common_UIEnable.CreateUI(false, UIMode.Normal_);
-
-        /// <summary>
         /// 能够通用的数据
         /// </summary>
         protected Common common { get; set; } = new Common();
@@ -93,9 +88,9 @@ namespace BangumiProject.Controllers
         /// </summary>
         protected BaseController(
             IServices DBServices,
+            SignInManager<User> SignInManager,
             RoleManager<IdentityRole> RoleManager = null,
             UserManager<User> UserManager = null,
-            SignInManager<User> SignInManager = null,
             IAuthorizationService AuthorizationService = null
             )
         {
@@ -116,7 +111,7 @@ namespace BangumiProject.Controllers
             bool ReturnValue = false;
             if (ReturnValue = AuthorizationService.AuthorizeAsync(user, policyName).Result.Succeeded)
             {
-                common.YURI_TYPE = policyName;
+                //common.YURI_TYPE = policyName;
             }
             return ReturnValue;
         }
@@ -131,13 +126,22 @@ namespace BangumiProject.Controllers
             //对传入的数据进行排序
             var Params = loadModes.ToList().OrderBy(key => key).ToList();
 
+            bool isSignIn = HttpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool();
+            if (!isSignIn)
+            {
+                if (isSignIn = SignInManager.IsSignedIn(User))
+                {
+                    Common common = ModeCheck.CommonMake(UserManager, HttpContext, isSignIn);
+                    HttpContext.SetComm(common);
+                }
+            }
             foreach (var Mode in Params)
             {
                 switch (Mode)
                 {
                     case LoadMode.SignIn:
                         //验证是否登录
-                        IsSignIn = SignInManager.IsSignedIn(HttpContext.User);
+                        IsSignIn = isSignIn;
                         if (IsSignIn == false)
                         {
                             goto NOSIGNIN;
@@ -145,7 +149,7 @@ namespace BangumiProject.Controllers
                         break;
                     case LoadMode.UIMode:
                         //加载UI模式
-                        IMode = HttpContext.UIModeCheck(YuriMode);
+                        IMode = (UIMode)HttpContext.Session.GetInt32(nameof(Common.UIMode));
                         break;
                     case LoadMode.YuriMode:
                         //加载百合模式
@@ -180,12 +184,10 @@ namespace BangumiProject.Controllers
                     case UIMode.Normal_:
                     case UIMode.YuriMode_:
                     case UIMode.YuriMode_Shojo:
-                        Common_UI = Common_UIEnable.CreateUI(YuriMode, IMode);
                         break;
                     case UIMode.YuriMode_G:
                     case UIMode.Normal_G:
                         // 加载UI显示数据
-                        Common_UI = HttpContext.CreateCommon_UI();
                         break;
                     default:
                         break;
@@ -211,7 +213,7 @@ namespace BangumiProject.Controllers
         [NonAction]
         public override ViewResult View(string viewName, object model)
         {
-            ViewData[nameof(Common)] = common;
+            ViewData[nameof(Common)] = HttpContext.GetComm();
             return base.View(viewName, model);
         }
 

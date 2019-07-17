@@ -1,6 +1,6 @@
 ﻿@using BangumiProjectDBServices.PageModels
 @model Common
-
+@inject 
 
 <fieldset>
     <legend>搜索</legend>
@@ -15,7 +15,7 @@
 
 <br />
 
-@if (Model != null && Model.IsSignIn)
+@if (Model.IsSignIn)
 {
     <fieldset>
         <legend>用户操作</legend>
@@ -27,7 +27,7 @@
                 <li>个人资料页面</li>
                 <li>个人信息</li>
                 <li><a href="#">普通模式</a>/<a href="#">百合模式</a><br /><span style="color:red;">（当前：百合模式)</span></li>
-                @if (Model.Yuri_Yuri2)
+                @if (Model.YURI_TYPE >= Final.YURI_TYPE.Yuri_Yuri2)
                 {
                     <li>上传文件</li>
                     <li>文件列表</li>
@@ -36,7 +36,7 @@
                 <li>帮助？</li>
             </ul>
 
-            @if (Model.Yuri_Girl)
+            @if (Model.YURI_TYPE >= Final.YURI_TYPE.Yuri_Girl)
             {
                 <p>网站数据管理</p>
                 <ul>
@@ -53,7 +53,7 @@
             </ul>
 
 
-            @if (Model.Yuri_Admin)
+            @if (Model.YURI_TYPE >= Final.YURI_TYPE.Yuri_Admin)
             {
                 <p>管理员</p>
                 <ul>

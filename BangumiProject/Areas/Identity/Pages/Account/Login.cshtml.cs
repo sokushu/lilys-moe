@@ -14,11 +14,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Caching.Memory;
 using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.PageModels;
+using BangumiProject.Controllers;
 
 namespace BangumiProject.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginModel : PageModel
+    public class LoginModel : BasePageModel
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
@@ -86,23 +87,29 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("用户登录成功");
 
-                    var user = await _userManager.GetUserAsync(User);
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
                     string policyName = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
                     Final.YURI_TYPE _type = policyName.GetYuri_Type();//获取权限类型
 
                     bool YuriMode = HttpContext.YuriModeCheck();
                     UIMode iMode = HttpContext.UIModeCheck(YuriMode);
-
+                    
                     //将通用数据写入到Session里面
                     HttpContext.SetComm(new Common
                     {
-                        IsSignIn = true
+                        IsSignIn = true,
+                        UI = UI.CreateUI(YuriMode, iMode),
+                        YuriMode = YuriMode,
+                        BackPicPath = user.UserBackPic ?? string.Empty,
+                        UIMode = iMode,
+                        Username = user.UserName,
+                        YURI_TYPE = _type
                     });
                     return LocalRedirect(returnUrl);
                 }
