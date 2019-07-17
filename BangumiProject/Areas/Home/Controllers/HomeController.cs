@@ -49,7 +49,6 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         {
             // 模式初始化
             Init(LoadMode.YuriMode, LoadMode.UIMode, LoadMode.SignIn);
-            Authorization(User, Final.Yuri_Yuri4);
             Index index = new Index();
             Tuple<Index, Common> Model = null;
             switch (IMode)
@@ -57,29 +56,29 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                 case UIMode.YuriMode_:
                 case UIMode.YuriMode_Shojo:
                 case UIMode.YuriMode_G:
-                    //得到最新的4部动画
-                    //得到含有百合标签的最新4部动画
-                    HashSet<string> YuriTags = YuriName.ToHashSet();
-                    List<Anime> YuriAnime = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4_Yuri(), 
-                        db => db.Include(anime => anime.Tags).Where(anime => anime.Tags.FirstOrDefault(tag => YuriTags.Contains(tag.TagName)) != null));
-                    //因为动画在完结之前我们不会知道这到底是不是百合动画，所以暂时没有未完结动画的数据
-                    switch (IMode)
+                    List<Anime> YuriAnimeNew4 = new List<Anime>();
+                    if (common.UI.New_4Anime)
                     {
-                        case UIMode.YuriMode_:
-                            break;
-                        case UIMode.YuriMode_Shojo:
-                            break;
-                        case UIMode.YuriMode_G:
-                            // 加载所有模块的数据（或者根据画面显示元素加载）
-                            break;
-                        default:
-#if DEBUG
-                            Console.WriteLine($"居然会出错？？是谁改了值？？？IMode ：{IMode}");
-                            break;
-#else
-                            throw new Exception($"Error : {iMode}");
-#endif
+                        //得到最新的4部动画
+                        //得到含有百合标签的最新4部动画
+                        HashSet<string> YuriTags = YuriName.ToHashSet();
+                        YuriAnimeNew4 = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4_Yuri(),
+                            db => db.Include(anime => anime.Tags).Where(anime => anime.Tags.FirstOrDefault(tag => YuriTags.Contains(tag.TagName)) != null));
+                        //因为动画在完结之前我们不会知道这到底是不是百合动画，所以暂时没有未完结动画的数据
                     }
+                    if (common.UI.YuriGoods)
+                    {
+
+                    }
+                    if (common.UI.YuriInfo)
+                    {
+
+                    }
+                    if (common.UI.YuriNews)
+                    {
+
+                    }
+                    index.Animes = YuriAnimeNew4;
                     Model = Tuple.Create(index, common);
                     break;
                 case UIMode.Normal_:

@@ -1,6 +1,5 @@
 ﻿@using BangumiProjectDBServices.PageModels
 @model Common
-@inject 
 
 <fieldset>
     <legend>搜索</legend>
@@ -25,7 +24,7 @@
                 <li>消息<br /><span style="color:red;">(12条新消息)</span></li>
                 <li>公共留言板<br /><span style="color:red;">(有新留言)</span></li>
                 <li>个人资料页面</li>
-                <li>个人信息</li>
+                <li><a href="/Profile/Setting">个人信息</a></li>
                 <li><a href="#">普通模式</a>/<a href="#">百合模式</a><br /><span style="color:red;">（当前：百合模式)</span></li>
                 @if (Model.YURI_TYPE >= Final.YURI_TYPE.Yuri_Yuri2)
                 {

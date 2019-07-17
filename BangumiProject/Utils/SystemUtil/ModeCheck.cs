@@ -117,16 +117,16 @@ namespace System
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public static Common GetComm(this HttpContext httpContext)
+        public static Common GetComm(this HttpContext httpContext, bool UI0 = false)
         {
-            return new Common
+            UI uI;
+            if (UI0)
             {
-                IsSignIn = httpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool(),
-                YuriMode = httpContext.Session.GetInt32(nameof(Common.YuriMode)).IntToBool(),
-                YURI_TYPE = (Final.YURI_TYPE)(httpContext.Session.GetInt32(nameof(Common.YURI_TYPE)) ?? 0),
-                UIMode = (UIMode)(httpContext.Session.GetInt32(nameof(Common.UIMode)) ?? 0),
-                BackPicPath = (httpContext.Session.GetString(nameof(Common.BackPicPath)) ?? string.Empty),
-                UI = new UI
+                uI = UI.CreateUI(false, UIMode.Normal_);
+            }
+            else
+            {
+                uI = new UI
                 {
                     New_4Anime = httpContext.Session.GetInt32(nameof(Common.UI.New_4Anime)).IntToBool(),
                     YuriNews = httpContext.Session.GetInt32(nameof(Common.UI.YuriNews)).IntToBool(),
@@ -134,7 +134,16 @@ namespace System
                     YuriGoods = httpContext.Session.GetInt32(nameof(Common.UI.YuriGoods)).IntToBool(),
                     NewBangumiTime = httpContext.Session.GetInt32(nameof(Common.UI.NewBangumiTime)).IntToBool(),
                     BackPic = httpContext.Session.GetInt32(nameof(Common.UI.BackPic)).IntToBool(),
-                },
+                };
+            }
+            return new Common
+            {
+                IsSignIn = httpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool(),
+                YuriMode = httpContext.Session.GetInt32(nameof(Common.YuriMode)).IntToBool(),
+                YURI_TYPE = (Final.YURI_TYPE)(httpContext.Session.GetInt32(nameof(Common.YURI_TYPE)) ?? 1),
+                UIMode = (UIMode)(httpContext.Session.GetInt32(nameof(Common.UIMode)) ?? 0),
+                BackPicPath = (httpContext.Session.GetString(nameof(Common.BackPicPath)) ?? string.Empty),
+                UI = uI,
             };
         }
 

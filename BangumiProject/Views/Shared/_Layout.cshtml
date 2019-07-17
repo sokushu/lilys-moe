@@ -5,6 +5,10 @@
 @inject UserManager<User> UserManager
 @{
     Common common = (Common)ViewData[nameof(Common)];
+    if (common == null)
+    {
+        common = new Common { IsSignIn = false };
+    }
 }
 <!DOCTYPE html>
 <html>

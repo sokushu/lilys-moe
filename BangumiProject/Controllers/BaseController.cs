@@ -89,8 +89,8 @@ namespace BangumiProject.Controllers
         protected BaseController(
             IServices DBServices,
             SignInManager<User> SignInManager,
+            UserManager<User> UserManager,
             RoleManager<IdentityRole> RoleManager = null,
-            UserManager<User> UserManager = null,
             IAuthorizationService AuthorizationService = null
             )
         {
@@ -125,39 +125,38 @@ namespace BangumiProject.Controllers
         {
             //对传入的数据进行排序
             var Params = loadModes.ToList().OrderBy(key => key).ToList();
-
-            bool isSignIn = HttpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool();
-            if (!isSignIn)
+            
+            IsSignIn = HttpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool();
+            if (!IsSignIn)//如果是没登陆的状态
             {
-                if (isSignIn = SignInManager.IsSignedIn(User))
+                if (IsSignIn = SignInManager.IsSignedIn(User))//检查是否真的没登陆
                 {
-                    Common common = ModeCheck.CommonMake(UserManager, HttpContext, isSignIn);
-                    HttpContext.SetComm(common);
+                    HttpContext.SetComm(common = ModeCheck.CommonMake(UserManager, HttpContext, IsSignIn));
                 }
+                else
+                {
+                    common = HttpContext.GetComm(true);//得到未登陆的
+                }
+            }
+            else
+            {
+                //已经登陆的状态
+                common = HttpContext.GetComm();
             }
             foreach (var Mode in Params)
             {
                 switch (Mode)
                 {
                     case LoadMode.SignIn:
-                        //验证是否登录
-                        IsSignIn = isSignIn;
-                        if (IsSignIn == false)
+                        if (!IsSignIn)
                         {
-                            goto NOSIGNIN;
+                            
                         }
                         break;
-                    case LoadMode.UIMode:
-                        //加载UI模式
-                        IMode = (UIMode)HttpContext.Session.GetInt32(nameof(Common.UIMode));
-                        break;
                     case LoadMode.YuriMode:
-                        //加载百合模式
                         YuriMode = HttpContext.YuriModeCheck();
                         if (YuriMode)
                         {
-                            // 如果是百合模式，那就加载百合名称
-                            YuriName = new string[] { "百合" };
                             switch (IMode)
                             {
                                 case UIMode.Normal_:
@@ -173,35 +172,19 @@ namespace BangumiProject.Controllers
                             }
                         }
                         break;
+                    case LoadMode.UIMode:
+                        IMode = HttpContext.UIModeCheck(YuriMode);
+                        break;
                     default:
                         break;
                 }
             }
+            UI.CreateUI(YuriMode, IMode);
             if (IsSignIn)
             {
-                switch (IMode)
-                {
-                    case UIMode.Normal_:
-                    case UIMode.YuriMode_:
-                    case UIMode.YuriMode_Shojo:
-                        break;
-                    case UIMode.YuriMode_G:
-                    case UIMode.Normal_G:
-                        // 加载UI显示数据
-                        break;
-                    default:
-                        break;
-                }
-                //获取用户名
-                UserName = UserManager.GetUserName(HttpContext.User);
-                //获取用户的ID
-                UID = UserManager.GetUserId(HttpContext.User);
+                UID = UserManager.GetUserId(User);
+                UserName = UserManager.GetUserName(User);
             }
-            NOSIGNIN://未登录，直接跳转
-            // Comm类的设置
-            common.IsSignIn = IsSignIn;
-            common.UIMode = IMode;
-            common.Username = UserName;
         }
 
         /// <summary>

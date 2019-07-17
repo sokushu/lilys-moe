@@ -67,6 +67,37 @@ namespace BangumiProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Time = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now')"),
+                    URL = table.Column<string>(nullable: true),
+                    UserPic = table.Column<string>(nullable: true),
+                    UserBackPic = table.Column<string>(nullable: true),
+                    UserInfo_G = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Common_UIEnables",
                 columns: table => new
                 {
@@ -166,43 +197,6 @@ namespace BangumiProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Time = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now')"),
-                    URL = table.Column<string>(nullable: true),
-                    UserPic = table.Column<string>(nullable: true),
-                    UserBackPic = table.Column<string>(nullable: true),
-                    Common_UIEnableID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Common_UIEnables_Common_UIEnableID",
-                        column: x => x.Common_UIEnableID,
-                        principalTable: "Common_UIEnables",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AnimeComms",
                 columns: table => new
                 {
@@ -228,34 +222,6 @@ namespace BangumiProject.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AnimeSouceComms",
-                columns: table => new
-                {
-                    CommID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CommStr = table.Column<string>(nullable: false),
-                    AnimeSouceID = table.Column<int>(nullable: true),
-                    UsersId = table.Column<string>(nullable: true),
-                    Time = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now')")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AnimeSouceComms", x => x.CommID);
-                    table.ForeignKey(
-                        name: "AnimeSouceComm_AnimeSouce_PK",
-                        column: x => x.AnimeSouceID,
-                        principalTable: "AnimeSouces",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "AnimeSouceComm_User_PK",
-                        column: x => x.UsersId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -346,6 +312,34 @@ namespace BangumiProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserAnimeInfos",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SubAnimeAnimeID = table.Column<int>(nullable: true),
+                    NowAnimeNum = table.Column<int>(nullable: false),
+                    UsersId = table.Column<string>(nullable: true),
+                    Time = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now')")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAnimeInfos", x => x.ID);
+                    table.ForeignKey(
+                        name: "UserAnimeInfo_Anime_PK",
+                        column: x => x.SubAnimeAnimeID,
+                        principalTable: "Anime",
+                        principalColumn: "AnimeID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "UserAnimeInfo_User_PK",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -377,27 +371,27 @@ namespace BangumiProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAnimeInfos",
+                name: "AnimeSouceComms",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    CommID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    SubAnimeAnimeID = table.Column<int>(nullable: true),
-                    NowAnimeNum = table.Column<int>(nullable: false),
+                    CommStr = table.Column<string>(nullable: false),
+                    AnimeSouceID = table.Column<int>(nullable: true),
                     UsersId = table.Column<string>(nullable: true),
                     Time = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now')")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAnimeInfos", x => x.ID);
+                    table.PrimaryKey("PK_AnimeSouceComms", x => x.CommID);
                     table.ForeignKey(
-                        name: "UserAnimeInfo_Anime_PK",
-                        column: x => x.SubAnimeAnimeID,
-                        principalTable: "Anime",
-                        principalColumn: "AnimeID",
+                        name: "AnimeSouceComm_AnimeSouce_PK",
+                        column: x => x.AnimeSouceID,
+                        principalTable: "AnimeSouces",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "UserAnimeInfo_User_PK",
+                        name: "AnimeSouceComm_User_PK",
                         column: x => x.UsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -496,42 +490,42 @@ namespace BangumiProject.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2383a0ce-c303-4bf7-8a5c-115437548948", "50a4a478-d40b-49c1-8186-351806b52c0c", "Admin,", "ADMIN," });
+                values: new object[] { "d028b14a-a28b-4c6e-99d3-64362ddc6442", "668bbfce-8cdc-47e7-b9fb-d3180f48352f", "Admin,", "ADMIN," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9e5a379a-33b7-40d8-8e7e-fef1c3234ae7", "229b27d2-5c2e-4892-b5cc-d69bd62ce5b1", "Girl,", "GIRL," });
+                values: new object[] { "afb6fbc4-24a9-4ce1-a1b8-fe6120307bd4", "daaf25aa-f793-41a3-952a-d178fe4f1d0b", "Girl,", "GIRL," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0fa87c95-2ca0-4303-8d31-ca1534c330c3", "cf9bde39-1503-4903-b207-1784747777f6", "Yuri5,", "YURI5," });
+                values: new object[] { "e95047b5-54dd-4124-91b5-a61ce6eccbf1", "94fc2463-fd61-429a-9b3f-5c036ddc8495", "Yuri5,", "YURI5," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "8814d305-fa0f-4bff-8006-cf8ded8e5a9d", "afdea45a-2f5a-455e-9926-9a6ad9b8738f", "Yuri4,", "YURI4," });
+                values: new object[] { "76d18a6a-d89e-4186-8e71-8b04e0f543ec", "527448fb-b7f2-40cb-b488-3177266c5687", "Yuri4,", "YURI4," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "969ef72b-0137-4377-b234-3b13d2954b85", "34054b25-96dc-4fa9-878b-af500ee4657b", "Yuri3,", "YURI3," });
+                values: new object[] { "081d0e4a-4a39-43d4-8d10-6893359d5e3e", "91b1b7c5-b447-4849-8e1f-0f5bdab2f69f", "Yuri3,", "YURI3," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e84c1db4-1feb-4d1a-bed5-c30a5eb88f58", "a87e8e67-e0ac-41dc-8bbf-37a57cb5ffa5", "Yuri2,", "YURI2," });
+                values: new object[] { "f1ced3f2-739c-48da-abb3-1140b499c374", "a88f0f32-fe26-4af0-bf61-2334dbaaa6f8", "Yuri2,", "YURI2," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "27d96732-43e6-4b39-9c3e-8ac7a57c707d", "5cbfbced-cdac-4213-aea0-24fbc10cc406", "Yuri1,", "YURI1," });
+                values: new object[] { "c44827f9-6194-4e05-bbd1-e9cb801cd411", "321edfbe-dfd2-4825-8bcb-46aba839beda", "Yuri1,", "YURI1," });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e4ce4088-10f5-44f9-b45f-1ba2de0db653", "da6ac72e-57e3-4f07-b323-0a8fde241ca1", "Boy,", "BOY," });
+                values: new object[] { "1c458791-c6d0-4297-b119-ff7024125888", "a4a93ae1-1007-4b96-8cda-ffd9508886bd", "Boy,", "BOY," });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Anime_AnimeID_AnimeName_AnimeType",
@@ -618,11 +612,6 @@ namespace BangumiProject.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Common_UIEnableID",
-                table: "AspNetUsers",
-                column: "Common_UIEnableID");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -729,6 +718,9 @@ namespace BangumiProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Common_UIEnables");
+
+            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
@@ -751,9 +743,6 @@ namespace BangumiProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Common_UIEnables");
 
             migrationBuilder.DropTable(
                 name: "Anime");

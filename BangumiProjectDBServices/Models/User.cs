@@ -43,11 +43,11 @@ namespace BangumiProjectDBServices.Models
         [DataType(DataType.ImageUrl)]
         public string UserBackPic { get; set; }
 
+        public string UserInfo_G { get; set; }
+
         public ICollection<FileImages> Images { get; set; }
         public ICollection<AnimeUserInfo> UserAnimeInfos { get; set; }
         public ICollection<AnimeSouceComm> AnimeSouceComms { get; set; }
         public ICollection<AnimeComm> AnimeComms { get; set; }
-
-        public Common_UIEnable Common_UIEnable { get; set; }
     }
 }
