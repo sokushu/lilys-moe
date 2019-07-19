@@ -112,7 +112,6 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         public IActionResult DetailsAsync(int ID = -1)
         {
             Init(LoadMode.SignIn, LoadMode.UIMode, LoadMode.YuriMode);
-            Authorization(User, Final.Yuri_Yuri4);
             try
             {
                 Bangumi_One bangumi_One = new Bangumi_One(DBServices);

@@ -15,7 +15,7 @@ namespace System
     /// <summary>
     /// 
     /// </summary>
-    public static class ModeCheck
+    public static class HttpContextTool
     {
         /// <summary>
         /// 检查是否是百合模式
@@ -59,7 +59,7 @@ namespace System
         /// <param name="UserManager"></param>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public static Common CommonMake(UserManager<User> UserManager, HttpContext httpContext, bool isSignIn)
+        public static Common CommonMake(this HttpContext httpContext, UserManager<User> UserManager, bool isSignIn)
         {
             var user = UserManager.GetUserAsync(httpContext.User).Result;
             string policyName = UserManager.GetRolesAsync(user).Result.FirstOrDefault();
@@ -80,36 +80,6 @@ namespace System
                 Username = user.UserName,
                 YURI_TYPE = _type
             };
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="policyName"></param>
-        /// <returns></returns>
-        public static Final.YURI_TYPE GetYuri_Type(this string policyName)
-        {
-            switch (policyName)
-            {
-                case Final.Yuri_Admin:
-                    return Final.YURI_TYPE.Yuri_Admin;
-                case Final.Yuri_Girl:
-                    return Final.YURI_TYPE.Yuri_Girl;
-                case Final.Yuri_Yuri1:
-                    return Final.YURI_TYPE.Yuri_Yuri1;
-                case Final.Yuri_Yuri2:
-                    return Final.YURI_TYPE.Yuri_Yuri2;
-                case Final.Yuri_Yuri3:
-                    return Final.YURI_TYPE.Yuri_Yuri3;
-                case Final.Yuri_Yuri4:
-                    return Final.YURI_TYPE.Yuri_Yuri4;
-                case Final.Yuri_Yuri5:
-                    return Final.YURI_TYPE.Yuri_Yuri5;
-                case Final.Yuri_Boy:
-                    return Final.YURI_TYPE.Yuri_Boy;
-                default:
-                    return Final.YURI_TYPE.Yuri_Yuri1;
-            }
         }
 
         /// <summary>

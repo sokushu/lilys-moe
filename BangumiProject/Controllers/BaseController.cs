@@ -41,7 +41,7 @@ namespace BangumiProject.Controllers
         /// <summary>
         /// 能够通用的数据
         /// </summary>
-        protected Common common { get; set; } = new Common();
+        protected Common Ccommon { get; set; } = new Common();
 
         /// <summary>
         /// 是否已经登录
@@ -58,6 +58,20 @@ namespace BangumiProject.Controllers
         /// </summary>
         protected string UID { get; set; } = string.Empty;
 
+        /// <summary>
+        /// 用户权限
+        /// </summary>
+        protected Final.YURI_TYPE YURI_TYPE { get; set; } = Final.YURI_TYPE.Yuri_Yuri1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected object Model { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected string ViewName { get; set; } = string.Empty;
         /// <summary>
         /// 数据库
         /// </summary>
@@ -102,26 +116,13 @@ namespace BangumiProject.Controllers
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [NonAction]
-        protected virtual bool Authorization(ClaimsPrincipal user, string policyName)
-        {
-            bool ReturnValue = false;
-            if (ReturnValue = AuthorizationService.AuthorizeAsync(user, policyName).Result.Succeeded)
-            {
-                //common.YURI_TYPE = policyName;
-            }
-            return ReturnValue;
-        }
-
-        /// <summary>
         /// 初始化，加载相应的数据
         /// </summary>
         /// <param name="loadMode"></param>
         [NonAction]
-        protected virtual void Init(params LoadMode[] loadModes)
+        protected virtual void Init(
+            params LoadMode[] loadModes
+            )
         {
             //对传入的数据进行排序
             var Params = loadModes.ToList().OrderBy(key => key).ToList();
@@ -131,17 +132,23 @@ namespace BangumiProject.Controllers
             {
                 if (IsSignIn = SignInManager.IsSignedIn(User))//检查是否真的没登陆
                 {
-                    HttpContext.SetComm(common = ModeCheck.CommonMake(UserManager, HttpContext, IsSignIn));
+                    HttpContext.SetComm(Ccommon = HttpContext.CommonMake(UserManager, IsSignIn));
                 }
                 else
                 {
-                    common = HttpContext.GetComm(true);//得到未登陆的
+                    Ccommon = HttpContext.GetComm(true);//得到未登陆的
                 }
             }
             else
             {
                 //已经登陆的状态
-                common = HttpContext.GetComm();
+                Ccommon = HttpContext.GetComm();
+            }
+            if (IsSignIn)
+            {
+                UID = UserManager.GetUserId(User);
+                UserName = UserManager.GetUserName(User);
+                YURI_TYPE = Ccommon.YURI_TYPE;
             }
             foreach (var Mode in Params)
             {
@@ -179,12 +186,16 @@ namespace BangumiProject.Controllers
                         break;
                 }
             }
-            UI.CreateUI(YuriMode, IMode);
-            if (IsSignIn)
-            {
-                UID = UserManager.GetUserId(User);
-                UserName = UserManager.GetUserName(User);
-            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ViewName"></param>
+        [NonAction]
+        protected virtual void InitView(string ViewName)
+        {
+            this.ViewName = ViewName;
         }
 
         /// <summary>
