@@ -157,7 +157,7 @@ namespace BangumiProject.Controllers
                     case LoadMode.SignIn:
                         if (!IsSignIn)
                         {
-                            
+                            return;
                         }
                         break;
                     case LoadMode.YuriMode:
@@ -207,8 +207,30 @@ namespace BangumiProject.Controllers
         [NonAction]
         public override ViewResult View(string viewName, object model)
         {
-            ViewData[nameof(Common)] = HttpContext.GetComm();
+            ViewData[nameof(Common)] = Ccommon;
             return base.View(viewName, model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <returns></returns>
+        [NonAction]
+        public override ViewResult View(string viewName)
+        {
+            ViewData[nameof(Common)] = Ccommon;
+            return base.View(viewName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [NonAction]
+        public override ViewResult View()
+        {
+            return base.View(ViewName);
         }
 
         /// <summary>

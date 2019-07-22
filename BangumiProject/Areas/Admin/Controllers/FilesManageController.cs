@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace BangumiProject.Areas.Admin.Controllers
 {
@@ -11,6 +12,12 @@ namespace BangumiProject.Areas.Admin.Controllers
     public class FilesManageController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
+
+        /// <summary>
+        /// 存储密码
+        /// </summary>
+        private static List<string> Passwords = new List<string>();
+
         /// <summary>
         /// 
         /// </summary>
@@ -37,10 +44,61 @@ namespace BangumiProject.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("/Admin/MakePassword")]
+        public IActionResult MakePasswords()
+        {
+            if (Passwords.Count == 0)
+            {
+                string ID = string.Empty;
+                for (int i = 0; i < 5; i++)
+                {
+                    ID += Guid.NewGuid().ToString();
+                    ID += DateTime.Now.ToString();
+                    Passwords.Add(ID);
+                }
+                return Json(Passwords);
+            }
+            else
+            {
+                return Json("还有未用完的密码，请用完后在重新生成密码");
+            }
+            
+        }
+
+        /// <summary>
+        /// 用于返回上传的链接，验证方式，验证密码等
+        /// </summary>
+        /// <param name="Password"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("/Admin/GetApi")]
+        public IActionResult UpLoadAPI(string Password)
+        {
+            string PW = Passwords.Where(pw => pw == Password).FirstOrDefault();
+            if (PW != null)
+            {
+                //密码只有一一个
+                bool flag = Passwords.Remove(PW);
+                if (flag)
+                {
+                    //开始读取文件
+                    //验证一下，是否是我们的软件啊
+                }
+                return Json("");
+            }
+            else
+            {
+                return Json("密码不正确");
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Path"></param>
+        [NonAction]
         private List<string> ListAllFile(string Path)
         {
             //Path目录是根目录下的文件夹或是文件

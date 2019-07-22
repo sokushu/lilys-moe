@@ -89,6 +89,8 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             int dayofweek = -1
             )
         {
+            Init();
+            InitView("Bangumi");
             /*######################   BUG    #########################
             * 这里要用搜索来实现了
             *######################   BUG    #########################
@@ -112,15 +114,16 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         public IActionResult DetailsAsync(int ID = -1)
         {
             Init(LoadMode.SignIn, LoadMode.UIMode, LoadMode.YuriMode);
+            InitView("Bangumi_OneAnime");
             try
             {
                 Bangumi_One bangumi_One = new Bangumi_One(DBServices);
                 bangumi_One.SetParams(ID, UID);
 
-                var Model = bangumi_One.Load();
+                Model = bangumi_One.Load();
                 
                 return View(
-                    "Bangumi_OneAnime",
+                    ViewName,
                     Model
                     );
             }
@@ -136,9 +139,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/Create", Name = Final.Route_Bangumi_Create)]
         public ActionResult Create()
         {
+            InitView("AddBangumi");
             //返回视图
             return View(
-                viewName: "AddBangumi"
+                ViewName
                 );
         }
 
@@ -153,9 +157,10 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 //上传的文件
                 var files = collection.Files;
-                if (files != null)
+                if (files.Count > 0)
                 {
                     //上传文件的操作
+                    
                 }
                 var AnimeNum = collection["AnimeNum"];
                 if (!int.TryParse(AnimeNum, out int Num))
@@ -175,7 +180,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                  * 过一段时间再解决这个问题吧
                  *######################   BUG    #########################
                  */
-                var End = collection["IsEnd"];
+                var End = collection["IsEnd"].FirstOrDefault();
                 if (!bool.TryParse(End, out bool IsEnd))
                 {
                     IsEnd = false;
@@ -196,7 +201,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 UpDataNew4(anime);//更新首页的最新4个动画的缓存
                 UpDataNotEnd(anime);
                 DBServices.ADDAnimeID(anime.AnimeID);//这里不要忘记添加动画ID
-                return RedirectToRoute(Final.Route_Bangumi_Index, anime.AnimeID);
+                return RedirectToRoutePermanent(Final.Route_Bangumi_Delete, anime.AnimeID);
             }
             catch
             {
