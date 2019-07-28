@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using BangumiProject.Areas.Bangumi.Process;
-using BangumiProject.Areas.HomeBar.Views.Home.Model;
-using BangumiProjectDBServices.Models;
-using BangumiProjectDBServices.Services;
+﻿using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.PageModels;
+using BangumiProjectDBServices.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace BangumiProject.Controllers
 {
@@ -64,14 +59,14 @@ namespace BangumiProject.Controllers
         protected Final.YURI_TYPE YURI_TYPE { get; set; } = Final.YURI_TYPE.Yuri_Yuri1;
 
         /// <summary>
-        /// 
+        /// 用于渲染的Model
         /// </summary>
-        protected object Model { get; set; }
+        protected object Model { get; set; } = null;
 
         /// <summary>
-        /// 
+        /// 页面的名称
         /// </summary>
-        protected string ViewName { get; set; } = string.Empty;
+        protected string ViewName { get; set; } = null;
         /// <summary>
         /// 数据库
         /// </summary>
@@ -124,66 +119,114 @@ namespace BangumiProject.Controllers
             params LoadMode[] loadModes
             )
         {
-            //对传入的数据进行排序
-            var Params = loadModes.ToList().OrderBy(key => key).ToList();
-            
-            IsSignIn = HttpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool();
-            if (!IsSignIn)//如果是没登陆的状态
+            IsSignIn = SignInManager.IsSignedIn(User);//检查登录
+            if (IsSignIn)
             {
-                if (IsSignIn = SignInManager.IsSignedIn(User))//检查是否真的没登陆
+                bool flag = HttpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool();
+                if (!flag)
                 {
                     HttpContext.SetComm(Ccommon = HttpContext.CommonMake(UserManager, IsSignIn));
                 }
                 else
                 {
-                    Ccommon = HttpContext.GetComm(true);//得到未登陆的
+                    //已经登陆的状态
+                    Ccommon = HttpContext.GetComm();
                 }
             }
             else
             {
-                //已经登陆的状态
-                Ccommon = HttpContext.GetComm();
+                Ccommon = HttpContext.GetComm(true);//得到未登陆的
+                return;
             }
-            if (IsSignIn)
+
+            UID = UserManager.GetUserId(User);
+            UserName = UserManager.GetUserName(User);
+            YURI_TYPE = Ccommon.YURI_TYPE;
+
+            YuriMode = HttpContext.YuriModeCheck();
+            if (YuriMode)
             {
-                UID = UserManager.GetUserId(User);
-                UserName = UserManager.GetUserName(User);
-                YURI_TYPE = Ccommon.YURI_TYPE;
-            }
-            foreach (var Mode in Params)
-            {
-                switch (Mode)
+                IMode = HttpContext.UIModeCheck(YuriMode);
+                switch (IMode)
                 {
-                    case LoadMode.SignIn:
-                        if (!IsSignIn)
-                        {
-                            return;
-                        }
-                        break;
-                    case LoadMode.YuriMode:
-                        YuriMode = HttpContext.YuriModeCheck();
-                        if (YuriMode)
-                        {
-                            switch (IMode)
-                            {
-                                case UIMode.Normal_:
-                                case UIMode.Normal_G:
-                                    //普通模式下，是显示所有数据，所以显示警告
-                                    //可以关掉。
-                                    //后期再写相关功能模块
-                                    ShowNotYuriPage = true;
-                                    break;
-                                default:
-                                    //其他的模式，不管了
-                                    break;
-                            }
-                        }
-                        break;
-                    case LoadMode.UIMode:
-                        IMode = HttpContext.UIModeCheck(YuriMode);
+                    case UIMode.Normal_:
+                    case UIMode.Normal_G:
+                        //普通模式下，是显示所有数据，所以显示警告
+                        //可以关掉。
+                        //后期再写相关功能模块
+                        ShowNotYuriPage = true;
                         break;
                     default:
+                        //其他的模式，不管了
                         break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 将数据保存到内存缓存中
+        /// </summary>
+        [NonAction]
+        protected void SaveCache(string Key, object Value)
+        {
+            DBServices.MemoryCache.CreateEntry(Key).Value = Value;
+        }
+
+        /// <summary>
+        /// 从内存缓存中读取数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Key"></param>
+        /// <returns></returns>
+        [NonAction]
+        protected T GetCache<T>(string Key)
+        {
+            bool OK = DBServices.MemoryCache.TryGetValue(Key, out object obj);
+            if (OK)
+            {
+                return (T)obj;
+            }
+            return default;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <param name="iformfile"></param>
+        [NonAction]
+        protected void SaveFile(string Path, params IFormFile[] iformfile)
+        {
+            foreach (IFormFile file in iformfile)
+            {
+                string fileName = file.FileName;
+                string contentType = file.ContentType;
+                long fileSize = file.Length;
+
+                Stream stream = null;
+                try
+                {
+                    using (stream = new FileStream(Path, FileMode.CreateNew))
+                    {
+                        file.CopyTo(stream);
+                        stream.Flush();
+                    }
+                }
+                catch (IOException)
+                {
+                    using (stream = new FileStream(Path, FileMode.Open))
+                    {
+                        file.CopyTo(stream);
+                        stream.Flush();
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                finally
+                {
+                    stream = null;
                 }
             }
         }
@@ -230,7 +273,29 @@ namespace BangumiProject.Controllers
         [NonAction]
         public override ViewResult View()
         {
-            return base.View(ViewName);
+            ViewData[nameof(Common)] = Ccommon;
+            if (Model == null)
+            {
+                if (ViewName == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View(ViewName);
+                }
+            }
+            else
+            {
+                if (ViewName == null)
+                {
+                    return View(Model);
+                }
+                else
+                {
+                    return View(ViewName, Model);
+                }
+            }
         }
 
         /// <summary>

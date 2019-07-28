@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BangumiProject.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
     public class APIController : ControllerBase
     {
