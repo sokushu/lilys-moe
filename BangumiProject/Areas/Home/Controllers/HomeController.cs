@@ -110,7 +110,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                         switch (YURI_TYPE)
                         {
                             case Final.YURI_TYPE.Yuri_Boy:// 猪狗不如的权限，封禁禁言等
-                                return StatusCode(Final.StatusCode403);
+                                return Forbid();
                             default:
                                 break;
                         }
@@ -157,8 +157,9 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                 default:
                     break;
             }
+            Model = Tuple.Create(index, Ccommon);
             // 最后返回页面
-            return View(ViewName, Model = Tuple.Create(index, Ccommon));
+            return View();
         }
 
         /// <summary>
