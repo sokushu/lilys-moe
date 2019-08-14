@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProject", "BangumiProject\BangumiProject.csproj", "{EFCF2180-97A5-4942-937B-EE8B432E2473}"
 EndProject
@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestProject", "NUnitTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProjectDBServices", "BangumiProjectDBServices\BangumiProjectDBServices.csproj", "{13CF669B-0FEE-4613-8FF9-665254DCF126}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProjectProcessComponents", "BangumiProjectProcessComponents\BangumiProjectProcessComponents.csproj", "{27911BCB-CEE9-44CE-B187-53EC70A4D349}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProjectDataLoader", "BangumiProjectProcessComponents\BangumiProjectDataLoader.csproj", "{27911BCB-CEE9-44CE-B187-53EC70A4D349}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoeUtils", "System\MoeUtils.csproj", "{CFF9BAA6-F62C-44F1-A2F1-E7434CA0347D}"
 EndProject

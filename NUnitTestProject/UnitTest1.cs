@@ -13,6 +13,8 @@ using Lucene;
 using Lucene.Net.Search.Payloads;
 using Lucene.Net.Search.Similarities;
 using Lucene.Net.Search.Spans;
+using MoeMushi.Core.DownLoad;
+using System.IO;
 
 namespace Tests
 {
@@ -78,10 +80,13 @@ namespace Tests
         [Test]
         public void Test2()
         {
-            //AdminSettingWriteAndRead adminSettingWriteAndRead = new AdminSettingWriteAndRead();
-            //adminSettingWriteAndRead.Write(new BangumiProject.Areas.Admin.Models.AdminSetting { IsShowTopPic = true });
-
-            //adminSettingWriteAndRead.Read();
+            FileDownLoad fileDownLoad = new FileDownLoad("https://images2017.cnblogs.com/blog/668104/201709/668104-20170905091808929-417127422.png");
+            byte[] file = fileDownLoad.GET();
+            FileStream fileStream = new FileStream(@"C:\Users\myweb\Desktop\TEST.png", FileMode.OpenOrCreate);
+            MemoryStream memoryStream = new MemoryStream(file);
+            memoryStream.CopyTo(fileStream);
+            memoryStream.Close();
+            fileStream.Close();
         }
     }
 }

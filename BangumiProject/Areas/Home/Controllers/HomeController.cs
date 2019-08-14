@@ -180,7 +180,8 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         [Route("/About.jsp", Name = "About")]
         public IActionResult GetAbout()
         {
-            return View("About");
+            InitView("About");
+            return View();
         }
 
         /// <summary>

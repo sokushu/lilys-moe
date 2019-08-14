@@ -4,24 +4,53 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using HttpCode.Core;
-using MoeMushi.Analyzer;
-using MoeMushi.Interface;
-using MoeMushi.Process;
 using System.Reflection;
+using MoeMushi.Core.DownLoad;
+using System.IO;
 
 namespace MoeMushi
 {
-    public class Mushi<T>
+    public abstract class Mushi<T>
     {
-        public static void Run()
+
+        protected bool GetOrPost { get; set; }
+
+        protected string POSTData { get; set; } = string.Empty;
+        public Mushi()
         {
-            Type type = typeof(T);
-            
+
         }
 
-        public static void Run<Setting>()
+        public void Run(string URL)
         {
+            HtmlDownLoad htmlDownLoad = new HtmlDownLoad(URL);
+            string HTML = string.Empty;
+            if (GetOrPost)
+            {
+                HTML = htmlDownLoad.GET();
+            }
+            else
+            {
+                if (POSTData == string.Empty || POSTData == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    HTML = htmlDownLoad.POST(POSTData);
+                }
+            }
+            //送去解析
 
         }
     }
+
+
+    public enum Save
+    {
+        File,
+        DB,
+        None,
+    }
+
 }

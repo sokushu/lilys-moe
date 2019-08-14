@@ -1,5 +1,6 @@
 ﻿using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.PageModels;
+using BangumiProjectDBServices.PageModels.Core;
 using BangumiProjectDBServices.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -164,6 +165,16 @@ namespace BangumiProject.Controllers
         }
 
         /// <summary>
+        /// 初始化Model
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        [NonAction]
+        protected void InitModel<T>() where T : BaseModel, new()
+        {
+            T model = new T();
+        }
+
+        /// <summary>
         /// 将数据保存到内存缓存中
         /// </summary>
         [NonAction]
@@ -267,7 +278,7 @@ namespace BangumiProject.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 返回页面的一个简单方法
         /// </summary>
         /// <returns></returns>
         [NonAction]

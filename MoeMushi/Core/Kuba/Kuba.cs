@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MoeMushi.Interface
+namespace MoeMushi.Core.Kuba
 {
-    public interface ISave
+    public class Kuba
     {
-        void Save();
     }
 }

@@ -72,7 +72,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BangumiProjectProcessComponents\BangumiProjectProcessComponents.csproj" />
+    <ProjectReference Include="..\BangumiProjectProcessComponents\BangumiProjectDataLoader.csproj" />
     <ProjectReference Include="..\BangumiProjectProcess\BangumiProjectProcess.csproj" />
     <ProjectReference Include="..\System\MoeUtils.csproj" />
   </ItemGroup>
