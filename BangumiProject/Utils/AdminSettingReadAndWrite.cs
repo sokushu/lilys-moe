@@ -45,9 +45,10 @@ namespace BangumiProject.Utils
             AdminSetting setting = new AdminSetting();
 
             var lines = File.ReadAllLines(Final.AdminSetting);
-            var obj = setting.GetType();
+
             List<PropertyInfo> proinfo = new List<PropertyInfo>();
-            proinfo.AddRange(obj.GetProperties());
+            proinfo.AddRange(setting.GetType().GetProperties());
+            Dictionary<string, PropertyInfo> keyval = proinfo.ToDictionary(list => list.Name);
 
             foreach (var data in lines)
             {
@@ -58,51 +59,46 @@ namespace BangumiProject.Utils
                 var key = KV[0];
                 var value = KV[1];
 
-                foreach (var item in proinfo)
+                PropertyInfo proitem = keyval[key];
+
+                object valObj = null;
+                TypeCode typef = Type.GetTypeCode(Type.GetType(type));
+                if (value != NULL)
                 {
-                    if (item.Name == key)
+                    switch (typef)
                     {
-                        object valObj = null;
-                        TypeCode typef = Type.GetTypeCode(Type.GetType(type));
-                        if (value != NULL)
-                        {
-                            switch (typef)
-                            {
-                                case TypeCode.Boolean:
-                                    valObj = bool.Parse(value);
-                                    break;
-                                case TypeCode.Byte:
-                                    valObj = byte.Parse(value);
-                                    break;
-                                case TypeCode.Char:
-                                    valObj = char.Parse(value);
-                                    break;
-                                case TypeCode.DateTime:
-                                    valObj = DateTime.Parse(value);
-                                    break;
-                                case TypeCode.Double:
-                                    valObj = double.Parse(value);
-                                    break;
-                                case TypeCode.Int16:
-                                    valObj = short.Parse(value);
-                                    break;
-                                case TypeCode.Int32:
-                                    valObj = int.Parse(value);
-                                    break;
-                                case TypeCode.Int64:
-                                    valObj = long.Parse(value);
-                                    break;
-                                case TypeCode.String:
-                                    valObj = value;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        item.SetValue(setting, valObj);
+                        case TypeCode.Boolean:
+                            valObj = bool.Parse(value);
+                            break;
+                        case TypeCode.Byte:
+                            valObj = byte.Parse(value);
+                            break;
+                        case TypeCode.Char:
+                            valObj = char.Parse(value);
+                            break;
+                        case TypeCode.DateTime:
+                            valObj = DateTime.Parse(value);
+                            break;
+                        case TypeCode.Double:
+                            valObj = double.Parse(value);
+                            break;
+                        case TypeCode.Int16:
+                            valObj = short.Parse(value);
+                            break;
+                        case TypeCode.Int32:
+                            valObj = int.Parse(value);
+                            break;
+                        case TypeCode.Int64:
+                            valObj = long.Parse(value);
+                            break;
+                        case TypeCode.String:
+                            valObj = value;
+                            break;
+                        default:
+                            break;
                     }
                 }
-                proinfo.RemoveAll(info => info.Name == key);
+                proitem.SetValue(setting, valObj);
             }
             return setting;
         }
