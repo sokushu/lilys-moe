@@ -30,6 +30,7 @@
     <Folder Include="Areas\Admin\Views\Admin\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\Search\Views\" />
+    <Folder Include="CoreProcess\Comm\" />
   </ItemGroup>
 
   <ItemGroup>

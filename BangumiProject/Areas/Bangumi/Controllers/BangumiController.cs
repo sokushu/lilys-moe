@@ -115,19 +115,16 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         {
             Init();
             InitView("Bangumi_OneAnime");
-            try
+            if (DBServices.HasAnimeID(ID))
             {
-                Bangumi_One bangumi_One = new Bangumi_One(DBServices);
+                LoadStreamBangumi_One bangumi_One = new LoadStreamBangumi_One(DBServices);
                 bangumi_One.SetParams(ID, UID);
 
                 Model = bangumi_One.Load();
 
                 return View();
             }
-            catch (Exception info)
-            {
-                throw info;
-            }
+            throw new AnimeNotFoundException("");
         }
 
 
@@ -135,9 +132,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="sub"></param>
-        /// <param name="json"></param>
+        /// <param name="id">动画ID</param>
+        /// <param name="sub">动画集数</param>
+        /// <param name="json">是否返回Json</param>
         /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = Final.Yuri_Yuri1)]
@@ -149,7 +146,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             {
                 if (del)
                 {
-                    //取消订阅
+                    ///
+                    ///取消订阅
+                    ///
                     var info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
                         db => db.Where(animeinfo => animeinfo.Users.Id == UID && animeinfo.SubAnime.AnimeID == id));
                     if (info != null)
@@ -172,7 +171,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 {
                     if (sub == -1)
                     {
-                        //订阅动画
+                        ///
+                        ///订阅动画
+                        ///
                         var info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
                             db => db.Where(animeinfo => animeinfo.Users.Id == UID && animeinfo.SubAnime.AnimeID == id));
                         if (info == null)
@@ -202,7 +203,9 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     }
                     else
                     {
-                        //更新动画的集数
+                        ///
+                        ///更新动画的集数
+                        ///
                         if (sub > 0)
                         {
                             var info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),

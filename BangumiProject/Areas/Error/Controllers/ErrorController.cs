@@ -22,6 +22,16 @@ namespace BangumiProject.Areas.Error.Controllers
         {
             var Code = HttpContext.Response.StatusCode;
             IExceptionHandlerFeature exf = HttpContext.Features.Get<IExceptionHandlerFeature>();
+           // Exception exception = null;
+
+            var err = exf?.Error;
+            switch (err.GetType().Name)
+            {
+                case nameof(ErrorException):
+                case nameof(AnimeNotFoundException):
+                default:
+                    break;
+            }
             if (exf?.Error is ErrorException exception)  // 如果出现错误就显示错误信息
             {
                 switch (exception.StatesCode)
