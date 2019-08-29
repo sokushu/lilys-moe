@@ -1,11 +1,12 @@
 ﻿using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BangumiProjectDBServices.PageModels
 {
-    public class Bangumi_OneAnime
+    public class Bangumi_OneAnime : BaseModel
     {
         public Anime Anime { get; set; }
 
@@ -17,7 +18,6 @@ namespace BangumiProjectDBServices.PageModels
 
         public bool IsSub { get; set; }
 
-        public bool IsSignIn { get; set; }
         public ICollection<AnimeMemo> Memos { get; set; }
 
         public bool IsShowEdit { get; set; }

@@ -1,5 +1,6 @@
 ﻿using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.PageModels;
+using BangumiProjectDBServices.PageModels.Core;
 using BaseProject;
 using BaseProject.Process;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,7 @@ namespace System
         /// <returns></returns>
         public static bool YuriModeCheck(this HttpContext httpContext)
         {
-            int? mode = httpContext.Session.GetInt32(nameof(Common.YuriMode));
+            int? mode = httpContext.Session.GetInt32(nameof(BaseModel.YuriMode));
             if (mode != null)
             {
                 return mode.IntToBool();
@@ -37,49 +38,20 @@ namespace System
         /// </summary>
         /// <param name="httpContext"></param>
         /// <param name="common"></param>
-        public static void SetComm(this HttpContext httpContext, Common common)
+        public static void SetComm(this HttpContext httpContext, BaseModel common)
         {
-            httpContext.Session.SetInt32(nameof(Common.IsSignIn), common.IsSignIn.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common.YuriMode), common.YuriMode.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common.YURI_TYPE), (int)common.YURI_TYPE);
-            httpContext.Session.SetInt32(nameof(Common.UIMode), (int)common.UIMode);
-            httpContext.Session.SetString(nameof(Common.BackPicPath), common.BackPicPath);
+            httpContext.Session.SetInt32(nameof(BaseModel.IsSignIn), common.IsSignIn.BoolToInt());
+            httpContext.Session.SetInt32(nameof(BaseModel.YuriMode), common.YuriMode.BoolToInt());
+            httpContext.Session.SetInt32(nameof(BaseModel.YURI_TYPE), (int)common.YURI_TYPE);
+            httpContext.Session.SetInt32(nameof(BaseModel.UIMode), (int)common.UIMode);
+            httpContext.Session.SetString(nameof(BaseModel.BackPicPath), common.BackPicPath);
 
-            httpContext.Session.SetInt32(nameof(Common.UI.New_4Anime), common.UI.New_4Anime.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common.UI.YuriNews), common.UI.YuriNews.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common.UI.YuriInfo), common.UI.YuriInfo.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common.UI.YuriGoods), common.UI.YuriGoods.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common.UI.NewBangumiTime), common.UI.NewBangumiTime.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common.UI.BackPic), common.UI.BackPic.BoolToInt());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="UserManager"></param>
-        /// <param name="httpContext"></param>
-        /// <returns></returns>
-        public static Common CommonMake(this HttpContext httpContext, UserManager<User> UserManager, bool isSignIn)
-        {
-            var user = UserManager.GetUserAsync(httpContext.User).Result;
-            string policyName = UserManager.GetRolesAsync(user).Result.FirstOrDefault();
-
-            Final.YURI_TYPE _type = policyName.GetYuri_Type();//获取权限类型
-
-            bool YuriMode = httpContext.YuriModeCheck();
-            UIMode iMode = httpContext.UIModeCheck(YuriMode);
-
-            //将通用数据写入到Session里面
-            return new Common
-            {
-                IsSignIn = isSignIn,
-                UI = UI.CreateUI(YuriMode, iMode),
-                YuriMode = YuriMode,
-                BackPicPath = user.UserBackPic ?? string.Empty,
-                UIMode = iMode,
-                Username = user.UserName,
-                YURI_TYPE = _type
-            };
+            httpContext.Session.SetInt32(nameof(BaseModel.UI.New_4Anime), common.UI.New_4Anime.BoolToInt());
+            httpContext.Session.SetInt32(nameof(BaseModel.UI.YuriNews), common.UI.YuriNews.BoolToInt());
+            httpContext.Session.SetInt32(nameof(BaseModel.UI.YuriInfo), common.UI.YuriInfo.BoolToInt());
+            httpContext.Session.SetInt32(nameof(BaseModel.UI.YuriGoods), common.UI.YuriGoods.BoolToInt());
+            httpContext.Session.SetInt32(nameof(BaseModel.UI.NewBangumiTime), common.UI.NewBangumiTime.BoolToInt());
+            httpContext.Session.SetInt32(nameof(BaseModel.UI.BackPic), common.UI.BackPic.BoolToInt());
         }
 
         /// <summary>
@@ -87,10 +59,10 @@ namespace System
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public static Common GetComm(this HttpContext httpContext, bool UI0 = false)
+        public static BaseModel GetComm(this HttpContext httpContext, BaseModel baseModel, bool IsSignIn = false)
         {
             UI uI;
-            if (UI0)
+            if (IsSignIn)
             {
                 uI = UI.CreateUI(false, UIMode.Normal_);
             }
@@ -98,23 +70,21 @@ namespace System
             {
                 uI = new UI
                 {
-                    New_4Anime = httpContext.Session.GetInt32(nameof(Common.UI.New_4Anime)).IntToBool(),
-                    YuriNews = httpContext.Session.GetInt32(nameof(Common.UI.YuriNews)).IntToBool(),
-                    YuriInfo = httpContext.Session.GetInt32(nameof(Common.UI.YuriInfo)).IntToBool(),
-                    YuriGoods = httpContext.Session.GetInt32(nameof(Common.UI.YuriGoods)).IntToBool(),
-                    NewBangumiTime = httpContext.Session.GetInt32(nameof(Common.UI.NewBangumiTime)).IntToBool(),
-                    BackPic = httpContext.Session.GetInt32(nameof(Common.UI.BackPic)).IntToBool(),
+                    New_4Anime = httpContext.Session.GetInt32(nameof(BaseModel.UI.New_4Anime)).IntToBool(),
+                    YuriNews = httpContext.Session.GetInt32(nameof(BaseModel.UI.YuriNews)).IntToBool(),
+                    YuriInfo = httpContext.Session.GetInt32(nameof(BaseModel.UI.YuriInfo)).IntToBool(),
+                    YuriGoods = httpContext.Session.GetInt32(nameof(BaseModel.UI.YuriGoods)).IntToBool(),
+                    NewBangumiTime = httpContext.Session.GetInt32(nameof(BaseModel.UI.NewBangumiTime)).IntToBool(),
+                    BackPic = httpContext.Session.GetInt32(nameof(BaseModel.UI.BackPic)).IntToBool(),
                 };
             }
-            return new Common
-            {
-                IsSignIn = httpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool(),
-                YuriMode = httpContext.Session.GetInt32(nameof(Common.YuriMode)).IntToBool(),
-                YURI_TYPE = (Final.YURI_TYPE)(httpContext.Session.GetInt32(nameof(Common.YURI_TYPE)) ?? 1),
-                UIMode = (UIMode)(httpContext.Session.GetInt32(nameof(Common.UIMode)) ?? 0),
-                BackPicPath = (httpContext.Session.GetString(nameof(Common.BackPicPath)) ?? string.Empty),
-                UI = uI,
-            };
+            baseModel.IsSignIn = httpContext.Session.GetInt32(nameof(BaseModel.IsSignIn)).IntToBool();
+            baseModel.YuriMode = httpContext.Session.GetInt32(nameof(BaseModel.YuriMode)).IntToBool();
+            baseModel.YURI_TYPE = (Final.YURI_TYPE)(httpContext.Session.GetInt32(nameof(BaseModel.YURI_TYPE)) ?? 1);
+            baseModel.UIMode = (UIMode)(httpContext.Session.GetInt32(nameof(BaseModel.UIMode)) ?? 0);
+            baseModel.BackPicPath = (httpContext.Session.GetString(nameof(BaseModel.BackPicPath)) ?? string.Empty);
+            baseModel.UI = uI;
+            return baseModel;
         }
 
         /// <summary>
@@ -125,7 +95,7 @@ namespace System
         public static void SetYuriMode(this HttpContext httpContext, bool YuriMode)
         {
             int Value = YuriMode.BoolToInt();
-            httpContext.Session.SetInt32(nameof(Common.YuriMode), Value);
+            httpContext.Session.SetInt32(nameof(BaseModel.YuriMode), Value);
         }
 
         /// <summary>
@@ -160,14 +130,14 @@ namespace System
         /// 
         /// </summary>
         /// <returns></returns>
-        public static Common_UIEnable CreateCommon_UI(this HttpContext httpContext)
+        public static UI CreateCommon_UI(this HttpContext httpContext)
         {
-            Common_UIEnable common_UI = new Common_UIEnable()
+            UI common_UI = new UI()
             {
-                New_4Anime = httpContext.Session.GetInt32(nameof(Common_UIEnable.New_4Anime)).IntToBool(),
-                YuriInfo = httpContext.Session.GetInt32(nameof(Common_UIEnable.YuriInfo)).IntToBool(),
-                YuriGoods = httpContext.Session.GetInt32(nameof(Common_UIEnable.YuriGoods)).IntToBool(),
-                YuriNews = httpContext.Session.GetInt32(nameof(Common_UIEnable.YuriNews)).IntToBool(),
+                New_4Anime = httpContext.Session.GetInt32(nameof(UI.New_4Anime)).IntToBool(),
+                YuriInfo = httpContext.Session.GetInt32(nameof(UI.YuriInfo)).IntToBool(),
+                YuriGoods = httpContext.Session.GetInt32(nameof(UI.YuriGoods)).IntToBool(),
+                YuriNews = httpContext.Session.GetInt32(nameof(UI.YuriNews)).IntToBool(),
             };
             return common_UI;
         }
@@ -177,12 +147,12 @@ namespace System
         /// </summary>
         /// <param name="httpContext"></param>
         /// <param name="common_UI"></param>
-        public static void SetCommon_UI(this HttpContext httpContext, Common_UIEnable common_UI)
+        public static void SetCommon_UI(this HttpContext httpContext, UI common_UI)
         {
-            httpContext.Session.SetInt32(nameof(Common_UIEnable.New_4Anime), common_UI.New_4Anime.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common_UIEnable.YuriInfo), common_UI.YuriInfo.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common_UIEnable.YuriGoods), common_UI.YuriGoods.BoolToInt());
-            httpContext.Session.SetInt32(nameof(Common_UIEnable.YuriNews), common_UI.YuriNews.BoolToInt());
+            httpContext.Session.SetInt32(nameof(UI.New_4Anime), common_UI.New_4Anime.BoolToInt());
+            httpContext.Session.SetInt32(nameof(UI.YuriInfo), common_UI.YuriInfo.BoolToInt());
+            httpContext.Session.SetInt32(nameof(UI.YuriGoods), common_UI.YuriGoods.BoolToInt());
+            httpContext.Session.SetInt32(nameof(UI.YuriNews), common_UI.YuriNews.BoolToInt());
         }
 
         /// <summary>

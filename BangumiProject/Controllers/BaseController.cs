@@ -15,6 +15,11 @@ namespace BangumiProject.Controllers
     public abstract class BaseController : Controller
     {
         /// <summary>
+        /// 是否已经初始化了
+        /// </summary>
+        private bool IsInit { get; set; } = false;
+
+        /// <summary>
         /// 百合模式
         /// </summary>
         protected bool YuriMode { get; set; } = false;
@@ -33,11 +38,6 @@ namespace BangumiProject.Controllers
         /// UI模式的类型
         /// </summary>
         protected UIMode IMode { get; set; } = UIMode.Normal_;
-
-        /// <summary>
-        /// 能够通用的数据
-        /// </summary>
-        protected Common Ccommon { get; set; } = new Common();
 
         /// <summary>
         /// 是否已经登录
@@ -62,12 +62,13 @@ namespace BangumiProject.Controllers
         /// <summary>
         /// 用于渲染的Model
         /// </summary>
-        protected object Model { get; set; } = null;
+        protected BaseModel Model { get; set; } = null;
 
         /// <summary>
         /// 页面的名称
         /// </summary>
         protected string ViewName { get; set; } = null;
+
         /// <summary>
         /// 数据库
         /// </summary>
@@ -116,37 +117,73 @@ namespace BangumiProject.Controllers
         /// </summary>
         /// <param name="loadMode"></param>
         [NonAction]
-        protected virtual void Init(
-            params LoadMode[] loadModes
-            )
+        protected virtual void Init<T>(string ViewName) where T : BaseModel, new()
         {
-            IsSignIn = SignInManager.IsSignedIn(User);//检查登录
-            if (IsSignIn)
+            this.ViewName = ViewName;
+            if (IsInit)
             {
-                bool flag = HttpContext.Session.GetInt32(nameof(Common.IsSignIn)).IntToBool();
-                if (!flag)
+                return;
+            }
+            if (Model == null)//检查Model是否为空，只初始化一次
+            {
+                IsInit = true;
+                Model = new T();
+                IsSignIn = SignInManager.IsSignedIn(User);//检查登录
+                if (IsSignIn)
                 {
-                    HttpContext.SetComm(Ccommon = HttpContext.CommonMake(UserManager, IsSignIn));
+                    //创建已登录用户的状态
+                    Model = HttpContext.GetComm(Model, true);
+
+                    UID = UserManager.GetUserId(User);
+                    UserName = UserManager.GetUserName(User);
+                    YURI_TYPE = Model.YURI_TYPE;
+
+                    YuriMode = HttpContext.YuriModeCheck();
+                    IMode = HttpContext.UIModeCheck(YuriMode);
+                    switch (IMode)
+                    {
+                        case UIMode.Normal_:
+                        case UIMode.Normal_G:
+                            //普通模式下，是显示所有数据，所以显示警告
+                            //可以关掉。
+                            //后期再写相关功能模块
+                            ShowNotYuriPage = true;
+                            break;
+                        default:
+                            //其他的模式，不管了
+                            break;
+                    }
                 }
                 else
                 {
-                    //已经登陆的状态
-                    Ccommon = HttpContext.GetComm();
+                    //创建未登录用户的状态
+                    Model = HttpContext.GetComm(Model, false);
                 }
             }
-            else
+        }
+
+        /// <summary>
+        /// 初始化，加载相应的数据
+        /// </summary>
+        /// <param name="loadMode"></param>
+        [NonAction]
+        protected virtual void Init(string Viewname = "", bool NotInit = false)
+        {
+            IsInit = NotInit;
+            this.ViewName = ViewName;
+            if (IsInit)
             {
-                Ccommon = HttpContext.GetComm(true);//得到未登陆的
                 return;
             }
-
-            UID = UserManager.GetUserId(User);
-            UserName = UserManager.GetUserName(User);
-            YURI_TYPE = Ccommon.YURI_TYPE;
-
-            YuriMode = HttpContext.YuriModeCheck();
-            if (YuriMode)
+            IsInit = true;
+            IsSignIn = SignInManager.IsSignedIn(User);//检查登录
+            if (IsSignIn)
             {
+                UID = UserManager.GetUserId(User);
+                UserName = UserManager.GetUserName(User);
+                YURI_TYPE = (Final.YURI_TYPE)(HttpContext.Session.GetInt32(nameof(BaseModel.YURI_TYPE)) ?? 1);
+
+                YuriMode = HttpContext.YuriModeCheck();
                 IMode = HttpContext.UIModeCheck(YuriMode);
                 switch (IMode)
                 {
@@ -162,20 +199,6 @@ namespace BangumiProject.Controllers
                         break;
                 }
             }
-        }
-
-        /// <summary>
-        /// 初始化Model
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        [NonAction]
-        protected void InitModel<T>() where T : BaseModel, new()
-        {
-            if (Model != null)
-            {
-                throw new Exception();
-            }
-            T model = new T();
         }
 
         /// <summary>
@@ -247,48 +270,12 @@ namespace BangumiProject.Controllers
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ViewName"></param>
-        [NonAction]
-        protected virtual void InitView(string ViewName)
-        {
-            this.ViewName = ViewName;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="viewName"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [NonAction]
-        public override ViewResult View(string viewName, object model)
-        {
-            ViewData[nameof(Common)] = Ccommon;
-            return base.View(viewName, model);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="viewName"></param>
-        /// <returns></returns>
-        [NonAction]
-        public override ViewResult View(string viewName)
-        {
-            ViewData[nameof(Common)] = Ccommon;
-            return base.View(viewName);
-        }
-
-        /// <summary>
         /// 返回页面的一个简单方法
         /// </summary>
         /// <returns></returns>
         [NonAction]
         public override ViewResult View()
         {
-            ViewData[nameof(Common)] = Ccommon;
             if (Model == null)
             {
                 if (ViewName == null)

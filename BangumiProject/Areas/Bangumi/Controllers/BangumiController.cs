@@ -89,8 +89,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             int dayofweek = -1
             )
         {
-            Init();
-            InitView("Bangumi");
+            
             /*######################   BUG    #########################
             * 这里要用搜索来实现了
             *######################   BUG    #########################
@@ -113,8 +112,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/{id:int}", Name = Final.Route_Bangumi_Details)]
         public IActionResult DetailsAsync(int ID = -1)
         {
-            Init();
-            InitView("Bangumi_OneAnime");
+            Init<Bangumi_OneAnime>("Bangumi_OneAnime");
             if (DBServices.HasAnimeID(ID))
             {
                 LoadStreamBangumi_One bangumi_One = new LoadStreamBangumi_One(DBServices);
@@ -124,7 +122,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
 
                 return View();
             }
-            throw new AnimeNotFoundException("");
+            throw new AnimeNotFoundException("没有找到相应的动画");
         }
 
 
@@ -261,16 +259,16 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 switch (type)
                 {
                     case "Memo"://添加一个MEMO
-                        InitView("Memo");
+                        Init("Memo", NotInit:true);
                         break;
                     default:
-                        InitView("AddBangumi");
+                        Init("AddBangumi", NotInit: true);
                         break;
                 }
             }
             else
             {
-                InitView("AddBangumi");
+                Init("AddBangumi", NotInit: true);
             }
             return View();
         }
@@ -366,13 +364,11 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit)]
         public ActionResult EditAsync(int id)
         {
-            InitView("BangumiEdit");
+            Init<AnimeEdit>("BangumiEdit");
             if (DBServices.HasAnimeID(id))
             {
                 var anime_One = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(anime => anime.AnimeID == id));
-
                 Model = new AnimeEdit { Anime = anime_One };
-
                 return View();
             }
             return NotFound();
