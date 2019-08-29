@@ -6,13 +6,29 @@ using System;
 
 namespace BangumiProject.Filter
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class OpenSite : IAuthorizationFilter
     {
-        IAuthorizationService AuthorizationService { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        private IAuthorizationService AuthorizationService { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="AuthorizationService"></param>
         public OpenSite(IAuthorizationService AuthorizationService)
         {
             this.AuthorizationService = AuthorizationService;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (!WebSiteSetting.IsWebSiteOpen)

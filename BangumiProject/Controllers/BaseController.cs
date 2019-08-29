@@ -171,6 +171,10 @@ namespace BangumiProject.Controllers
         [NonAction]
         protected void InitModel<T>() where T : BaseModel, new()
         {
+            if (Model != null)
+            {
+                throw new Exception();
+            }
             T model = new T();
         }
 

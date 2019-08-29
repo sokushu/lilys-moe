@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29102.190
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProject", "BangumiProject\BangumiProject.csproj", "{EFCF2180-97A5-4942-937B-EE8B432E2473}"
 EndProject
@@ -19,8 +19,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestProject", "NUnitTestProject\NUnitTestProject.csproj", "{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProjectDBServices", "BangumiProjectDBServices\BangumiProjectDBServices.csproj", "{13CF669B-0FEE-4613-8FF9-665254DCF126}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProjectDataLoader", "BangumiProjectProcessComponents\BangumiProjectDataLoader.csproj", "{27911BCB-CEE9-44CE-B187-53EC70A4D349}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoeUtils", "System\MoeUtils.csproj", "{CFF9BAA6-F62C-44F1-A2F1-E7434CA0347D}"
 EndProject
@@ -74,14 +72,6 @@ Global
 		{13CF669B-0FEE-4613-8FF9-665254DCF126}.Release|Any CPU.Build.0 = Release|Any CPU
 		{13CF669B-0FEE-4613-8FF9-665254DCF126}.Release|x64.ActiveCfg = Release|x64
 		{13CF669B-0FEE-4613-8FF9-665254DCF126}.Release|x64.Build.0 = Release|x64
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Debug|x64.ActiveCfg = Debug|x64
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Debug|x64.Build.0 = Debug|x64
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Release|x64.ActiveCfg = Release|x64
-		{27911BCB-CEE9-44CE-B187-53EC70A4D349}.Release|x64.Build.0 = Release|x64
 		{CFF9BAA6-F62C-44F1-A2F1-E7434CA0347D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CFF9BAA6-F62C-44F1-A2F1-E7434CA0347D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFF9BAA6-F62C-44F1-A2F1-E7434CA0347D}.Debug|x64.ActiveCfg = Debug|x64

@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using BangumiProjectDBServices.ParamsModels;
 using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Identity;
-using BangumiProjectProcessComponents.LoadStream;
+using BangumiProject.CoreProcess.Bangumi;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
