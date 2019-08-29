@@ -54,7 +54,7 @@ namespace BangumiProjectDBServices.PageModels.Core
     /// <summary>
     /// 界面显示
     /// </summary>
-    public struct UI
+    public class UI
     {
         /// <summary>
         /// 最近更新

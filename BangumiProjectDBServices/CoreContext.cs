@@ -1,5 +1,6 @@
 ﻿using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.PageModels;
+using BangumiProjectDBServices.PageModels.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace BangumiProjectDBServices
         public DbSet<AnimeNumInfo> AnimeNums { get; set; }
         public DbSet<Music> Musics { get; set; }
         public DbSet<AnimeMoreInfo> AnimeMoreInfos { get; set; }
-        public DbSet<Common_UIEnable> Common_UIEnables { get; set; }
+        public DbSet<UI> Common_UIEnables { get; set; }
         /// <summary>
         /// 
         /// </summary>

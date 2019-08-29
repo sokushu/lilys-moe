@@ -58,30 +58,30 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                 case UIMode.YuriMode_Shojo:
                 case UIMode.YuriMode_G:
                     List<Anime> YuriAnimeNew4 = new List<Anime>();
-                    if (Ccommon.UI.New_4Anime)
+                    if (Model.UI.New_4Anime)
                     {
                         //得到含有百合标签的最新4部动画
                         HashSet<string> YuriTags = YuriName.ToHashSet();
                         YuriAnimeNew4 = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4_Yuri(),
                             db => db.Include(anime => anime.Tags).Where(anime => anime.Tags.FirstOrDefault(tag => YuriTags.Contains(tag.TagName)) != null));
                     }
-                    if (Ccommon.UI.YuriGoods)
+                    if (Model.UI.YuriGoods)
                     {
 
                     }
-                    if (Ccommon.UI.YuriInfo)
+                    if (Model.UI.YuriInfo)
                     {
 
                     }
-                    if (Ccommon.UI.YuriNews)
+                    if (Model.UI.YuriNews)
                     {
 
                     }
-                    if (Ccommon.UI.BackPic)
+                    if (Model.UI.BackPic)
                     {
 
                     }
-                    if (Ccommon.UI.NewBangumiTime)
+                    if (Model.UI.NewBangumiTime)
                     {
                         //不加载新番时间表
                         //因为动画在完结之前我们不会知道这到底是不是百合动画，所以暂时没有未完结动画的数据
@@ -92,7 +92,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                     List<Anime> animes = new List<Anime>();
                     List<Anime> SAnime = new List<Anime>();
                     List<List<Anime>> weeks = new List<List<Anime>>();
-                    if (Ccommon.UI.NewBangumiTime)
+                    if (Model.UI.NewBangumiTime)
                     {
                         //得到未完结的动画
                         SAnime = DBServices.Save_ToList<Anime>(CacheKey.Anime_NotEnd(), db => db.Where(anime => anime.IsEnd == false));
@@ -100,7 +100,7 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                         WeekSwitch WeekSwitch = new WeekSwitch();
                         weeks = WeekSwitch.SwitchAnime(SAnime, WeekSwitch.SwitchType.Week);
                     }
-                    if (Ccommon.UI.New_4Anime)
+                    if (Model.UI.New_4Anime)
                     {
                         //得到最新的4部动画
                         animes = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
@@ -122,28 +122,28 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                     List<Anime> animesNormal_G = new List<Anime>();
                     List<Anime> SAnimeNormal_G = new List<Anime>();
                     List<List<Anime>> weeksNormal_G = new List<List<Anime>>();
-                    if (Ccommon.UI.New_4Anime)
+                    if (Model.UI.New_4Anime)
                     {
                         //得到最新的4部动画
                         animesNormal_G = DBServices.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
                     }
-                    if (Ccommon.UI.YuriGoods)
+                    if (Model.UI.YuriGoods)
                     {
 
                     }
-                    if (Ccommon.UI.YuriInfo)
+                    if (Model.UI.YuriInfo)
                     {
 
                     }
-                    if (Ccommon.UI.YuriNews)
+                    if (Model.UI.YuriNews)
                     {
 
                     }
-                    if (Ccommon.UI.BackPic)
+                    if (Model.UI.BackPic)
                     {
 
                     }
-                    if (Ccommon.UI.NewBangumiTime)
+                    if (Model.UI.NewBangumiTime)
                     {
                         //得到未完结的动画
                         SAnimeNormal_G = DBServices.Save_ToList<Anime>(CacheKey.Anime_NotEnd(), db => db.Where(anime => anime.IsEnd == false));

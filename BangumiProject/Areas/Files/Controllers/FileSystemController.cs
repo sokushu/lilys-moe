@@ -51,9 +51,7 @@ namespace BangumiProject.Areas.Files.Controllers
         [Route("/UpLoad", Name = "FileUpLoad")]
         public IActionResult UpLoad(IFormCollection collection)
         {
-            Init();
-            InitView("VIEWNAME");
-            Model = "HelloWorld";
+            Init("VIEWNAME");
             // 事先判断上传的位置（OSS还是本机）
             //TODO: 判断代码
             var files = collection.Files;
@@ -76,9 +74,6 @@ namespace BangumiProject.Areas.Files.Controllers
         [Route("/UpLoad", Name = "FileUpLoad")]
         public IActionResult UpLoadGet(IFormCollection collection)
         {
-            Init();
-            InitView("VIEWNAME");
-            Model = "HelloWorld";
             // 事先判断上传的位置（OSS还是本机）
             //TODO: 判断代码
             var files = collection.Files;
