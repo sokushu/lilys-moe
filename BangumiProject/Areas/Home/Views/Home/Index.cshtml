@@ -3,46 +3,44 @@
     首页，根据用户不同，设置不同，显示不同的页面
 *@
 @using BangumiProjectDBServices.PageModels
-
-@model Tuple<Index, Common>
-
+@model Index
 @{
     ViewData["Title"] = "Home page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @* 加载背景图片 *@
-@if (Model.Item2.UI.BackPic)
+@if (Model.UI.BackPic)
 {
 
 }
 
 @* 加载最近更新 *@
-@if (Model.Item2.UI.New_4Anime)
+@if (Model.UI.New_4Anime)
 {
-    <partial name="~/Views/Partial/New_4Anime.cshtml" model="Model.Item1" />
+    <partial name="~/Views/Partial/New_4Anime.cshtml" model="Model" />
 }
 
 @* 加载新番组时间表 *@
-@if (Model.Item2.UI.NewBangumiTime)
+@if (Model.UI.NewBangumiTime)
 {
-    <partial name="~/Views/Partial/NewBangumiTime.cshtml" model="Model.Item1" />
+    <partial name="~/Views/Partial/NewBangumiTime.cshtml" model="Model" />
 }
 
 @* 加载百合情报 *@
-@if (Model.Item2.UI.YuriInfo)
+@if (Model.UI.YuriInfo)
 {
 
 }
 
 @* 加载百合新闻 *@
-@if (Model.Item2.UI.YuriNews)
+@if (Model.UI.YuriNews)
 {
 
 }
 
 @* 加载百合商品信息 *@
-@if (Model.Item2.UI.YuriGoods)
+@if (Model.UI.YuriGoods)
 {
 
 }

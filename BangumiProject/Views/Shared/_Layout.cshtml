@@ -3,13 +3,6 @@
 @using BangumiProjectDBServices.PageModels
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-@{
-    Common common = (Common)ViewData[nameof(Common)];
-    if (common == null)
-    {
-        common = new Common { IsSignIn = false };
-    }
-}
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,11 +29,11 @@
                 </td>
             </tr>
             @* 顶部菜单栏 *@
-            <tr>
+            @*<tr>
                 <td style="background-color:cyan;" colspan="2">
                     <partial name="MenuBar" model="Model" />
                 </td>
-            </tr>
+            </tr>*@
             @* 这里显示的就是内容了 *@
             <tr>
                 <td colspan="2"><hr /><hr /></td>
@@ -52,9 +45,9 @@
                     </div>
                 </td>
                 <td style="background-color:orange;" valign="top">
-                    <div style="width:224px;">
+                    @*<div style="width:224px;">
                         <partial name="Cebian" model="common" />
-                    </div>
+                    </div>*@
                 </td>
             </tr>
             @* 这里显示的就是页面下部了 *@

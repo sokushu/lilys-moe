@@ -16,8 +16,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoeMushi", "MoeMushi\MoeMus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseProject", "BaseProject\BaseProject.csproj", "{0AB4B054-BD6E-47B5-84BF-3D643DF4EC94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestProject", "NUnitTestProject\NUnitTestProject.csproj", "{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BangumiProjectDBServices", "BangumiProjectDBServices\BangumiProjectDBServices.csproj", "{13CF669B-0FEE-4613-8FF9-665254DCF126}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoeUtils", "System\MoeUtils.csproj", "{CFF9BAA6-F62C-44F1-A2F1-E7434CA0347D}"
@@ -56,14 +54,6 @@ Global
 		{0AB4B054-BD6E-47B5-84BF-3D643DF4EC94}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0AB4B054-BD6E-47B5-84BF-3D643DF4EC94}.Release|x64.ActiveCfg = Release|x64
 		{0AB4B054-BD6E-47B5-84BF-3D643DF4EC94}.Release|x64.Build.0 = Release|x64
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Debug|x64.ActiveCfg = Debug|x64
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Debug|x64.Build.0 = Debug|x64
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Release|x64.ActiveCfg = Release|x64
-		{C34A90F9-18D2-4E6E-8C94-DE264F063FBD}.Release|x64.Build.0 = Release|x64
 		{13CF669B-0FEE-4613-8FF9-665254DCF126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{13CF669B-0FEE-4613-8FF9-665254DCF126}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13CF669B-0FEE-4613-8FF9-665254DCF126}.Debug|x64.ActiveCfg = Debug|x64

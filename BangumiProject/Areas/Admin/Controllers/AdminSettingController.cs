@@ -33,14 +33,14 @@ namespace BangumiProject.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("/WebSetting")]
-        public IActionResult Setting(AdminSetting setting)
+        public IActionResult Setting(/*AdminSetting setting*/)
         {
-            WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
-            WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
-            WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
-            WebSiteSetting.PicPath = setting.PicPath;
+            //WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
+            //WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
+            //WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
+            //WebSiteSetting.PicPath = setting.PicPath;
 
-            AdminSettingWriteAndRead.Write(setting);
+            //AdminSettingWriteAndRead.Write(setting);
 
             return Redirect("/WebSetting");
         }
@@ -53,10 +53,9 @@ namespace BangumiProject.Areas.Admin.Controllers
         [Route("/WebSetting")]
         public IActionResult ShowSettingPage()
         {
-            AdminSetting setting = AdminSettingWriteAndRead.Read();
+            //AdminSetting setting = AdminSettingWriteAndRead.Read();
             return View(
-                viewName: "Setting",
-                model: setting
+                viewName: "Setting"//model: setting
                 );
         }
     }

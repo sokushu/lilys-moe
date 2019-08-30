@@ -1,14 +1,19 @@
 ﻿using BangumiProjectDBServices.Models;
-using BangumiProjectDBServices.PageModels;
 using BangumiProjectDBServices.PageModels.Core;
 using BangumiProjectDBServices.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.IO;
-using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BangumiProject.Controllers
 {
@@ -112,6 +117,7 @@ namespace BangumiProject.Controllers
             this.AuthorizationService = AuthorizationService;
         }
 
+        #region 数据初始化相关的方法
         /// <summary>
         /// 初始化，加载相应的数据
         /// </summary>
@@ -167,7 +173,7 @@ namespace BangumiProject.Controllers
         /// </summary>
         /// <param name="loadMode"></param>
         [NonAction]
-        protected virtual void Init(string Viewname = "", bool NotInit = false)
+        protected virtual void Init(string ViewName = "", bool NotInit = false)
         {
             IsInit = NotInit;
             this.ViewName = ViewName;
@@ -200,6 +206,28 @@ namespace BangumiProject.Controllers
                 }
             }
         }
+        #endregion 数据初始化相关的方法
+
+        #region PartialView的页面转换成字符串
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [NonAction]
+        protected string PartialViewToString(string ViewName)
+        {
+            using (var writer = new StringWriter())
+            {
+                var ViewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
+                var res = ViewEngine.FindView(ControllerContext, ViewName, true);
+                ViewContext viewContext = new ViewContext(ControllerContext, res.View, ViewData, TempData, writer, new HtmlHelperOptions());
+                res.View.RenderAsync(viewContext);
+                string html = writer.GetStringBuilder().ToString();
+            }
+
+            return string.Empty;
+        }
+        #endregion PartialView的页面转换成字符串
 
         /// <summary>
         /// 将数据保存到内存缓存中

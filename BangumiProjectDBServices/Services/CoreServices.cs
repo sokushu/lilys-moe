@@ -38,10 +38,10 @@ namespace BangumiProjectDBServices.Services
                 {
                     if (AddED == false)
                     {
-                        DB.Anime.Select(ani => ani.AnimeID).ToList().ForEach(id =>
-                        {
-                            AnimeIDs.Add(id);
-                        });
+                        //DB.Anime.Select(ani => ani.AnimeID).ToList().ForEach(id =>
+                        //{
+                        //    AnimeIDs.Add(id);
+                        //});
                         AddED = true;
                     }
                 }

@@ -15,8 +15,8 @@ namespace BangumiProject.Controllers
         /// <returns></returns>
         public override PageResult Page()
         {
-            Common common = HttpContext.GetComm();
-            ViewData[nameof(Common)] = common;
+            //Common common = HttpContext.GetComm();
+            //ViewData[nameof(Common)] = common;
             return base.Page();
         }
     }

@@ -28,27 +28,27 @@ namespace System
         /// <summary>
         /// 文件存储地址
         /// </summary>
-        public const string FilePath = @"E:\TEST\";
-        public const string FilePath_VersionLog = @"E:\TEST\TestLog";
+        public const string FilePath = @"D:\TEST\";
+        public const string FilePath_VersionLog = @"D:\TEST\TestLog";
         public const string DateBasePath = "";
         /// <summary>
         /// 图片储存目录
         /// </summary>
-        public const string FilePath_Image = @"E:\TEST\TESTPIC\";
+        public const string FilePath_Image = @"D:\TEST\TESTPIC\";
         public const string FilePath_Image_Static = "";
         /// <summary>
         /// 缩略图储存目录
         /// </summary>
-        public const string FilePath_Image_Thumb = @"E:\TEST\TESTPIC\Thumb\";
-        public const string FilePath_ImageProcess_Thumb = @"E:\TEST\TESTPIC\ProcessThumb\";
-        public const string FilePath_DownLoad = @"E:\TEST\DownLoad\";
-        public const string FilePath_DownLoad_Log = @"E:\TEST\DownLoad\Log\";
+        public const string FilePath_Image_Thumb = @"D:\TEST\TESTPIC\Thumb\";
+        public const string FilePath_ImageProcess_Thumb = @"D:\TEST\TESTPIC\ProcessThumb\";
+        public const string FilePath_DownLoad = @"D:\TEST\DownLoad\";
+        public const string FilePath_DownLoad_Log = @"D:\TEST\DownLoad\Log\";
 
         /// <summary>
         /// 搜索引擎的索引库
         /// </summary>
-        public const string Search_Index = @"E:\programme\test";
-        public const string AdminSetting = @"E:\TEST\WebSetting.conf";
+        public const string Search_Index = @"D:\programme\test";
+        public const string AdminSetting = @"D:\TEST\WebSetting.conf";
 #else
         
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.Bangumi.Views.Bangumi.Model
 {
-    public class BangumiEdit
+    public class BangumiEdit : BaseModel
     {
         /// <summary>
         /// 动画

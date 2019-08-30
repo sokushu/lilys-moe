@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using BangumiProject.Areas.Bangumi.Process;
 using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels.Core;
 
 namespace BangumiProject.Areas.Bangumi.Views.Bangumi.Model
 {
-    public class Bangumi_OneAnime
+    public class Bangumi_OneAnime : BaseModel
     {
         public Anime Anime { get; set; }
 

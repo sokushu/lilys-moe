@@ -15,6 +15,7 @@ using Microsoft.Extensions.Caching.Memory;
 using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.PageModels;
 using BangumiProject.Controllers;
+using BangumiProjectDBServices.PageModels.Core;
 
 namespace BangumiProject.Areas.Identity.Pages.Account
 {
@@ -101,7 +102,7 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                     UIMode iMode = HttpContext.UIModeCheck(YuriMode);
                     
                     //将通用数据写入到Session里面
-                    HttpContext.SetComm(new Common
+                    HttpContext.SetComm(new BaseModel
                     {
                         IsSignIn = true,
                         UI = UI.CreateUI(YuriMode, iMode),

@@ -11,10 +11,10 @@ using BangumiProjectDBServices.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using BangumiProjectDBServices.ParamsModels;
 using BangumiProject.Controllers;
 using Microsoft.AspNetCore.Identity;
 using BangumiProject.CoreProcess.Bangumi;
+using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -364,11 +364,11 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit)]
         public ActionResult EditAsync(int id)
         {
-            Init<AnimeEdit>("BangumiEdit");
+            Init<BangumiEdit>("BangumiEdit");
             if (DBServices.HasAnimeID(id))
             {
                 var anime_One = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(anime => anime.AnimeID == id));
-                Model = new AnimeEdit { Anime = anime_One };
+                Model = new BangumiEdit { Anime = anime_One };
                 return View();
             }
             return NotFound();
@@ -385,7 +385,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Policy = Final.Yuri_Yuri4)]
         [Route("/Bangumi/Edit/{id:int}", Name = Final.Route_Bangumi_Edit_POST)]
-        public ActionResult EditAsync(int id, AnimeEdit bangumiEdit)
+        public ActionResult EditAsync(int id, BangumiEdit bangumiEdit)
         {
             try
             {

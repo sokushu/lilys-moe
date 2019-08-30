@@ -7,7 +7,7 @@ namespace BangumiProjectDBServices.PageModels.Core
     /// <summary>
     /// 共同基类
     /// </summary>
-    public abstract class BaseModel
+    public class BaseModel
     {
         /// <summary>
         /// 是否已经登陆

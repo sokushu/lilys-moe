@@ -1,4 +1,5 @@
 ﻿using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BangumiProject.Areas.HomeBar.Views.Home.Model
 {
-    public class Index
+    public class Index : BaseModel
     {
         public ICollection<Anime> Animes { get; set; }
 

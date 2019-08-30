@@ -19,7 +19,6 @@ using BangumiProjectDBServices.Services;
 using BangumiProject.Utils;
 using BaseProject.Process;
 using BangumiProjectDBServices.PageModels;
-using BangumiProjectDBServices.ParamsModels;
 using BangumiProject.Filter;
 
 namespace BangumiProject
@@ -246,12 +245,12 @@ namespace BangumiProject
 #endif
 
             AdminSettingReadAndWrite adminSettingWriteAndRead = new AdminSettingReadAndWrite();
-            var setting = adminSettingWriteAndRead.Read();
+            //var setting = adminSettingWriteAndRead.Read();
 
-            WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
-            WebSiteSetting.IsOpenSignUp = setting.IsOpenSignUp;
-            WebSiteSetting.PicPath = setting.PicPath;
-            WebSiteSetting.IsWebSiteOpen = setting.IsWebSiteOpen;
+            //WebSiteSetting.IsShowTopPic = setting.IsShowTopPic;
+            WebSiteSetting.IsOpenSignUp = true;
+            //WebSiteSetting.PicPath = setting.PicPath;
+            WebSiteSetting.IsWebSiteOpen = true;
 
             BuildMap.Build<Anime>();
             BuildMap.Build<AnimeComm>();
@@ -266,10 +265,10 @@ namespace BangumiProject
             BuildMap.Build<FileImages>();
             BuildMap.Build<Music>();
             BuildMap.Build<MusicAlbum>();
-            BuildMap.Build<AdminSetting>();
-            BuildMap.Build<AnimeEdit>();
-            BuildMap.Build<AnimeInfoModel>();
-            BuildMap.Build<Bangumi_OneAnime>();
+            //BuildMap.Build<AdminSetting>();
+            //BuildMap.Build<AnimeEdit>();
+            //BuildMap.Build<AnimeInfoModel>();
+            //BuildMap.Build<Bangumi_OneAnime>();
         }
     }
 }

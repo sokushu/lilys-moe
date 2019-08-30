@@ -1,13 +1,10 @@
-﻿using BangumiProject.Areas.Error.Models;
+﻿using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
 using BangumiProjectDBServices.Models;
-using BangumiProjectDBServices.PageModels;
 using BangumiProjectDBServices.Services;
 using BaseProject.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BangumiProject.CoreProcess.Bangumi
 {
