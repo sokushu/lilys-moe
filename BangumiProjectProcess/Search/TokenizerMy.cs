@@ -12,7 +12,7 @@ namespace BangumiProjectProcess.Search
     public class TokenizerMy : Tokenizer
     {
         private static readonly object _LockObj = new object();
-        private static readonly bool _Inited = false;
+        //private static readonly bool _Inited = false;
         private List<JiebaNet.Segmenter.Token> _WordList = new List<JiebaNet.Segmenter.Token>();
         private string _InputText { get; set; }
         private bool _OriginalResult { get; set; } = false;

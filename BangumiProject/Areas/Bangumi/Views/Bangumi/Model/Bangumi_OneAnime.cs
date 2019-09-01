@@ -20,7 +20,6 @@ namespace BangumiProject.Areas.Bangumi.Views.Bangumi.Model
 
         public bool IsSub { get; set; }
 
-        public bool IsSignIn { get; set; }
         public ICollection<AnimeMemo> Memos { get; set; }
 
         public bool IsShowEdit { get; set; }
