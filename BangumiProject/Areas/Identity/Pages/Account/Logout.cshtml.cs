@@ -38,7 +38,7 @@ namespace BangumiProject.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToRoute(Final.Route_Index);
+                return RedirectToRoute(Final.Route_Home_Index);
             }
         }
     }
