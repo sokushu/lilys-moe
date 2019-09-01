@@ -1,14 +1,15 @@
-ï»¿using BangumiProjectDBServices.Models;
-using BangumiProjectDBServices.PageModels.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels.Core;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-
-namespace BangumiProject.Areas.HomeBar.Views.Home.Model
+namespace BangumiProject.Areas.Home.Views.Home
 {
-    public class Index : BaseModel
+    public class IndexModel : BaseModel
     {
         public ICollection<Anime> Animes { get; set; }
 
@@ -24,10 +25,10 @@ namespace BangumiProject.Areas.HomeBar.Views.Home.Model
 
         public List<List<Anime>> WeekAnimes { get; set; }
 
-        //æµ‹è¯•ç”¨
+        //²âÊÔÓÃ
         public List<User> AllUsers { get; set; }
 
-        //æ›´æ–°æ—¥è®°
+        //¸üÐÂÈÕ¼Ç
         public List<List<string>> Log { get; set; }
     }
 }

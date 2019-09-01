@@ -1,9 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using BangumiProjectDBServices.Models
-@using BangumiProjectDBServices.PageModels
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -29,11 +24,11 @@
                 </td>
             </tr>
             @* 顶部菜单栏 *@
-            @*<tr>
+            <tr>
                 <td style="background-color:cyan;" colspan="2">
                     <partial name="MenuBar" model="Model" />
                 </td>
-            </tr>*@
+            </tr>
             @* 这里显示的就是内容了 *@
             <tr>
                 <td colspan="2"><hr /><hr /></td>
@@ -45,9 +40,9 @@
                     </div>
                 </td>
                 <td style="background-color:orange;" valign="top">
-                    @*<div style="width:224px;">
-                        <partial name="Cebian" model="common" />
-                    </div>*@
+                    <div style="width:224px;">
+                        <partial name="Cebian" model="Model" />
+                    </div>
                 </td>
             </tr>
             @* 这里显示的就是页面下部了 *@

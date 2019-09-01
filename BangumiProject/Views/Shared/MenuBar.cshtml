@@ -2,18 +2,20 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @using Microsoft.AspNetCore.Identity
+@using BangumiProjectDBServices.PageModels.Core
 @using BangumiProjectDBServices.Models
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
+@model BaseModel
 
 <table border="1" style="width:100%;text-align:center;">
     <tr>
-        <td><a asp-route="@Final.Route_Index">首页</a></td>
+        <td><a asp-route="Home_Index">首页</a></td>
         <td>动画</td>
         <td>新番</td>
         <td>文件</td>
-        @if (SignInManager.IsSignedIn(User))
+        @if (Model.IsSignIn)
         {
             <td>已经登陆</td>
             <td>@UserManager.GetUserName(User)</td>
@@ -26,31 +28,3 @@
 
     </tr>
 </table>
-
-@*<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target:'#menu-more'}" mdui-tooltip="{content:'更多选项'}"><i class="mdui-icon material-icons">more_vert</i></a>
-            <ul class="mdui-menu" id="menu-more">
-                <li class="mdui-menu-item">
-                    <a href="javascript:;" class="mdui-ripple">Refresh</a>
-                </li>
-                @if ((await AuthorizationService.AuthorizeAsync(User, Final.Yuri_Girl)).Succeeded)
-                {
-                    <li class="mdui-menu-item">
-                        <a class="mdui-ripple" asp-route="@Final.Route_Video_Create_POST">BT文件上传</a>
-                    </li>
-                }
-                <li class="mdui-menu-item">
-                    <a class="mdui-ripple" asp-route="@Final.Route_Bangumi_Create">添加动画</a>
-                </li>
-                <li class="mdui-menu-item">
-                    <a class="mdui-ripple" asp-route="@Final.Route_Files_Index">文件上传</a>
-                </li>
-                <li class="mdui-divider"></li>
-                <li class="mdui-menu-item">
-                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" class="mdui-ripple">退出登录</a>
-                </li>
-            </ul>
-        }
-    </div>*@
-@* <div class="mdui-container-fluid mdui-color-grey-50 mdui-row-gapless" style="height:300px;">
-        <img class="mdui-img-fluid mdui-center" style="height:300px;" src="~/images/18513240.jpg" />
-    </div> *@

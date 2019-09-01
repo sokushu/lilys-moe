@@ -1,21 +1,17 @@
-﻿using System;
+﻿using BangumiProject.Controllers;
+using BangumiProjectDBServices.Models;
+using BangumiProjectDBServices.PageModels.Core;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Caching.Memory;
-using BangumiProjectDBServices.Models;
-using BangumiProjectDBServices.PageModels;
-using BangumiProject.Controllers;
-using BangumiProjectDBServices.PageModels.Core;
 
 namespace BangumiProject.Areas.Identity.Pages.Account
 {
@@ -88,7 +84,7 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-                
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("用户登录成功");
@@ -100,7 +96,7 @@ namespace BangumiProject.Areas.Identity.Pages.Account
 
                     bool YuriMode = HttpContext.YuriModeCheck();
                     UIMode iMode = HttpContext.UIModeCheck(YuriMode);
-                    
+
                     //将通用数据写入到Session里面
                     HttpContext.SetComm(new BaseModel
                     {
@@ -116,7 +112,7 @@ namespace BangumiProject.Areas.Identity.Pages.Account
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {

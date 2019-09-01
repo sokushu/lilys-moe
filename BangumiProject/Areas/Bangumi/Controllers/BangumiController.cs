@@ -1,20 +1,17 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using BaseProject.Core;
+﻿using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
+using BangumiProject.Controllers;
+using BangumiProject.CoreProcess.Bangumi;
+using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.Services;
 using BaseProject.Exceptionss;
-using BangumiProjectDBServices.PageModels;
 using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using BangumiProjectDBServices.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using BangumiProject.Controllers;
-using Microsoft.AspNetCore.Identity;
-using BangumiProject.CoreProcess.Bangumi;
-using BangumiProject.Areas.Bangumi.Views.Bangumi.Model;
 
 namespace BangumiProject.Areas.Bangumi.Controllers
 {
@@ -46,13 +43,13 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             UserManager<User> _UserManager,
             IAuthorizationService _AuthorizationService,
             SignInManager<User> SignInManager
-            ) :base(
+            ) : base(
                 DBServices: _Services,
                 UserManager: _UserManager,
                 AuthorizationService: _AuthorizationService,
                 SignInManager: SignInManager
                 )
-        {}
+        { }
 
         /// <summary>
         /// 
@@ -89,7 +86,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             int dayofweek = -1
             )
         {
-            
+
             /*######################   BUG    #########################
             * 这里要用搜索来实现了
             *######################   BUG    #########################
@@ -147,7 +144,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                     ///
                     ///取消订阅
                     ///
-                    var info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
+                    AnimeUserInfo info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
                         db => db.Where(animeinfo => animeinfo.Users.Id == UID && animeinfo.SubAnime.AnimeID == id));
                     if (info != null)
                     {
@@ -172,12 +169,12 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                         ///
                         ///订阅动画
                         ///
-                        var info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
+                        AnimeUserInfo info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
                             db => db.Where(animeinfo => animeinfo.Users.Id == UID && animeinfo.SubAnime.AnimeID == id));
                         if (info == null)
                         {
-                            var user = UserManager.GetUserAsync(User).Result;
-                            var anime = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(ani => ani.AnimeID == id));
+                            User user = UserManager.GetUserAsync(User).Result;
+                            Anime anime = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(ani => ani.AnimeID == id));
 
                             DBServices.Add(new AnimeUserInfo
                             {
@@ -206,7 +203,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                         ///
                         if (sub > 0)
                         {
-                            var info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
+                            AnimeUserInfo info = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id),
                                 db => db.Where(animeinfo => animeinfo.Users.Id == UID && animeinfo.SubAnime.AnimeID == id));
                             if (info != null)
                             {
@@ -259,7 +256,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 switch (type)
                 {
                     case "Memo"://添加一个MEMO
-                        Init("Memo", NotInit:true);
+                        Init("Memo", NotInit: true);
                         break;
                     default:
                         Init("AddBangumi", NotInit: true);
@@ -291,7 +288,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 if (DBServices.HasAnimeID(id))
                 {
                     Init();
-                    var infos = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id), db => db.Include(info => info.Memos).Where(info => info.SubAnime.AnimeID == id && info.Users.Id == UID));
+                    AnimeUserInfo infos = DBServices.Save_ToFirst<AnimeUserInfo>(CacheKey.Anime_User_Info(UID, id), db => db.Include(info => info.Memos).Where(info => info.SubAnime.AnimeID == id && info.Users.Id == UID));
                     if (infos != null)
                     {
                         infos.Memos.Add(null);
@@ -307,18 +304,18 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 try
                 {
                     //上传的文件
-                    var files = collection.Files;
+                    IFormFileCollection files = collection.Files;
                     if (files.Count > 0)
                     {
                         //上传文件的操作
 
                     }
-                    var AnimeNum = collection["AnimeNum"];
+                    Microsoft.Extensions.Primitives.StringValues AnimeNum = collection["AnimeNum"];
                     if (!int.TryParse(AnimeNum, out int Num))
                     {
                         Num = 1;
                     }
-                    var AnimeTime = collection["AnimePlayTime"];
+                    Microsoft.Extensions.Primitives.StringValues AnimeTime = collection["AnimePlayTime"];
                     if (!DateTime.TryParse(AnimeTime, out DateTime dateTime))
                     {
                         dateTime = DateTime.Now;
@@ -367,7 +364,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             Init<BangumiEdit>("BangumiEdit");
             if (DBServices.HasAnimeID(id))
             {
-                var anime_One = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(anime => anime.AnimeID == id));
+                Anime anime_One = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(anime => anime.AnimeID == id));
                 Model = new BangumiEdit { Anime = anime_One };
                 return View();
             }
@@ -392,7 +389,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
                 if (DBServices.HasAnimeID(id))
                 {
                     Anime Anime = bangumiEdit.Anime;
-                    var NewTag = bangumiEdit.AddTag;
+                    string NewTag = bangumiEdit.AddTag;
 
                     Anime anime = DBServices.ToFirst<Anime>(db => db.Where(a => a.AnimeID == id).Include(a => a.Tags));
 
@@ -451,7 +448,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             try
             {
                 // TODO: 更改成软删除，目前还是直接删除的逻辑
-                var DelAnime = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(anime => anime.AnimeID == id));
+                Anime DelAnime = DBServices.Save_ToFirst<Anime>(CacheKey.Anime_One(id), db => db.Where(anime => anime.AnimeID == id));
                 DBServices.Remove(DelAnime).Commit();
                 return RedirectToRoute(Final.Route_Bangumi_Index);
             }
@@ -470,7 +467,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         /// <param name="anime"></param>
         private void UpDataNew4(Anime anime)
         {
-            var List = DBServices.GetCache<List<Anime>>(CacheKey.Anime_New4());
+            List<Anime> List = DBServices.GetCache<List<Anime>>(CacheKey.Anime_New4());
             List.RemoveAll(a => a.AnimeID == anime.AnimeID);
             List.Add(anime);
             DBServices.GetCacheEntry(CacheKey.Anime_New4()).Value = List.OrderByDescending(t => t.Time).ToList();
@@ -483,7 +480,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
         private void UpDataNotEnd(Anime anime)
         {
             int ID = anime.AnimeID;
-            var List = DBServices.GetCache<List<Anime>>(CacheKey.Anime_NotEnd());
+            List<Anime> List = DBServices.GetCache<List<Anime>>(CacheKey.Anime_NotEnd());
             Anime SearchAnime = null;
             if ((SearchAnime = List.Where(a => a.AnimeID == ID).FirstOrDefault()) == null)
             {

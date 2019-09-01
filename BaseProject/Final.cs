@@ -148,7 +148,8 @@ namespace System
          * 以下是路由
          * ====================================================
          */
-        public const string Route_Index =                   nameof(Route_Index);
+        public const string Route_Home_Index =              nameof(Route_Home_Index);
+        public const string Route_Home_About =              nameof(Route_Home_About);
         public const string Route_Profile_UID =             nameof(Route_Profile_UID);
         public const string Route_Profile =                 nameof(Route_Profile);
         public const string Route_Test =                    nameof(Route_Test);

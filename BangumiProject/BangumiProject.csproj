@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Admin\" />
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Areas\Identity\Controllers\" />
     <Folder Include="Areas\Search\Views\" />
     <Folder Include="CoreProcess\Comm\" />
   </ItemGroup>
@@ -42,9 +43,6 @@
     </Content>
     <Content Update="Areas\Bangumi\Views\BangumiMemo\Memo.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Areas\Home\Views\Home\BagnumiList.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_CookieConsentPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>

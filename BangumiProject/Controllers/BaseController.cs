@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BangumiProject.Controllers
 {
@@ -100,14 +102,34 @@ namespace BangumiProject.Controllers
         protected IAuthorizationService AuthorizationService { get; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        private IRazorViewEngine RazorViewEngine { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private ITempDataProvider TempDataProvider { get; }
+
+        /// <summary>
         /// 初始化
         /// </summary>
+        /// <param name="DBServices">数据库</param>
+        /// <param name="SignInManager">用户登录</param>
+        /// <param name="UserManager">用户</param>
+        /// <param name="RoleManager">用户权限表</param>
+        /// <param name="AuthorizationService">用户权限认证</param>
+        /// <param name="TempDataProvider">页面渲染</param>
+        /// <param name="RazorViewEngine">页面渲染</param>
         protected BaseController(
             IServices DBServices,
             SignInManager<User> SignInManager,
             UserManager<User> UserManager,
             RoleManager<IdentityRole> RoleManager = null,
-            IAuthorizationService AuthorizationService = null
+            IAuthorizationService AuthorizationService = null,
+            //页面渲染用的
+            ITempDataProvider TempDataProvider = null,
+            IRazorViewEngine RazorViewEngine = null
             )
         {
             this.DBServices = DBServices;
@@ -115,6 +137,8 @@ namespace BangumiProject.Controllers
             this.UserManager = UserManager;
             this.SignInManager = SignInManager;
             this.AuthorizationService = AuthorizationService;
+            this.TempDataProvider = TempDataProvider;
+            this.RazorViewEngine = RazorViewEngine;
         }
 
         #region 数据初始化相关的方法
@@ -208,26 +232,47 @@ namespace BangumiProject.Controllers
         }
         #endregion 数据初始化相关的方法
 
-        #region PartialView的页面转换成字符串
+        #region 将页面转换成HTML字符串
         /// <summary>
-        /// 
+        /// 将页面转换成HTML字符串
         /// </summary>
+        /// <param name="viewName">页面名</param>
+        /// <param name="model">model类</param>
+        /// <see cref="https://www.cnblogs.com/maxzhang1985/p/6268777.html"/>
         /// <returns></returns>
         [NonAction]
-        protected string PartialViewToString(string ViewName)
+        protected string RenderToString(string viewName, object model, bool isMainPage = true)
         {
-            using (var writer = new StringWriter())
+            //var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
+            //var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+            if (RazorViewEngine == null || TempDataProvider == null)
             {
-                var ViewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
-                var res = ViewEngine.FindView(ControllerContext, ViewName, true);
-                ViewContext viewContext = new ViewContext(ControllerContext, res.View, ViewData, TempData, writer, new HtmlHelperOptions());
-                res.View.RenderAsync(viewContext);
-                string html = writer.GetStringBuilder().ToString();
+                throw new ArgumentNullException($"{nameof(RazorViewEngine)}或者{nameof(TempDataProvider)}其中之一的值是空的");
             }
-
-            return string.Empty;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = RazorViewEngine.FindView(ControllerContext, viewName, isMainPage);
+                if (viewResult.View == null)
+                {
+                    throw new ArgumentNullException($"{viewName} does not match any available view");
+                }
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                {
+                    Model = model
+                };
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    viewDictionary,
+                    new TempDataDictionary(ControllerContext.HttpContext, TempDataProvider),
+                    sw,
+                    new HtmlHelperOptions()
+                );
+                viewResult.View.RenderAsync(viewContext);
+                return sw.ToString();
+            }
         }
-        #endregion PartialView的页面转换成字符串
+        #endregion
 
         /// <summary>
         /// 将数据保存到内存缓存中
@@ -289,10 +334,6 @@ namespace BangumiProject.Controllers
                 catch (Exception e)
                 {
                     throw e;
-                }
-                finally
-                {
-                    stream = null;
                 }
             }
         }

@@ -86,7 +86,7 @@ namespace BangumiProject.Areas.Admin.Controllers
                     //开始读取文件
                     //验证一下，是否是我们的软件啊
                 }
-                return Json("");
+                return Json("密码校验失败");
             }
             else
             {
