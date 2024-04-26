@@ -20,6 +20,18 @@ namespace System
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="FilePath"></param>
+        public static void WriteToFile(this string str, string FilePath)
+        {
+            StreamWriter writer = File.AppendText(FilePath);
+            writer.WriteLine(str);
+            writer.Close();
+        }
+
+        /// <summary>
         /// 得到图片缩略图文件目录
         /// </summary>
         /// <param name="str"></param>

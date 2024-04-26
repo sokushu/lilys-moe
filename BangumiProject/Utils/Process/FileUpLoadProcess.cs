@@ -1,6 +1,5 @@
 ﻿using BangumiProject.Areas.Error.Models;
 using BangumiProject.Areas.Files.Process.AliyunOSS;
-using BangumiProject.Process;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

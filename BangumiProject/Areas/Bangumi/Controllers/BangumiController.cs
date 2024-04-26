@@ -163,7 +163,7 @@ namespace BangumiProject.Areas.Bangumi.Controllers
             var UID = _Services.UserManager.GetUserId(HttpContext.User);
             bool isOK = Result.Succeeded;
             // 百合模式检查
-            YURIModeCheck();
+            YuriMode = HttpContext.YuriModeCheck();
             try
             {
                 // 初始化

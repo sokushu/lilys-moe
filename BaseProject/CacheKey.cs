@@ -54,6 +54,14 @@ namespace System
             return "AnimeNew4";
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string Anime_New4_Yuri()
+        {
+            return nameof(Anime_New4_Yuri);
+        }
+        /// <summary>
         /// 得到没有完结的全部动画
         /// </summary>
         /// <returns></returns>

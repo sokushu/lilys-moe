@@ -10,10 +10,12 @@ using BangumiProject.Areas.Bangumi.Process;
 using BangumiProject.Areas.HomeBar.Views.Home.Model;
 using BangumiProjectDBServices.Models;
 using BangumiProjectDBServices.Services;
+using BangumiProjectProcess.Common;
+using BangumiProjectDBServices.PageModels;
 
 namespace BangumiProject.Areas.HomeBar.Controllers
 {
-    [Area("HomeBar")]
+    [Area("Home")]
     public class HomeController : Controller
     {
         /// <summary>
@@ -21,18 +23,31 @@ namespace BangumiProject.Areas.HomeBar.Controllers
         /// </summary>
         private readonly IServices _DBCORE;
         private readonly RoleManager<IdentityRole> _roleManager;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_DBCORE"></param>
+        /// <param name="_roleManager"></param>
         public HomeController(
             IServices _DBCORE, 
             RoleManager<IdentityRole> _roleManager)
         {
             this._roleManager = _roleManager;
             this._DBCORE = _DBCORE;
+
+            YuriName = YuriMode_Process.GetYuriName(this._DBCORE);
         }
 
         /// <summary>
         /// 百合模式
         /// </summary>
         private bool YuriMode { get; set; } = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string[] YuriName { get; set; }
 
         /// <summary>
         /// 返回首页
@@ -45,15 +60,40 @@ namespace BangumiProject.Areas.HomeBar.Controllers
             //加载百合模式
             YuriMode = HttpContext.YuriModeCheck();
             //加载UI模式
-            UIMode iMode = HttpContext.UIModeCheck();
+            UIMode iMode = HttpContext.UIModeCheck(YuriMode);
+            bool IsSignIn = _DBCORE.SignInManager.IsSignedIn(HttpContext.User);
+            if (IsSignIn)
+            {
+                //从数据库中读取Common_UIEnable
+            }
+            Common_UIEnable common_UI = Common_UIEnable.CreateUI(YuriMode, iMode);
             switch (iMode)
             {
                 case UIMode.YuriMode_:
-                    break;
                 case UIMode.YuriMode_Shojo:
-                    break;
                 case UIMode.YuriMode_G:
-                    break;
+                    //得到最新的4部动画
+                    HashSet<string> YuriTags = YuriName.ToHashSet();
+                    List<Anime> YuriAnime = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_New4_Yuri(), 
+                        db => db.Include(anime => anime.Tags).Where(anime => anime.Tags.FirstOrDefault(tag => YuriTags.Contains(tag.TagName)) != null));
+
+                    switch (iMode)
+                    {
+                        case UIMode.YuriMode_:
+                            break;
+                        case UIMode.YuriMode_Shojo:
+                            break;
+                        case UIMode.YuriMode_G:
+                            break;
+                        default:
+#if DEBUG
+                            Console.WriteLine(iMode);
+                            break;
+#else
+                            throw new Exception($"Error : {iMode}");
+#endif
+                    }
+                    return View("Index");
                 case UIMode.Normal_:
                     //得到最新的4部动画
                     List<Anime> animes = _DBCORE.Save_ToList<Anime>(CacheKey.Anime_New4(), db => db.OrderByDescending(anime => anime.Time).Take(4));
@@ -107,7 +147,6 @@ namespace BangumiProject.Areas.HomeBar.Controllers
                 default:
                     break;
             }
-            Tuple.Create(new Common());
             return View();
         }
 

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BangumiProjectDBServices.PageModels;
+using BaseProject;
+using BaseProject.Process;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace System
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ModeCheck
     {
         /// <summary>
@@ -40,7 +46,7 @@ namespace System
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        public static UIMode UIModeCheck(this HttpContext httpContext)
+        public static UIMode UIModeCheck(this HttpContext httpContext, bool YuriMode = false)
         {
             int? iMode = httpContext.Session.GetInt32(nameof(UIMode));
             if (iMode != null)
@@ -50,15 +56,46 @@ namespace System
                 {
                     case UIMode.Normal_:
                     case UIMode.Normal_G:
+                        return ReturnMode;
                     case UIMode.YuriMode_:
                     case UIMode.YuriMode_Shojo:
+                        return YuriMode ? ReturnMode : UIMode.Normal_;
                     case UIMode.YuriMode_G:
-                        return ReturnMode;
+                        return YuriMode ? ReturnMode : UIMode.Normal_G;
                     default:
                         return UIMode.Normal_;
                 }
             }
             return UIMode.Normal_;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static Common_UIEnable CreateCommon_UI(this HttpContext httpContext)
+        {
+            Common_UIEnable common_UI = new Common_UIEnable()
+            {
+                New_4Anime = httpContext.Session.GetInt32(nameof(Common_UIEnable.New_4Anime)).IntToBool(),
+                YuriInfo = httpContext.Session.GetInt32(nameof(Common_UIEnable.YuriInfo)).IntToBool(),
+                YuriGoods = httpContext.Session.GetInt32(nameof(Common_UIEnable.YuriGoods)).IntToBool(),
+                YuriNews = httpContext.Session.GetInt32(nameof(Common_UIEnable.YuriNews)).IntToBool(),
+            };
+            return common_UI;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <param name="common_UI"></param>
+        public static void SetCommon_UI(this HttpContext httpContext, Common_UIEnable common_UI)
+        {
+            httpContext.Session.SetInt32(nameof(Common_UIEnable.New_4Anime), common_UI.New_4Anime.BoolToInt());
+            httpContext.Session.SetInt32(nameof(Common_UIEnable.YuriInfo), common_UI.YuriInfo.BoolToInt());
+            httpContext.Session.SetInt32(nameof(Common_UIEnable.YuriGoods), common_UI.YuriGoods.BoolToInt());
+            httpContext.Session.SetInt32(nameof(Common_UIEnable.YuriNews), common_UI.YuriNews.BoolToInt());
         }
 
         /// <summary>
